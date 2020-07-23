@@ -1,4 +1,4 @@
-void main(List<String> args) {
+void main() {
   double sueldo = 20000;
   double porcentaje;
   String mostrar;
