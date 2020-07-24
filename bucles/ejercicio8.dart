@@ -1,6 +1,6 @@
 void main(List<String> args) {
-  int dividendo = 18;
-  int divisor = -5;
+  int dividendo = 50;
+  int divisor = -95;
   int respuesta = 0;
 
   if (dividendo * divisor > 0) {
@@ -12,11 +12,11 @@ void main(List<String> args) {
       respuesta++;
     }
   } else {
+    // si los dos signos no son iguales, hago lo contrario
     if (dividendo > 0) {
       dividendo = -dividendo;
       divisor = -divisor;
     }
-    // si los dos signos no son iguales, hago lo contrario
     while (dividendo <= -divisor) {
       dividendo = dividendo + divisor;
       respuesta--;

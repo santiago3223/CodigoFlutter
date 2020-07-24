@@ -12,4 +12,9 @@ void main() {
     print("Llego aqui ${numero}");
     numero += 1;
   } while (5 >= numero);
+  print("------------");
+  //Bucle for (declaracion y/o asignacion; condicion ; incremento)
+  for (int i = 1; i <= 5; i++) {
+    print("Llego aqui ${i}");
+  }
 }
