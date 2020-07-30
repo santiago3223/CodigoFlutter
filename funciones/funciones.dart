@@ -1,8 +1,24 @@
-int numero = 15;
 void main() {
-  ImprimirRectangulo(8);
-  ImprimirRectangulo(9);
-  ImprimirRectangulo(9, 5);
+  DescomponeEntero(456);
+}
+
+void DescomponeEntero2(int numero) {}
+
+void DescomponeEntero(int numero) {
+  String nums = numero.toString();
+  for (int i = 0; i < nums.length; i++) {
+    print(nums[nums.length - i - 1]);
+  }
+}
+
+void MuestraNoMultiplos(int limite, int multiplo) {
+  String respuesta = "";
+  for (int i = 1; i < limite; i++) {
+    if (i % multiplo != 0) {
+      respuesta = respuesta + i.toString() + " ";
+    }
+  }
+  print(respuesta);
 }
 
 void ImprimirRectangulo(int filas, [int columnas = 12]) {
