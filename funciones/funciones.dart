@@ -1,8 +1,20 @@
 void main() {
-  DescomponeEntero(456);
+  DescomponeEntero3(45611);
 }
 
-void DescomponeEntero2(int numero) {}
+void DescomponeEntero3(int numero) {
+  for (int i = 0; numero > 0; i++) {
+    print(numero % 10);
+    numero = (numero / 10).floor();
+  }
+}
+
+void DescomponeEntero2(int numero) {
+  while (numero > 0) {
+    print(numero % 10);
+    numero = (numero / 10).floor();
+  }
+}
 
 void DescomponeEntero(int numero) {
   String nums = numero.toString();
