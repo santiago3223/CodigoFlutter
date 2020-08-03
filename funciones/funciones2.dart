@@ -1,7 +1,27 @@
 String respuesta = "";
 void main() {
-  print(arbolfibonacci3(4));
-  print(respuesta);
+  List<int> desordenado = [9, 8, 6, 4, 1];
+  List<int> ordenado = ordenar(desordenado);
+  print(ordenado);
+}
+
+List<int> ordenar(List<int> lista) {
+  List<int> nuevo = [];
+  int menor = lista[0];
+  int size = lista.length;
+  for (int e = 0; e < size; e++) {
+    for (int i = 0; i < lista.length; i++) {
+      if (menor > lista[i]) {
+        menor = lista[i];
+      }
+    }
+    lista.remove(menor);
+    nuevo.add(menor);
+    if (lista.length > 0) {
+      menor = lista[0];
+    }
+  }
+  return nuevo;
 }
 
 int arbolfibonacci3(int numero, [int nivel = 1]) {
