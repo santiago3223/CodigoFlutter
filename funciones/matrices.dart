@@ -1,19 +1,32 @@
 import 'dart:math';
 
 void main() {
-  List<List<int>> num1 = [];
-  var num2 = []; //para usar más adelante en las pruebas
-  var rng = new Random();
-  for (int fil = 0; fil < 5; fil++) {
-    num1.add([]);
-    for (int col = 0; col < 4; col++) {
-      num1[fil].add(rng.nextInt(100));
-    }
-  }
-  print(esNula(num1));
+  var num1 = [
+    [1, 1, 1],
+    [2, 2, 2]
+  ];
+  var num2 = [
+    [1, 1],
+    [2, 2]
+  ]; //para usar más adelante en las pruebas
+
+  print(sonIguales(num1, num2));
 }
 
-bool sonIguales(List l1, List l2) {}
+List sumaMatrices(var m1, var m2) {}
+
+bool sonIguales(var l1, var l2) {
+  if (l1.length != l2.length) return false;
+  for (var i = 0; i < l1.length; i++) {
+    if (l1[i].length != l2[i].length) return false;
+    for (var j = 0; j < l1[i].length; j++) {
+      if (l1[i][j] != l2[i][j]) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
 
 bool esNula(List lista) {
   for (var i = 0; i < lista.length; i++) {
