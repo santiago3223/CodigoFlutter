@@ -1,13 +1,14 @@
 import 'dart:math';
 
 void main() {
-  List numero = [22, 25, 29, 30, 31, 35, 45];
+  List<int> numero = [22, 25, 29, 30, 31, 35, 45];
   Random r = Random();
-
   for (int i = 0; i < 100000; i++) {
     numero.add(r.nextInt(100000));
-    buscarEnLista(numero, 5500);
   }
+  numero.sort();
+  //busquedaBinariaIterativa(numero, 5000);
+  numero.contains(5000);
 }
 
 bool busquedaBinariaIterativa(List numeros, int n) {
