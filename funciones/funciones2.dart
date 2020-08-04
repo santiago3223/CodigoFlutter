@@ -1,8 +1,41 @@
+import 'dart:math';
+
 String respuesta = "";
 void main() {
-  List<int> desordenado = [9, 8, 6, 4, 1];
-  List<int> ordenado = ordenar(desordenado);
-  print(ordenado);
+  List<int> l1 = [0, 0, 0, 0, 0];
+  List<int> l2 = [9, 8, 5, 6, 7];
+  print(distanciaEuclideana(l1, l2));
+  print(distanciaCamberra(l1, l2));
+}
+
+double distanciaCamberra(List l1, List l2) {
+  double dist = 0;
+  for (int i = 0; i < l1.length; i++) {
+    dist += (l1[i] - l2[i]).abs();
+  }
+  return dist;
+}
+
+double distanciaEuclideana(List l1, List l2) {
+  double dist = 0;
+  for (int i = 0; i < l1.length; i++) {
+    dist += pow(l1[i] - l2[i], 2);
+  }
+  return sqrt(dist);
+}
+
+List<int> ordenarBurbuja(List<int> lista) {
+  for (int e = 0; e < lista.length - 1; e++) {
+    for (int i = 0; i < lista.length - 1 - e; i++) {
+      if (lista[i] > lista[i + 1]) {
+        int temp = lista[i];
+        lista[i] = lista[i + 1];
+        lista[i + 1] = temp;
+      }
+    }
+    print(lista);
+  }
+  return lista;
 }
 
 List<int> ordenar(List<int> lista) {
