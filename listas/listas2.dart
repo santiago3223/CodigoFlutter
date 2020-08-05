@@ -2,6 +2,21 @@ import 'dart:io';
 
 void main() {
   List<String> alumnos = llenarAlumnos();
+  alumnos.sort();
+  imprimirListaAlumnos(alumnos);
+}
+
+List ordenarListaAlf(List<String> alumnos) {
+  for (int i = 0; i < alumnos.length; i++) {
+    for (int e = 0; e < alumnos.length - 1; e++) {
+      if (alumnos[e].codeUnitAt(0) > alumnos[e + 1].codeUnitAt(0)) {
+        var tmp = alumnos[e];
+        alumnos[e] = alumnos[e + 1];
+        alumnos[e + 1] = tmp;
+      }
+    }
+  }
+  return alumnos;
 }
 
 List llenarAlumnos() {
