@@ -8,9 +8,19 @@ void main() {
     }
   }
 
-  imprimirLista(alumnos);
+  imprimirLista2(alumnos);
 }
 
 void imprimirLista(List l) {
   l.forEach((fila) => {print(fila.join("\t"))});
+}
+
+void imprimirLista2(List l) {
+  l.forEach(imprimirFila);
+}
+
+void imprimirFila(var fila) {
+  String filaimpresa = "";
+  fila.forEach((alumno) => {filaimpresa += "${alumno} \t"});
+  print(filaimpresa);
 }
