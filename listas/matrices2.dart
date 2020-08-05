@@ -1,6 +1,5 @@
 void main() {
   List alumnos = []; //lista de filas
-
   for (int i = 0; i < 5; i++) {
     alumnos.add([]);
     for (int e = 0; e < 4; e++) {
@@ -16,11 +15,10 @@ void imprimirLista(List l) {
 }
 
 void imprimirLista2(List l) {
-  l.forEach(imprimirFila);
-}
-
-void imprimirFila(var fila) {
-  String filaimpresa = "";
-  fila.forEach((alumno) => {filaimpresa += "${alumno} \t"});
-  print(filaimpresa);
+  String filaimpresa;
+  l.forEach((fila) => {
+        filaimpresa = "",
+        fila.forEach((alumno) => {filaimpresa += "${alumno} \t"}),
+        print(filaimpresa)
+      });
 }
