@@ -42,14 +42,21 @@ class Asignatura {
         primerPuesto = alumnos[i];
     }
     return primerPuesto;
+  }
 
-/*
-    Alumno primerPuesto = alumnos[0];
-    alumnos.forEach((alumno) =>
-        {if (alumno.notaFinal > primerPuesto.notaFinal) primerPuesto = alumno});
-    return primerPuesto;
-    alumnos.sort((a1, a2) => a2.notaFinal.compareTo(a1.notaFinal));
-    return alumnos[0];
-    */
+  Alumno obtenerUltimoPuesto() {
+    Alumno ultimoPuesto = alumnos[0];
+    for (int i = 0; i < alumnos.length; i++) {
+      if (alumnos[i].notaFinal < ultimoPuesto.notaFinal)
+        ultimoPuesto = alumnos[i];
+    }
+    return ultimoPuesto;
+  }
+
+  bool buscarAlumnoPorNombre(String nombre) {
+    for (int i = 0; i < alumnos.length; i++) {
+      if (alumnos[i].nombres.toLowerCase() == nombre.toLowerCase()) return true;
+    }
+    return false;
   }
 }

@@ -13,9 +13,5 @@ void main() {
   flutter.matricularAlumno(alm2);
   flutter.matricularAlumno(alm3);
 
-  flutter.imprimirAlumnos();
-  print(flutter.obtenerCantidadDesaprobados());
-  print("Primer puestp");
-  print(flutter.obtenerPrimerPuesto());
-  flutter.imprimirAlumnos();
+  print(flutter.buscarAlumnoPorNombre("wEnDy"));
 }
