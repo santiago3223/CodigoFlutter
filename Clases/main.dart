@@ -2,9 +2,8 @@ import 'dart:io';
 import 'banco.dart';
 import 'cuenta.dart';
 
-Banco cajaCodigo;
+Banco cajaCodigo = new Banco();
 void main() {
-  cajaCodigo = new Banco();
   while (true) {
     print("Bienvenido a nuestro banco");
     print("Digite : ");
@@ -28,6 +27,7 @@ void ConsultarCuenta() {
     print("Digite : ");
     print("1 para depositar");
     print("2 para retirar");
+    print("3 para transferir");
     String opcion = stdin.readLineSync();
     if (opcion == "1") {
       print("Ingrese el monto a depositar");
@@ -37,6 +37,13 @@ void ConsultarCuenta() {
       print("Ingrese el monto a retirar");
       String saldo = stdin.readLineSync();
       c.Retirar(double.parse(saldo));
+    }
+    if (opcion == "3") {
+      print("Ingrese el monto a transferir");
+      String monto = stdin.readLineSync();
+      print("Ingrese la cuenta de destino");
+      String destino = stdin.readLineSync();
+      cajaCodigo.transferencia(c.numeroCuenta, destino, double.parse(monto));
     }
   }
 }
