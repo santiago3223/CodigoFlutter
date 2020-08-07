@@ -1,17 +1,30 @@
 import 'cuenta.dart';
 
-void main() {
-  Cuenta solesSantiago = Cuenta(
-      nombreTitular: "Santiago",
-      tipo: "Corriente",
-      tipoMoneda: 1,
-      numeroCuenta: "123-123",
-      saldo: 100);
-  solesSantiago.Depositar(100);
-  solesSantiago.Retirar(15);
-  solesSantiago.Retirar(5);
-  solesSantiago.Depositar(10);
-  print("");
-  solesSantiago.imprimirMovimientos();
-  print(solesSantiago);
+class Banco {
+  List<Cuenta> cuentas = new List();
+
+  void agregarCuenta(Cuenta c) {
+    cuentas.add(c);
+  }
+
+  void imprimirClientes() {
+    cuentas.forEach((cuenta) => {print(cuenta.nombreTitular)});
+  }
+
+  void transferencia(String origen, String destino, double monto) {
+    Cuenta ori = buscarCuentaPorNumero(origen);
+    Cuenta dest = buscarCuentaPorNumero(destino);
+    if (ori != null && dest != null) {
+      ori.Retirar(monto);
+      dest.Depositar(monto);
+    } else {
+      print("Los datos ingresados son incorrectos");
+    }
+  }
+
+  Cuenta buscarCuentaPorNumero(String g) {
+    for (int i = 0; i < cuentas.length; i++) {
+      if (cuentas[i].numeroCuenta == g) return cuentas[i];
+    }
+  }
 }
