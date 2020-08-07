@@ -12,12 +12,31 @@ void main() {
     print("2 para crear una nueva cuenta");
     String opcion = stdin.readLineSync();
     if (opcion == "1") {
-      print("Ingrese NumeroCuenta");
-      String numeroCuenta = stdin.readLineSync();
-      Cuenta c = cajaCodigo.buscarCuentaPorNumero(numeroCuenta);
-      print(c);
+      ConsultarCuenta();
     } else if (opcion == "2") {
       CrearNuevaCuenta();
+    }
+  }
+}
+
+void ConsultarCuenta() {
+  print("Ingrese NumeroCuenta");
+  String numeroCuenta = stdin.readLineSync();
+  Cuenta c = cajaCodigo.buscarCuentaPorNumero(numeroCuenta);
+  if (c != null) {
+    print(c);
+    print("Digite : ");
+    print("1 para depositar");
+    print("2 para retirar");
+    String opcion = stdin.readLineSync();
+    if (opcion == "1") {
+      print("Ingrese el monto a depositar");
+      String saldo = stdin.readLineSync();
+      c.Depositar(double.parse(saldo));
+    } else if (opcion == "2") {
+      print("Ingrese el monto a retirar");
+      String saldo = stdin.readLineSync();
+      c.Retirar(double.parse(saldo));
     }
   }
 }
