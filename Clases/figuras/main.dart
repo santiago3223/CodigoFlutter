@@ -9,6 +9,8 @@ void main(List<String> args) {
   imprimirCaracteristicas(r);
 }
 
+double suma(double n1, double n2) => n1 + n2;
+
 void imprimirCaracteristicas(FiguraGeometrica figuraGeometrica) {
   print(figuraGeometrica.obtenerArea());
   print(figuraGeometrica.obtenerPerimetro());
