@@ -14,4 +14,10 @@ class Profesor extends Persona {
             nombres: nombres,
             apellidos: apellidos,
             correo: correo);
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return "Prof." + super.toString();
+  }
 }

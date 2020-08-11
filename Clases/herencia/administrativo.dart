@@ -10,4 +10,9 @@ class Administrativo extends Persona {
             nombres: nombres,
             apellidos: apellidos,
             correo: correo);
+  @override
+  String toString() {
+    // TODO: implement toString
+    return "Adm." + super.toString();
+  }
 }
