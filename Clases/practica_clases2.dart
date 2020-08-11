@@ -12,7 +12,7 @@ main(List<String> args) {
   h.imprimir24H();
   h2.imprimir12H();
   h2.imprimir24H();
-  print(h.Diferencia(h2));
+  print(h - h2);
 }
 
 class Hora {
@@ -44,7 +44,7 @@ class Hora {
     }
   }
 
-  int Diferencia(Hora h2) {
+  int operator -(Hora h2) {
     int difmin = (horas * 60 + minutos) - (h2.horas * 60 + h2.minutos);
     return difmin;
   }
