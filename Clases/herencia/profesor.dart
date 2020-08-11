@@ -1,19 +1,18 @@
-import 'persona.dart';
+import 'trabajadores.dart';
 
-class Profesor extends Persona {
-  double sueldo;
-
+class Profesor extends Trabajador {
   Profesor(
       {int codigo,
       String nombres,
       String apellidos,
       String correo,
-      this.sueldo})
+      double sueldoPorHora})
       : super(
             codigo: codigo,
             nombres: nombres,
             apellidos: apellidos,
-            correo: correo);
+            correo: correo,
+            sueldoPorHora: sueldoPorHora);
 
   @override
   String toString() {

@@ -1,23 +1,20 @@
 import 'administrativo.dart';
-import 'alumno.dart';
-import 'asignatura.dart';
+import 'persona.dart';
 import 'profesor.dart';
+import 'trabajadores.dart';
 
 main(List<String> args) {
-  Alumno a1 = new Alumno(nombres: "Santiago 1");
-  Alumno a2 = new Alumno(nombres: "Santiago 2");
-  Alumno a3 = new Alumno(nombres: "Santiago 3");
-  Administrativo adm = new Administrativo(nombres: "administradorin");
+  Administrativo adm =
+      new Administrativo(nombres: "administradorin", sueldoPorHora: 10);
   Profesor p = new Profesor(
       nombres: "Santiago2",
       apellidos: "Lovón",
       codigo: 2,
-      correo: "slg@gmail.com");
+      correo: "slg@gmail.com",
+      sueldoPorHora: 10);
+  List<Trabajador> trabajadores = [];
+  trabajadores.add(p);
+  trabajadores.add(adm);
 
-  Asignatura asignatura = new Asignatura(nombre: "CodiGo", profesor: adm);
-  asignatura += a1;
-  asignatura += a2;
-
-  print(asignatura.alumnos);
-  print(asignatura[0]);
+  trabajadores.forEach((f) => {print(f.obtenerSueldoTotal(50))});
 }
