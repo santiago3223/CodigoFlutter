@@ -19,4 +19,9 @@ class Profesor extends Trabajador {
     // TODO: implement toString
     return "Prof." + super.toString();
   }
+
+  @override
+  double obtenerSueldoTotal(int horas) {
+    return sueldoPorHora * horas;
+  }
 }

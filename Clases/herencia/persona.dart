@@ -1,4 +1,4 @@
-class Persona {
+abstract class Persona {
   int codigo;
   String nombres;
   String apellidos;

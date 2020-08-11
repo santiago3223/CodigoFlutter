@@ -1,6 +1,6 @@
 import 'persona.dart';
 
-class Trabajador extends Persona {
+abstract class Trabajador extends Persona {
   double sueldoPorHora;
 
   Trabajador(
@@ -15,7 +15,5 @@ class Trabajador extends Persona {
             apellidos: apellidos,
             correo: correo);
 
-  double obtenerSueldoTotal(int horas) {
-    return horas * sueldoPorHora;
-  }
+  double obtenerSueldoTotal(int horas);
 }
