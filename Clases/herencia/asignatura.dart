@@ -13,4 +13,19 @@ class Asignatura {
   String toString() {
     return nombre + ": " + profesor.toString();
   }
+
+  void agregarAlumno(Alumno a) {
+    if (alumnos == null) alumnos = [];
+    alumnos.add(a);
+  }
+
+  Asignatura operator +(Alumno a) {
+    if (this.alumnos == null) this.alumnos = [];
+    this.alumnos.add(a);
+    return this;
+  }
+
+  Alumno operator [](int i) {
+    return alumnos[i];
+  }
 }

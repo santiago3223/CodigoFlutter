@@ -14,8 +14,10 @@ main(List<String> args) {
       codigo: 2,
       correo: "slg@gmail.com");
 
-  Asignatura asignatura =
-      new Asignatura(nombre: "CodiGo", profesor: adm, alumnos: [a2, a3]);
+  Asignatura asignatura = new Asignatura(nombre: "CodiGo", profesor: adm);
+  asignatura += a1;
+  asignatura += a2;
 
-  print(asignatura);
+  print(asignatura.alumnos);
+  print(asignatura[0]);
 }
