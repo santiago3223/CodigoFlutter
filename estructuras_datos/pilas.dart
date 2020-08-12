@@ -22,7 +22,7 @@ bool estaBalanceado(String expresion) {
 
 class Nodo<E> {
   E valor;
-  Nodo anterior;
+  Nodo<E> anterior;
   Nodo({this.valor, this.anterior});
 }
 
