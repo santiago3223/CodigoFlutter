@@ -3,6 +3,7 @@ void main(List<String> args) {
   l.insertarFin(15);
   l.insertarFin(18);
   l.insertarFin(20);
+  l.insertarInicio(1);
   l.imprimir();
 }
 
@@ -24,7 +25,13 @@ class ListaS<T> {
     }
   }
 
-  void insertarInicio(T valor) {}
+  void insertarInicio(T valor) {
+    Nodo<T> n = Nodo(valor: valor, siguiente: inicio);
+    inicio = n;
+    if (fin == null) {
+      fin = n;
+    }
+  }
 
   void insertarFin(T valor) {
     Nodo<T> n = Nodo(valor: valor);
