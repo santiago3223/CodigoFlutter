@@ -1,5 +1,3 @@
-import 'dart:math';
-
 main(List<String> args) {
   String expresion = "(a+[(b*5-[(a(7)+(35*5))])])";
   print(estaBalanceado(expresion));
