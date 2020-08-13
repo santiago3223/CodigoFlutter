@@ -2,10 +2,7 @@ void main(List<String> args) {
   ListaS<int> l = new ListaS();
   l.insertarFin(15);
   l.insertarFin(18);
-  l.insertarFin(20);
-  l.insertarInicio(1);
-  l.insertarPosicion(10, 2);
-  l.insertarPosicion(2, 1);
+  l.insertarPosicion(10, 100);
   l.imprimir();
 }
 
@@ -25,6 +22,10 @@ class ListaS<T> {
       print(tmp.valor);
       tmp = tmp.siguiente;
     }
+  }
+
+  void eliminarPrimero() {
+    inicio = inicio.siguiente;
   }
 
   void insertarInicio(T valor) {
@@ -51,7 +52,7 @@ class ListaS<T> {
       insertarInicio(valor);
     } else {
       Nodo<T> actual = inicio;
-      for (int i = 1; i < posicion; i++) {
+      for (int i = 1; i < posicion && actual.siguiente != null; i++) {
         actual = actual.siguiente;
       }
       Nodo<T> n = Nodo(valor: valor, siguiente: actual.siguiente);
