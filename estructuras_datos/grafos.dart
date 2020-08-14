@@ -9,13 +9,22 @@ void main(List<String> args) {
   g.agregarArista(3, 1);
   g.agregarArista(5, 7);
   g.imprimir();
-  print(g.cantidadVecinos(5));
+  g.imprimirVecinos(2);
 }
 
 class Grafo {
   List<Arista> aristas = new List();
 
-  void imprimirVecinos(int n) {}
+  void imprimirVecinos(int n) {
+    for (int i = 0; i < aristas.length; i++) {
+      if (aristas[i].v1.valor == n) {
+        print(aristas[i].v2.valor);
+      }
+      if (aristas[i].v2.valor == n) {
+        print(aristas[i].v1.valor);
+      }
+    }
+  }
 
   int cantidadVecinos(int n) {
     int cantidad = 0;
