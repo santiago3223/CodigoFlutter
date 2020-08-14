@@ -1,2 +1,11 @@
-graph {15 -- 15;
+graph {Santiago15 -- Santiago15;
+Santiago15 -- Frank10;
+Frank10 -- Renzo7;
+Renzo7 -- Sebastian5;
+Renzo7 -- Gerson9;
+Frank10 -- Wendy11;
+Wendy11 -- Walter14;
+Santiago15 -- Daniel18;
+Daniel18 -- Fernando16;
+Daniel18 -- Orlando20;
 }
