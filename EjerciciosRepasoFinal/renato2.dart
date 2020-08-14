@@ -10,10 +10,11 @@ digPow(46288, 3) should return 51 since 4³ + 6⁴+ 2⁵ + 8⁶ + 8⁷ = 2360688
 import 'dart:math';
 
 main(List<String> args) {
-  print(digPow(46288, 3));
+  print(digPow(92, 1));
 }
 
 int digPow(int numero, int potencia) {
+  int numOriginal = numero;
   int numtemporal = numero;
   int cantDigitos = 0;
   while (numtemporal > 0) {
@@ -28,5 +29,10 @@ int digPow(int numero, int potencia) {
     numero = (numero / 10).floor();
     potencia--;
   }
-  return suma;
+
+  if (suma % numOriginal != 0) {
+    return -1;
+  } else {
+    return (suma / numOriginal).floor();
+  }
 }
