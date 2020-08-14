@@ -7,7 +7,7 @@ anagrams('laser', ['lazing', 'lazy',  'lacer']) => []
 */
 
 void main(List<String> args) {
-  print(anagrams('abba', ['aabb', 'abcd', 'bbaa', 'dada']));
+  print(anagrams('laser', ['lazing', 'lazy', 'lacer']));
 }
 
 String ordenarPalabra(String s) {
@@ -25,10 +25,13 @@ bool esAnagrama(String s1, String s2) {
 }
 
 List<String> anagrams(String palabra, List<String> opciones) {
+  List<String> respuesta = new List();
   int cont = 0;
   while (cont < opciones.length) {
-    print(
-        opciones[cont] + " " + esAnagrama(palabra, opciones[cont]).toString());
+    if (esAnagrama(palabra, opciones[cont])) {
+      respuesta.add(opciones[cont]);
+    }
     cont++;
   }
+  return respuesta;
 }
