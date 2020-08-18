@@ -1,5 +1,6 @@
 import 'package:contador/texto.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,9 +15,19 @@ class WidgetsPrueba extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: TextoPruebas(),
-    ));
+      body: Center(
+        child: Container(
+          height: 500,
+          width: 300,
+          color: Colors.red,
+          child: Icon(
+            FontAwesomeIcons.adobe,
+            size: 100,
+            color: Colors.green,
+          ),
+        ),
+      ),
+    );
   }
 }
 
