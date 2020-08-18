@@ -42,6 +42,7 @@ class WidgetsPrueba extends StatelessWidget {
               ),
               IconButton(
                 icon: Icon(FontAwesomeIcons.addressCard),
+                iconSize: 100,
                 tooltip: "IconButton",
                 onPressed: () => {},
               ),
