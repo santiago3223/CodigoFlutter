@@ -17,43 +17,7 @@ class WidgetsPrueba extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Container(
-          height: 500,
-          width: 300,
-          child: Column(
-            children: [
-              FlatButton(
-                child: Text("flat"),
-                highlightColor: Colors.blue,
-                onPressed: () => {},
-              ),
-              RaisedButton(
-                child: Text("raised"),
-                highlightColor: Colors.blue,
-                onPressed: () => {},
-              ),
-              OutlineButton(
-                child: Text("raised"),
-                onPressed: () => {},
-              ),
-              CupertinoButton(
-                child: Text("cupertino"),
-                onPressed: () => {},
-              ),
-              IconButton(
-                icon: Icon(FontAwesomeIcons.addressCard),
-                iconSize: 100,
-                tooltip: "IconButton",
-                onPressed: () => {},
-              ),
-              RaisedButton.icon(
-                onPressed: () => {},
-                icon: Icon(Icons.ac_unit),
-                label: Text("Raised icon"),
-              )
-            ],
-          ),
-        ),
+        child: Text("CodiGo"),
       ),
     );
   }
