@@ -1,3 +1,4 @@
+import 'package:contador/texto.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -14,7 +15,7 @@ class WidgetsPrueba extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-      child: Text("prueba"),
+      child: TextoPruebas(),
     ));
   }
 }
