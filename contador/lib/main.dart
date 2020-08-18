@@ -39,6 +39,16 @@ class WidgetsPrueba extends StatelessWidget {
               CupertinoButton(
                 child: Text("cupertino"),
                 onPressed: () => {},
+              ),
+              IconButton(
+                icon: Icon(FontAwesomeIcons.addressCard),
+                tooltip: "IconButton",
+                onPressed: () => {},
+              ),
+              RaisedButton.icon(
+                onPressed: () => {},
+                icon: Icon(Icons.ac_unit),
+                label: Text("Raised icon"),
               )
             ],
           ),
