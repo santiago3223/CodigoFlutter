@@ -29,33 +29,44 @@ class MyPage extends StatelessWidget {
         title: Text("Hola CodiGo"),
         backgroundColor: Colors.deepPurple,
       ),
-      body: Center(
-        child: Column(children: [
-          Text(
-            "Hola Santiago",
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-              color: Colors.amber,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Hola Santiago",
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.amber,
+                ),
+              ),
             ),
-          ),
-          Text(
-            "A programar",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.blue,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "A programar",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue,
+                ),
+              ),
             ),
-          ),
-          Image.network(
-            'https://images.freeimages.com/images/large-previews/eaa/the-beach-1464354.jpg',
-            height: 200,
-          ),
-          RaisedButton(
-            child: Text("presioname"),
-            onPressed: () => contactanos(context),
-          )
-        ]),
+            Image.network(
+              'https://images.freeimages.com/images/large-previews/eaa/the-beach-1464354.jpg',
+              height: 200,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: RaisedButton(
+                child: Text("presioname"),
+                onPressed: () => contactanos(context),
+              ),
+            )
+          ]),
+        ),
       ),
     );
   }
