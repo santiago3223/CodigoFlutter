@@ -3,6 +3,13 @@ import 'package:flutter/material.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(home: MyPage());
+  }
+}
+
+class MyPage extends StatelessWidget {
   void contactanos(BuildContext context) {
     showDialog(
       context: context,
@@ -17,40 +24,38 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Hola CodiGo"),
-          backgroundColor: Colors.deepPurple,
-        ),
-        body: Center(
-          child: Column(children: [
-            Text(
-              "Hola Santiago",
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Colors.amber,
-              ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Hola CodiGo"),
+        backgroundColor: Colors.deepPurple,
+      ),
+      body: Center(
+        child: Column(children: [
+          Text(
+            "Hola Santiago",
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              color: Colors.amber,
             ),
-            Text(
-              "A programar",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
-              ),
+          ),
+          Text(
+            "A programar",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.blue,
             ),
-            Image.network(
-              'https://images.freeimages.com/images/large-previews/eaa/the-beach-1464354.jpg',
-              height: 200,
-            ),
-            RaisedButton(
-              child: Text("presioname"),
-              onPressed: () => contactanos(context),
-            )
-          ]),
-        ),
+          ),
+          Image.network(
+            'https://images.freeimages.com/images/large-previews/eaa/the-beach-1464354.jpg',
+            height: 200,
+          ),
+          RaisedButton(
+            child: Text("presioname"),
+            onPressed: () => contactanos(context),
+          )
+        ]),
       ),
     );
   }
