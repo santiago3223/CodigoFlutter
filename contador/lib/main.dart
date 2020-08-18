@@ -1,4 +1,5 @@
 import 'package:contador/texto.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -19,11 +20,27 @@ class WidgetsPrueba extends StatelessWidget {
         child: Container(
           height: 500,
           width: 300,
-          color: Colors.red,
-          child: Icon(
-            FontAwesomeIcons.adobe,
-            size: 100,
-            color: Colors.green,
+          child: Column(
+            children: [
+              FlatButton(
+                child: Text("flat"),
+                highlightColor: Colors.blue,
+                onPressed: () => {},
+              ),
+              RaisedButton(
+                child: Text("raised"),
+                highlightColor: Colors.blue,
+                onPressed: () => {},
+              ),
+              OutlineButton(
+                child: Text("raised"),
+                onPressed: () => {},
+              ),
+              CupertinoButton(
+                child: Text("cupertino"),
+                onPressed: () => {},
+              )
+            ],
           ),
         ),
       ),
