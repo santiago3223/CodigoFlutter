@@ -24,26 +24,52 @@ class PaginaPerfil extends StatelessWidget {
           Column(
             children: [
               buildHeader(context),
-              Container(
-                margin: EdgeInsets.only(top: 10),
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Collection",
-                        style: Theme.of(context).textTheme.headline6,
+              buildHeaderComidas(context),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    Container(
+                      width: 150,
+                      height: 200,
+                      color: Colors.red,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Image.network(
+                                "https://firebasestorage.googleapis.com/v0/b/dl-flutter-ui-challenges.appspot.com/o/food%2Fmeal.jpg?alt=media",
+                                fit: BoxFit.cover),
+                          ),
+                          Text("Food joint"),
+                        ],
                       ),
-                      Text("Create new"),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               )
             ],
           )
         ],
+      ),
+    );
+  }
+
+  Container buildHeaderComidas(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: 10),
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Collection",
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            Text("Create new"),
+          ],
+        ),
       ),
     );
   }
