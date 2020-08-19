@@ -24,18 +24,39 @@ class PaginaAutos extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Text("VW"),
-              Text("Gol"),
-              Image.network(
-                  "https://acs2.blob.core.windows.net/imgcatalogo/m/VA_674e942d8f56473bafccf1184a89712c.jpg"),
-              Text("VW"),
-              Text("Gol"),
-              Image.network(
-                  "https://acs2.blob.core.windows.net/imgcatalogo/m/VA_674e942d8f56473bafccf1184a89712c.jpg"),
-              Text("VW"),
-              Text("Gol"),
-              Image.network(
-                  "https://acs2.blob.core.windows.net/imgcatalogo/m/VA_674e942d8f56473bafccf1184a89712c.jpg"),
+              Container(
+                margin: EdgeInsets.only(bottom: 20),
+                child: Column(
+                  children: [
+                    Text("VW"),
+                    Text("Gol"),
+                    Image.network(
+                        "https://acs2.blob.core.windows.net/imgcatalogo/m/VA_674e942d8f56473bafccf1184a89712c.jpg"),
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(bottom: 20),
+                child: Column(
+                  children: [
+                    Text("VW"),
+                    Text("Gol"),
+                    Image.network(
+                        "https://acs2.blob.core.windows.net/imgcatalogo/m/VA_674e942d8f56473bafccf1184a89712c.jpg"),
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(bottom: 20),
+                child: Column(
+                  children: [
+                    Text("VW"),
+                    Text("Gol"),
+                    Image.network(
+                        "https://acs2.blob.core.windows.net/imgcatalogo/m/VA_674e942d8f56473bafccf1184a89712c.jpg"),
+                  ],
+                ),
+              )
             ],
           ),
         ),
