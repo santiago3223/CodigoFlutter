@@ -21,33 +21,101 @@ class PaginaPerfil extends StatelessWidget {
                 gradient: LinearGradient(
                     colors: [Colors.indigo.shade300, Colors.indigo.shade700])),
           ),
-          Column(
-            children: [
-              buildHeader(context),
-              buildHeaderComidas(context),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    Container(
-                      width: 150,
-                      height: 200,
-                      color: Colors.red,
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Image.network(
-                                "https://firebasestorage.googleapis.com/v0/b/dl-flutter-ui-challenges.appspot.com/o/food%2Fmeal.jpg?alt=media",
-                                fit: BoxFit.cover),
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                buildHeader(context),
+                buildHeaderComidas(context),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 5, right: 5),
+                    child: Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(left: 10, right: 10),
+                          width: 150,
+                          height: 200,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(5),
+                                  child: Image.network(
+                                      "https://firebasestorage.googleapis.com/v0/b/dl-flutter-ui-challenges.appspot.com/o/food%2Fmeal.jpg?alt=media",
+                                      fit: BoxFit.cover),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "Food joint",
+                                style:
+                                    TextStyle(color: Colors.grey, fontSize: 16),
+                              ),
+                            ],
                           ),
-                          Text("Food joint"),
-                        ],
-                      ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 10, right: 10),
+                          width: 150,
+                          height: 200,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(5),
+                                  child: Image.network(
+                                      "https://firebasestorage.googleapis.com/v0/b/dl-flutter-ui-challenges.appspot.com/o/food%2Fmeal.jpg?alt=media",
+                                      fit: BoxFit.cover),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "Food joint",
+                                style:
+                                    TextStyle(color: Colors.grey, fontSize: 16),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 10, right: 10),
+                          width: 150,
+                          height: 200,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(5),
+                                  child: Image.network(
+                                      "https://firebasestorage.googleapis.com/v0/b/dl-flutter-ui-challenges.appspot.com/o/food%2Fmeal.jpg?alt=media",
+                                      fit: BoxFit.cover),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "Food joint",
+                                style:
+                                    TextStyle(color: Colors.grey, fontSize: 16),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              )
-            ],
+                  ),
+                )
+              ],
+            ),
           )
         ],
       ),
