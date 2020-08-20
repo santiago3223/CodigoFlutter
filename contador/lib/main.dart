@@ -13,6 +13,21 @@ class PaginaPerfil2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.notifications),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () {},
+          ),
+        ],
+      ),
       body: Stack(
         children: [
           Container(
@@ -26,6 +41,9 @@ class PaginaPerfil2 extends StatelessWidget {
               ], begin: Alignment.topLeft, end: Alignment.bottomRight),
             ),
             height: 350,
+          ),
+          Column(
+            children: [Text("Date mate")],
           )
         ],
       ),
