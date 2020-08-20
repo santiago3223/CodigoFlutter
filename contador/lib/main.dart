@@ -42,8 +42,29 @@ class PaginaPerfil2 extends StatelessWidget {
             ),
             height: 350,
           ),
-          Column(
-            children: [Text("Date mate")],
+          Container(
+            margin: EdgeInsets.only(top: 80),
+            child: Column(
+              children: [
+                Text(
+                  "Date mate",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontStyle: FontStyle.italic),
+                ),
+                Container(
+                  height: 230,
+                  margin: EdgeInsets.only(left: 30, right: 30, top: 30),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(30),
+                    child: Image.network(
+                        "https://firebasestorage.googleapis.com/v0/b/dl-flutter-ui-challenges.appspot.com/o/food%2Fmeal.jpg?alt=media",
+                        fit: BoxFit.cover),
+                  ),
+                ),
+              ],
+            ),
           )
         ],
       ),
