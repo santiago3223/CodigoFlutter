@@ -93,7 +93,18 @@ class PaginaTabs extends StatelessWidget {
             ListView.builder(
                 itemCount: titulos.length,
                 itemBuilder: (context, index) {
-                  return Text(titulos[index]);
+                  return Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Container(
+                      color: Colors.white,
+                      child: Column(
+                        children: [
+                          Text(titulos[index]),
+                        ],
+                      ),
+                    ),
+                  );
                 }),
             Text("Tab2"),
             Text("Tab3"),
