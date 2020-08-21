@@ -98,9 +98,39 @@ class PaginaTabs extends StatelessWidget {
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     child: Container(
                       color: Colors.white,
-                      child: Column(
+                      child: Row(
                         children: [
-                          Text(titulos[index]),
+                          Container(
+                            height: 90,
+                            width: 80,
+                            child: Image.network(
+                              "https://firebasestorage.googleapis.com/v0/b/dl-flutter-ui-challenges.appspot.com/o/food%2Fmeal.jpg?alt=media",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Text(
+                                  titulos[index],
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text.rich(TextSpan(children: [
+                                  TextSpan(
+                                      text: "Jhon Vino",
+                                      style: TextStyle(fontSize: 16)),
+                                  TextSpan(
+                                    text: "4 min read ",
+                                  )
+                                ])),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
