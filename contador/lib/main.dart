@@ -174,6 +174,31 @@ class PaginaTabs extends StatelessWidget {
             Text("Tab5"),
             Text("Tab6"),
           ]),
+          bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            items: [
+              BottomNavigationBarItem(
+                title: Text(""),
+                icon: Icon(Icons.home),
+              ),
+              BottomNavigationBarItem(
+                title: Text(""),
+                icon: Icon(Icons.folder),
+              ),
+              BottomNavigationBarItem(
+                title: Text(""),
+                icon: Icon(Icons.favorite),
+              ),
+              BottomNavigationBarItem(
+                title: Text(""),
+                icon: Icon(Icons.portrait),
+              ),
+              BottomNavigationBarItem(
+                title: Text(""),
+                icon: Icon(Icons.settings),
+              ),
+            ],
+          ),
         ),
       ),
     );
