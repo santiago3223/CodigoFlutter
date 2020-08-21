@@ -96,43 +96,57 @@ class PaginaTabs extends StatelessWidget {
                   return Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: Container(
-                      color: Colors.white,
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 90,
-                            width: 80,
-                            child: Image.network(
-                              "https://firebasestorage.googleapis.com/v0/b/dl-flutter-ui-challenges.appspot.com/o/food%2Fmeal.jpg?alt=media",
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Expanded(
-                            child: Column(
+                    child: Stack(
+                      children: [
+                        Container(
+                          width: 90,
+                          height: 90,
+                          color: Colors.pink.shade100,
+                        ),
+                        Container(
+                          margin: EdgeInsets.all(16),
+                          padding: EdgeInsets.all(16),
+                          color: Colors.white,
+                          child: Container(
+                            color: Colors.white,
+                            child: Row(
                               children: [
-                                Text(
-                                  titulos[index],
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
+                                Container(
+                                  height: 90,
+                                  width: 80,
+                                  child: Image.network(
+                                    "https://firebasestorage.googleapis.com/v0/b/dl-flutter-ui-challenges.appspot.com/o/food%2Fmeal.jpg?alt=media",
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                                Text.rich(TextSpan(children: [
-                                  TextSpan(
-                                      text: "Jhon Vino",
-                                      style: TextStyle(fontSize: 16)),
-                                  TextSpan(
-                                    text: "4 min read ",
-                                  )
-                                ])),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        titulos[index],
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text.rich(TextSpan(children: [
+                                        TextSpan(
+                                            text: "Jhon Vino",
+                                            style: TextStyle(fontSize: 16)),
+                                        TextSpan(
+                                          text: "4 min read ",
+                                        )
+                                      ])),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   );
                 }),
