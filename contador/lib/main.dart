@@ -6,199 +6,59 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: PaginaTabs());
+    return MaterialApp(home: Login());
   }
 }
 
-class PaginaTabs extends StatelessWidget {
-  final List<String> titulos = [
-    "How to seem like you always have your shot together",
-    "Does Dry is January Actually improve your health",
-    "Yo do hire a designer to make something. Yuo hire them"
-  ];
-
+class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData(
-        appBarTheme: AppBarTheme(
-            color: Colors.white,
-            textTheme: TextTheme(
-              headline6: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
-            ),
-            iconTheme: IconThemeData(color: Colors.black)),
-      ),
-      child: DefaultTabController(
-        length: 6,
-        child: Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            title: Text("Categories"),
-            leading: Icon(Icons.category),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.search),
-                onPressed: () {},
-              )
-            ],
-            bottom: TabBar(
-              isScrollable: true,
-              labelColor: Colors.pink,
-              indicatorColor: Colors.pink,
-              unselectedLabelColor: Colors.black,
-              tabs: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Tab1",
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Tab1",
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Tab1",
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Tab1",
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Tab1",
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Tab1",
-                  ),
-                ),
-              ],
-            ),
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage(
+                "https://firebasestorage.googleapis.com/v0/b/dl-flutter-ui-challenges.appspot.com/o/bike%2Fbike1.jpg?alt=media"),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.5), BlendMode.srcOver),
           ),
-          body: TabBarView(children: [
-            ListView.builder(
-                itemCount: titulos.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: Container(
-                      color: Colors.white,
-                      child: Stack(
-                        children: [
-                          Container(
-                            width: 90,
-                            height: 90,
-                            color: Colors.pink.shade50,
-                          ),
-                          Container(
-                            margin: EdgeInsets.all(16),
-                            padding: EdgeInsets.all(16),
-                            color: Colors.white,
-                            child: Container(
-                              color: Colors.white,
-                              child: Row(
-                                children: [
-                                  Container(
-                                    height: 90,
-                                    width: 80,
-                                    child: Image.network(
-                                      "https://firebasestorage.googleapis.com/v0/b/dl-flutter-ui-challenges.appspot.com/o/food%2Fmeal.jpg?alt=media",
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          titulos[index],
-                                          textAlign: TextAlign.justify,
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text.rich(TextSpan(children: [
-                                          WidgetSpan(
-                                              child: CircleAvatar(
-                                            backgroundColor:
-                                                Colors.pink.shade300,
-                                            radius: 15,
-                                          )),
-                                          WidgetSpan(
-                                              child: SizedBox(
-                                            width: 5,
-                                          )),
-                                          TextSpan(
-                                              text: "Jhon Vino",
-                                              style: TextStyle(fontSize: 16)),
-                                          WidgetSpan(
-                                              child: SizedBox(
-                                            width: 15,
-                                          )),
-                                          TextSpan(
-                                            text: "4 min read ",
-                                          )
-                                        ])),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                }),
-            Text("Tab2"),
-            Text("Tab3"),
-            Text("Tab4"),
-            Text("Tab5"),
-            Text("Tab6"),
-          ]),
-          bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            items: [
-              BottomNavigationBarItem(
-                title: Text(""),
-                icon: Icon(Icons.home),
+        ),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 100,
+            ),
+            Text(
+              "Bienvenido",
+              style: TextStyle(color: Colors.white, fontSize: 28),
+            ),
+            Text(
+              "Inicia Sesión para continuar",
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+            TextField(
+              style: TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                hintText: "Username",
+                hintStyle: TextStyle(color: Colors.white),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
               ),
-              BottomNavigationBarItem(
-                title: Text(""),
-                icon: Icon(Icons.folder),
+            ),
+            TextField(
+              obscureText: true,
+              style: TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                hintText: "Password",
+                hintStyle: TextStyle(color: Colors.white),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
               ),
-              BottomNavigationBarItem(
-                title: Text(""),
-                icon: Icon(Icons.favorite),
-              ),
-              BottomNavigationBarItem(
-                title: Text(""),
-                icon: Icon(Icons.portrait),
-              ),
-              BottomNavigationBarItem(
-                title: Text(""),
-                icon: Icon(Icons.settings),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
