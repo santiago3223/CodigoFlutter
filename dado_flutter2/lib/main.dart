@@ -22,8 +22,14 @@ class PaginaDado extends StatefulWidget {
 }
 
 class _PaginaDadoState extends State<PaginaDado> {
-  List<int> _numerosDados = [];
-  int _cantidadDados = 3;
+  List<int> _numerosDados = [1];
+  int _cantidadDados = 1;
+
+  void _refrescarDados() {
+    for (int i = 0; i < _numerosDados.length; i++) {
+      _numerosDados[i] = 1 + Random().nextInt(6);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +47,11 @@ class _PaginaDadoState extends State<PaginaDado> {
                   RaisedButton(
                     onPressed: () {
                       setState(() {
-                        if (_cantidadDados > 1) _cantidadDados--;
+                        if (_cantidadDados > 1) {
+                          _cantidadDados--;
+                          _numerosDados.removeLast();
+                          _refrescarDados();
+                        }
                       });
                     },
                     child: Text("Quitar"),
@@ -50,6 +60,8 @@ class _PaginaDadoState extends State<PaginaDado> {
                     onPressed: () {
                       setState(() {
                         _cantidadDados++;
+                        _numerosDados.add(1);
+                        _refrescarDados();
                       });
                     },
                     child: Text("Agregar"),
@@ -60,8 +72,7 @@ class _PaginaDadoState extends State<PaginaDado> {
                 child: FlatButton(
                   onPressed: () {
                     setState(() {
-                      //_numeroDado = 1 + Random().nextInt(6);
-                      //_numeroDado2 = 1 + Random().nextInt(6);
+                      _refrescarDados();
                     });
                   },
                   child: GridView.builder(
@@ -72,7 +83,8 @@ class _PaginaDadoState extends State<PaginaDado> {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Image(
-                          image: AssetImage("assets/images/dice1.png"),
+                          image: AssetImage(
+                              "assets/images/dice${_numerosDados[index]}.png"),
                         ),
                       );
                     },
