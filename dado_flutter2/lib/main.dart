@@ -47,7 +47,7 @@ class _PaginaDadoState extends State<PaginaDado> {
                   RaisedButton(
                     onPressed: () {
                       setState(() {
-                        if (_cantidadDados > 1) {
+                        if (_cantidadDados > 0) {
                           _cantidadDados--;
                           _numerosDados.removeLast();
                           _refrescarDados();
