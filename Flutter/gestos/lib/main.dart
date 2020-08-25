@@ -28,8 +28,8 @@ class _DetectorGestosState extends State<DetectorGestos> {
   int _contador = 0;
   int _contador2 = 0;
   int _contador3 = 0;
-  int _contador4 = 0;
-  bool _scollingVertically = false;
+  Offset _offsetVertical = Offset.zero;
+  bool _scrollingVertically = false;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -73,18 +73,26 @@ class _DetectorGestosState extends State<DetectorGestos> {
         GestureDetector(
           onVerticalDragStart: (details) {
             setState(() {
-              _scollingVertically = true;
+              _scrollingVertically = true;
             });
           },
           onVerticalDragEnd: (details) {
             setState(() {
-              _scollingVertically = false;
+              _scrollingVertically = false;
+            });
+          },
+          onVerticalDragUpdate: (details) {
+            setState(() {
+              _offsetVertical += details.delta;
             });
           },
           child: Container(
-            height: 100,
+            height: 200,
             color: Colors.grey,
-            child: Text(_scollingVertically ? "Drag" : "Stop"),
+            child: Center(
+                child: Transform.translate(
+                    offset: _offsetVertical,
+                    child: Text(_scrollingVertically ? "Drag" : "Stop"))),
           ),
         ),
       ],
