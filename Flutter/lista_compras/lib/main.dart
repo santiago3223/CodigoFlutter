@@ -30,7 +30,7 @@ class _ListaComprasState extends State<ListaCompras> {
     return valor == 0 ? 'Se requiere al menos 1 unidad' : null;
   }
 
-  void _verificarYAgregarOrden() {}
+  String _verificarYAgregarOrden() {}
 
   @override
   Widget build(BuildContext context) {
