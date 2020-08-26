@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,88 +15,101 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: DetectorGestos(),
+      home: DemoInputs(),
     );
   }
 }
 
-class DetectorGestos extends StatefulWidget {
+class DemoInputs extends StatefulWidget {
   @override
-  _DetectorGestosState createState() => _DetectorGestosState();
+  _DemoInputsState createState() => _DemoInputsState();
 }
 
-class _DetectorGestosState extends State<DetectorGestos> {
-  int _contador = 0;
-  int _contador2 = 0;
-  int _contador3 = 0;
-  Offset _offsetVertical = Offset.zero;
-  bool _scrollingVertically = false;
+class _DemoInputsState extends State<DemoInputs> {
+  String texto = "";
+  TextEditingController _controller = TextEditingController();
+
+  void cambioValorTexto() {
+    print(_controller.text);
+    setState(() {
+      texto = _controller.text;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(cambioValorTexto);
+    print("Creando widget");
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(cambioValorTexto);
+    print("Murio widget");
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              _contador++;
-            });
-          },
-          child: Container(
-            height: 100,
-            color: Colors.grey,
-            child: Text("$_contador"),
+    print("volviendo a dibujar");
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  inputFormatters: [
+                    TextInputFormatter.withFunction(
+                      (oldValue, newValue) {
+                        return newValue.copyWith(
+                            text: newValue.text.toUpperCase());
+                      },
+                    ),
+                  ],
+                  maxLength: 10,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.ac_unit),
+                    labelText: "Ingrese texto",
+                    hintText: "Ingrese su texto a invertir",
+                    helperText: "Esta es una ayuda",
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
+                  ),
+                  keyboardType: TextInputType.name,
+                  onChanged: (v) {
+                    print("cambio $v");
+                  },
+                  onEditingComplete: () {
+                    print("termino de editarse");
+                  },
+                  onSubmitted: (v) {
+                    print("envio $v");
+                  },
+                  controller: _controller,
+                ),
+              ),
+              RaisedButton(
+                child: Text("Prueba"),
+                onPressed: () {},
+              )
+            ],
           ),
-        ),
-        GestureDetector(
-          onDoubleTap: () {
-            setState(() {
-              _contador2++;
-            });
-          },
-          child: Container(
-            height: 100,
-            color: Colors.grey,
-            child: Text("$_contador2"),
-          ),
-        ),
-        GestureDetector(
-          onLongPress: () {
-            setState(() {
-              _contador3++;
-            });
-          },
-          child: Container(
-            height: 100,
-            color: Colors.grey,
-            child: Text("$_contador3"),
-          ),
-        ),
-        GestureDetector(
-          onVerticalDragStart: (details) {
-            setState(() {
-              _scrollingVertically = true;
-            });
-          },
-          onVerticalDragEnd: (details) {
-            setState(() {
-              _scrollingVertically = false;
-            });
-          },
-          onVerticalDragUpdate: (details) {
-            setState(() {
-              _offsetVertical += details.delta;
-            });
-          },
-          child: Container(
-            height: 200,
-            color: Colors.grey,
-            child: Center(
-                child: Transform.translate(
-                    offset: _offsetVertical,
-                    child: Text(_scrollingVertically ? "Drag" : "Stop"))),
-          ),
-        ),
-      ],
+          Text(texto.split('').reversed.join())
+        ],
+      ),
     );
   }
 }
