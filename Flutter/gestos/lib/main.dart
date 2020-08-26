@@ -28,6 +28,7 @@ class DemoInputs extends StatefulWidget {
 class _DemoInputsState extends State<DemoInputs> {
   String texto = "";
   int valorRadio = 0;
+  String valorDropdown = "";
   TextEditingController _controller = TextEditingController();
 
   void cambioValorTexto() {
@@ -63,6 +64,23 @@ class _DemoInputsState extends State<DemoInputs> {
           buildRadio(1),
           buildRadio(2),
           buildRadio(3),
+          DropdownButton(
+              value: valorDropdown,
+              items: [
+                DropdownMenuItem(
+                  value: "Manzana",
+                  child: Text("Manzana"),
+                ),
+                DropdownMenuItem(
+                  value: "Pera",
+                  child: Text("Pera"),
+                ),
+              ],
+              onChanged: (value) {
+                setState(() {
+                  valorDropdown = value;
+                });
+              })
         ],
       ),
     );
