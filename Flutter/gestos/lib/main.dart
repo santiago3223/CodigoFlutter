@@ -28,7 +28,7 @@ class DemoInputs extends StatefulWidget {
 class _DemoInputsState extends State<DemoInputs> {
   String texto = "";
   int valorRadio = 0;
-  String valorDropdown = "";
+  String valorDropdown = "Manzana";
   List<int> valoresCheckbox = [];
   TextEditingController _controller = TextEditingController();
 
@@ -66,6 +66,9 @@ class _DemoInputsState extends State<DemoInputs> {
           buildRadio(2),
           buildRadio(3),
           buildDropdownButton(),
+          TextField(
+            maxLines: 8,
+          ),
           Checkbox(
               value: valoresCheckbox.contains(1),
               onChanged: (selected) {
