@@ -19,6 +19,8 @@ class ListaCompras extends StatefulWidget {
 }
 
 class _ListaComprasState extends State<ListaCompras> {
+  GlobalKey<FormState> _formKey = GlobalKey();
+  List<ItemLista> items = [];
   String item = "";
   int cantidad = 0;
 
@@ -30,7 +32,17 @@ class _ListaComprasState extends State<ListaCompras> {
     return valor == 0 ? 'Se requiere al menos 1 unidad' : null;
   }
 
-  String _verificarYAgregarOrden() {}
+  void _verificarYAgregarOrden() {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+
+      ItemLista i = ItemLista(item: item, cantidad: cantidad);
+      setState(() {
+        items.insert(0, i);
+      });
+      _formKey.currentState.reset();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +53,7 @@ class _ListaComprasState extends State<ListaCompras> {
       body: Column(
         children: [
           Form(
+            key: _formKey,
             child: Column(
               children: [
                 TextFormField(
@@ -56,7 +69,29 @@ class _ListaComprasState extends State<ListaCompras> {
                 RaisedButton(onPressed: _verificarYAgregarOrden)
               ],
             ),
-          )
+          ),
+          Expanded(
+            child: Container(
+              child: ListView.builder(
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  return Dismissible(
+                    background: Container(color: Colors.red),
+                    key: Key(items[index].item),
+                    onDismissed: (dir) {
+                      setState(() {
+                        items.removeAt(index);
+                      });
+                    },
+                    child: ListTile(
+                      title: Text(items[index].item),
+                      subtitle: Text(items[index].cantidad.toString()),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -66,4 +101,6 @@ class _ListaComprasState extends State<ListaCompras> {
 class ItemLista {
   String item;
   int cantidad;
+
+  ItemLista({this.item, this.cantidad});
 }
