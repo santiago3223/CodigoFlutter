@@ -29,6 +29,7 @@ class _DemoInputsState extends State<DemoInputs> {
   String texto = "";
   int valorRadio = 0;
   String valorDropdown = "";
+  List<int> valoresCheckbox = [];
   TextEditingController _controller = TextEditingController();
 
   void cambioValorTexto() {
@@ -64,26 +65,52 @@ class _DemoInputsState extends State<DemoInputs> {
           buildRadio(1),
           buildRadio(2),
           buildRadio(3),
-          DropdownButton(
-              value: valorDropdown,
-              items: [
-                DropdownMenuItem(
-                  value: "Manzana",
-                  child: Text("Manzana"),
-                ),
-                DropdownMenuItem(
-                  value: "Pera",
-                  child: Text("Pera"),
-                ),
-              ],
-              onChanged: (value) {
+          buildDropdownButton(),
+          Checkbox(
+              value: valoresCheckbox.contains(1),
+              onChanged: (selected) {
                 setState(() {
-                  valorDropdown = value;
+                  if (selected) {
+                    valoresCheckbox.add(1);
+                  } else {
+                    valoresCheckbox.remove(1);
+                  }
+                });
+              }),
+          Checkbox(
+              value: valoresCheckbox.contains(2),
+              onChanged: (selected) {
+                setState(() {
+                  if (selected) {
+                    valoresCheckbox.add(2);
+                  } else {
+                    valoresCheckbox.remove(2);
+                  }
                 });
               })
         ],
       ),
     );
+  }
+
+  DropdownButton<String> buildDropdownButton() {
+    return DropdownButton(
+        value: valorDropdown,
+        items: [
+          DropdownMenuItem(
+            value: "Manzana",
+            child: Text("Manzana"),
+          ),
+          DropdownMenuItem(
+            value: "Pera",
+            child: Text("Pera"),
+          ),
+        ],
+        onChanged: (value) {
+          setState(() {
+            valorDropdown = value;
+          });
+        });
   }
 
   Radio<int> buildRadio(int value) {
