@@ -27,6 +27,7 @@ class DemoInputs extends StatefulWidget {
 
 class _DemoInputsState extends State<DemoInputs> {
   String texto = "";
+  int valorRadio = 0;
   TextEditingController _controller = TextEditingController();
 
   void cambioValorTexto() {
@@ -57,59 +58,76 @@ class _DemoInputsState extends State<DemoInputs> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  inputFormatters: [
-                    TextInputFormatter.withFunction(
-                      (oldValue, newValue) {
-                        return newValue.copyWith(
-                            text: newValue.text.toUpperCase());
-                      },
-                    ),
-                  ],
-                  maxLength: 10,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.ac_unit),
-                    labelText: "Ingrese texto",
-                    hintText: "Ingrese su texto a invertir",
-                    helperText: "Esta es una ayuda",
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15),
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15),
-                      ),
-                    ),
-                  ),
-                  keyboardType: TextInputType.name,
-                  onChanged: (v) {
-                    print("cambio $v");
-                  },
-                  onEditingComplete: () {
-                    print("termino de editarse");
-                  },
-                  onSubmitted: (v) {
-                    print("envio $v");
-                  },
-                  controller: _controller,
-                ),
-              ),
-              RaisedButton(
-                child: Text("Prueba"),
-                onPressed: () {},
-              )
-            ],
-          ),
-          Text(texto.split('').reversed.join())
+          buildTextInput(),
+          Text(texto.split('').reversed.join()),
+          buildRadio(1),
+          buildRadio(2),
+          buildRadio(3),
         ],
       ),
+    );
+  }
+
+  Radio<int> buildRadio(int value) {
+    return Radio(
+        value: value,
+        groupValue: valorRadio,
+        onChanged: (i) {
+          setState(() {
+            valorRadio = i;
+          });
+        });
+  }
+
+  Row buildTextInput() {
+    return Row(
+      children: [
+        Expanded(
+          child: TextField(
+            inputFormatters: [
+              TextInputFormatter.withFunction(
+                (oldValue, newValue) {
+                  return newValue.copyWith(text: newValue.text.toUpperCase());
+                },
+              ),
+            ],
+            maxLength: 10,
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.ac_unit),
+              labelText: "Ingrese texto",
+              hintText: "Ingrese su texto a invertir",
+              helperText: "Esta es una ayuda",
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.black),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.black),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+            ),
+            keyboardType: TextInputType.name,
+            onChanged: (v) {
+              print("cambio $v");
+            },
+            onEditingComplete: () {
+              print("termino de editarse");
+            },
+            onSubmitted: (v) {
+              print("envio $v");
+            },
+            controller: _controller,
+          ),
+        ),
+        RaisedButton(
+          child: Text("Prueba"),
+          onPressed: () {},
+        )
+      ],
     );
   }
 }
