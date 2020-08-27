@@ -27,13 +27,36 @@ class _MemoriaState extends State<Memoria> {
   double puntaje = 0;
   String primerValor = "";
   String segundoValor = "";
+  List<GlobalKey<FlipCardState>> cardKeys = [];
+
+  void verificarTarjetas() {
+    if (primerValor == segundoValor) {
+      print("Gano");
+    } else if (segundoValor != "") {
+      print("Perdio");
+      primerValor = "";
+      segundoValor = "";
+    }
+  }
+
+  void refrescarTarjetas() {
+    double cantidad = 10;
+    cardKeys = [
+      for (double i = 1; i <= cantidad; i += 0.5) GlobalKey<FlipCardState>()
+    ];
+    datos = [for (double i = 1; i <= cantidad; i += 0.5) i.floor().toString()];
+    datos.shuffle();
+    voltearTarjetas();
+  }
+
+  void voltearTarjetas() {
+    cardKeys.forEach((element) {
+      if (element.currentState != null) element.currentState.toggleCard();
+    });
+  }
 
   @override
   void initState() {
-    int cantidad = 10;
-    datos = [for (double i = 1; i <= cantidad; i += 0.5) i.floor().toString()];
-
-    datos.shuffle();
     super.initState();
   }
 
@@ -50,8 +73,15 @@ class _MemoriaState extends State<Memoria> {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3),
                 itemBuilder: (context, index) => FlipCard(
+                  key: cardKeys[index],
                   onFlipDone: (isFront) {
                     setState(() {
+                      if (primerValor == "") {
+                        primerValor = datos[index];
+                      } else {
+                        segundoValor = datos[index];
+                      }
+                      verificarTarjetas();
                       cantMovimientos += 0.5;
                     });
                   },
@@ -67,6 +97,11 @@ class _MemoriaState extends State<Memoria> {
             )
           ],
         ),
+        floatingActionButton: FloatingActionButton(onPressed: () {
+          setState(() {
+            refrescarTarjetas();
+          });
+        }),
       ),
     );
   }
