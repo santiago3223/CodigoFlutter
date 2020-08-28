@@ -54,6 +54,8 @@ class _MemoriaState extends State<Memoria> {
 
   void verificarTarjetas() {
     if (primerValor != segundoValor &&
+        primerValor != -1 &&
+        segundoValor != -1 &&
         tarjetas[primerValor].dato == tarjetas[segundoValor].dato) {
       tarjetas[primerValor].puedeVoltearse = false;
       tarjetas[segundoValor].puedeVoltearse = false;
@@ -136,15 +138,17 @@ class _MemoriaState extends State<Memoria> {
                     flipOnTouch: tarjetas[index].puedeVoltearse,
                     key: tarjetas[index].key,
                     onFlipDone: (isFront) {
-                      setState(() {
-                        if (primerValor == -1) {
-                          primerValor = index;
-                        } else {
-                          segundoValor = index;
-                        }
-                        verificarTarjetas();
-                        cantMovimientos += 0.5;
-                      });
+                      if (!isFront) {
+                        setState(() {
+                          if (primerValor == -1) {
+                            primerValor = index;
+                          } else {
+                            segundoValor = index;
+                          }
+                          verificarTarjetas();
+                          cantMovimientos += 0.5;
+                        });
+                      }
                     },
                     front: Container(
                         margin: EdgeInsets.all(8), color: Colors.orange),
