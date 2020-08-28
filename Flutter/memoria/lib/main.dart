@@ -28,30 +28,39 @@ class _MemoriaState extends State<Memoria> {
   String primerValor = "";
   String segundoValor = "";
   List<GlobalKey<FlipCardState>> cardKeys = [];
+  List<bool> tarjetasPuedenVoltear = [];
 
   void verificarTarjetas() {
     if (primerValor == segundoValor) {
+      tarjetasPuedenVoltear[datos.indexOf(primerValor)] = false;
+      tarjetasPuedenVoltear[datos.lastIndexOf(segundoValor)] = false;
       print("Gano");
     } else if (segundoValor != "") {
       print("Perdio");
       primerValor = "";
       segundoValor = "";
+      voltearTarjetas();
     }
   }
 
   void refrescarTarjetas() {
-    double cantidad = 10;
+    double cantidad = 3.5;
     cardKeys = [
       for (double i = 1; i <= cantidad; i += 0.5) GlobalKey<FlipCardState>()
     ];
+    tarjetasPuedenVoltear = [for (double i = 1; i <= cantidad; i += 0.5) true];
     datos = [for (double i = 1; i <= cantidad; i += 0.5) i.floor().toString()];
     datos.shuffle();
     voltearTarjetas();
   }
 
   void voltearTarjetas() {
+    int i = 0;
     cardKeys.forEach((element) {
-      if (element.currentState != null) element.currentState.toggleCard();
+      if (element.currentState != null &&
+          tarjetasPuedenVoltear[i] &&
+          !element.currentState.isFront) element.currentState.toggleCard();
+      i++;
     });
   }
 
