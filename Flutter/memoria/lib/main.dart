@@ -22,21 +22,24 @@ class Memoria extends StatefulWidget {
 }
 
 class _MemoriaState extends State<Memoria> {
-  List<String> datos = [];
+  List<Tarjeta> tarjetas = [];
+  int cantidadTarjetas = 10;
   double cantMovimientos = 0;
   double puntaje = 0;
   String primerValor = "";
   String segundoValor = "";
-  List<GlobalKey<FlipCardState>> cardKeys = [];
-  List<bool> tarjetasPuedenVoltear = [];
 
   void verificarTarjetas() {
     if (primerValor == segundoValor) {
-      tarjetasPuedenVoltear[datos.indexOf(primerValor)] = false;
-      tarjetasPuedenVoltear[datos.lastIndexOf(segundoValor)] = false;
-      print("Gano");
+      tarjetas
+          .firstWhere((element) => element.dato == primerValor)
+          .puedeVoltearse = false;
+      tarjetas
+          .lastWhere((element) => element.dato == primerValor)
+          .puedeVoltearse = false;
+      primerValor = "";
+      segundoValor = "";
     } else if (segundoValor != "") {
-      print("Perdio");
       primerValor = "";
       segundoValor = "";
       voltearTarjetas();
@@ -44,23 +47,19 @@ class _MemoriaState extends State<Memoria> {
   }
 
   void refrescarTarjetas() {
-    double cantidad = 3.5;
-    cardKeys = [
-      for (double i = 1; i <= cantidad; i += 0.5) GlobalKey<FlipCardState>()
+    tarjetas = [
+      for (double i = 1; i <= cantidadTarjetas; i += 1)
+        Tarjeta((i / 2).floor().toString())
     ];
-    tarjetasPuedenVoltear = [for (double i = 1; i <= cantidad; i += 0.5) true];
-    datos = [for (double i = 1; i <= cantidad; i += 0.5) i.floor().toString()];
-    datos.shuffle();
+    tarjetas.shuffle();
+    primerValor = "";
+    segundoValor = "";
     voltearTarjetas();
   }
 
   void voltearTarjetas() {
-    int i = 0;
-    cardKeys.forEach((element) {
-      if (element.currentState != null &&
-          tarjetasPuedenVoltear[i] &&
-          !element.currentState.isFront) element.currentState.toggleCard();
-      i++;
+    tarjetas.forEach((element) {
+      element.voltearTarjeta();
     });
   }
 
@@ -75,20 +74,28 @@ class _MemoriaState extends State<Memoria> {
       child: Scaffold(
         body: Column(
           children: [
+            TextField(
+              decoration: InputDecoration(hintText: "Cantidad de tarjetas"),
+              onChanged: (value) {
+                setState(() {
+                  cantidadTarjetas = int.tryParse(value);
+                });
+              },
+            ),
             Text(cantMovimientos.floor().toString()),
             Expanded(
               child: GridView.builder(
-                itemCount: datos.length,
+                itemCount: tarjetas.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3),
                 itemBuilder: (context, index) => FlipCard(
-                  key: cardKeys[index],
+                  key: tarjetas[index].key,
                   onFlipDone: (isFront) {
                     setState(() {
                       if (primerValor == "") {
-                        primerValor = datos[index];
+                        primerValor = tarjetas[index].dato;
                       } else {
-                        segundoValor = datos[index];
+                        segundoValor = tarjetas[index].dato;
                       }
                       verificarTarjetas();
                       cantMovimientos += 0.5;
@@ -99,19 +106,41 @@ class _MemoriaState extends State<Memoria> {
                   back: Container(
                     margin: EdgeInsets.all(8),
                     color: Colors.orange.shade200,
-                    child: Center(child: Text(datos[index])),
+                    child: Center(child: Text(tarjetas[index].dato)),
                   ),
                 ),
               ),
             )
           ],
         ),
-        floatingActionButton: FloatingActionButton(onPressed: () {
-          setState(() {
-            refrescarTarjetas();
-          });
-        }),
+        floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.refresh),
+            onPressed: () {
+              setState(() {
+                refrescarTarjetas();
+              });
+            }),
       ),
     );
+  }
+}
+
+class Tarjeta {
+  GlobalKey<FlipCardState> key;
+  String dato;
+  bool puedeVoltearse;
+
+  Tarjeta(String dato) {
+    this.dato = dato;
+    puedeVoltearse = true;
+    key = GlobalKey<FlipCardState>();
+  }
+
+  void voltearTarjeta() {
+    if (puedeVoltearse &&
+        key.currentState != null &&
+        !key.currentState.isFront) {
+      key.currentState.toggleCard();
+    }
   }
 }
