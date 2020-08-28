@@ -67,7 +67,8 @@ class _MemoriaState extends State<Memoria> {
 
     if (tarjetas.every((element) => !element.puedeVoltearse)) {
       Toast.show("Ganamos", context,
-          duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+      timer.cancel();
     }
   }
 
