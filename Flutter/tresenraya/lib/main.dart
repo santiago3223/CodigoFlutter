@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 
@@ -93,14 +95,56 @@ class _TresEnRayaState extends State<TresEnRaya> {
   void _jugarMaquina() {
     if (!_dosjugadores) {
       if (!_turno) {
-        for (int j = 0; j < jugadas.length; j++) {
-          if (jugadas[j] == "") {
-            tarjetas[j].currentState.toggleCard();
-            break;
+        int inicioh = _obtenerJugadaHorizontal();
+        int iniciov = _obtenerJugadaVertical();
+        print(iniciov);
+        if (iniciov >= 0) {
+          for (int j = iniciov; j < 3; j++) {
+            for (int i = 0; i < 3; i++) {
+              if (jugadas[i * 3 + j] == "") {
+                tarjetas[i * 3 + j].currentState.toggleCard();
+                return;
+              }
+            }
+          }
+        } else {
+          for (int j = inicioh; j < jugadas.length; j++) {
+            if (jugadas[j] == "") {
+              tarjetas[j].currentState.toggleCard();
+              return;
+            }
           }
         }
       }
     }
+  }
+
+  int _obtenerJugadaVertical() {
+    int jugadasPorFila = 0;
+    for (int j = 0; j < 3; j++) {
+      jugadasPorFila = 0;
+      for (int i = 0; i < 3; i++) {
+        if (jugadas[i * 3 + j] == "X") jugadasPorFila++;
+      }
+      if (jugadasPorFila == 2) {
+        return j;
+      }
+    }
+    return -1;
+  }
+
+  int _obtenerJugadaHorizontal() {
+    int jugadasPorFila = 0;
+    for (int j = 0; j < 3; j++) {
+      jugadasPorFila = 0;
+      for (int i = 0; i < 3; i++) {
+        if (jugadas[j * 3 + i] == "X") jugadasPorFila++;
+      }
+      if (jugadasPorFila == 2) {
+        return j * 3;
+      }
+    }
+    return 0;
   }
 
   bool _hayGanador() {
