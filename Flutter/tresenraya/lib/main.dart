@@ -23,6 +23,7 @@ class TresEnRaya extends StatefulWidget {
 
 class _TresEnRayaState extends State<TresEnRaya> {
   bool _turno = true; // true: X  , false: O
+  bool _dosjugadores = true;
   List<String> jugadas = [];
   List<GlobalKey<FlipCardState>> tarjetas = [];
 
@@ -63,15 +64,63 @@ class _TresEnRayaState extends State<TresEnRaya> {
     _voltearTarjetas();
   }
 
-  void _jugar(int i) {
+  _mostrarGanador(BuildContext context, String ganador) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Ganador: $ganador"),
+          );
+        });
+  }
+
+  void _jugar(int i, BuildContext context) {
     setState(() {
       if (_turno) {
         jugadas[i] = "X";
       } else {
         jugadas[i] = "O";
       }
+
+      if (_hayGanador()) {
+        print("Gano ${_turno ? 'X' : 'O'}");
+        _mostrarGanador(context, _turno ? 'X' : 'O');
+      }
       _turno = !_turno;
     });
+  }
+
+  bool _hayGanador() {
+    String resp = "O";
+    if (_turno) {
+      resp = "X";
+    }
+
+    if ((jugadas[0] == resp) && (jugadas[1] == resp) && (jugadas[2] == resp)) {
+      return true;
+    }
+    if ((jugadas[3] == resp) && (jugadas[4] == resp) && (jugadas[5] == resp)) {
+      return true;
+    }
+    if ((jugadas[6] == resp) && (jugadas[7] == resp) && (jugadas[8] == resp)) {
+      return true;
+    }
+    if ((jugadas[0] == resp) && (jugadas[3] == resp) && (jugadas[6] == resp)) {
+      return true;
+    }
+    if ((jugadas[1] == resp) && (jugadas[4] == resp) && (jugadas[7] == resp)) {
+      return true;
+    }
+    if ((jugadas[2] == resp) && (jugadas[5] == resp) && (jugadas[8] == resp)) {
+      return true;
+    }
+    if ((jugadas[0] == resp) && (jugadas[4] == resp) && (jugadas[8] == resp)) {
+      return true;
+    }
+    if ((jugadas[2] == resp) && (jugadas[4] == resp) && (jugadas[6] == resp)) {
+      return true;
+    }
+    return false;
   }
 
   @override
@@ -80,29 +129,54 @@ class _TresEnRayaState extends State<TresEnRaya> {
       appBar: AppBar(
         title: Text("Tres en raya"),
       ),
-      body: GridView.builder(
-        itemCount: 9,
-        gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-        itemBuilder: (context, index) => Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: FlipCard(
-            key: tarjetas[index],
-            flipOnTouch: jugadas[index] == "",
-            onFlip: () {
-              if (tarjetas[index].currentState.isFront) {
-                _jugar(index);
-              }
-            },
-            front: Container(
-              color: Colors.amber,
-            ),
-            back: Container(
-              color: Colors.amber,
-              child: Center(child: Text(jugadas[index])),
+      body: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("1 Jugador"),
+              Switch(
+                value: _dosjugadores,
+                onChanged: (value) {
+                  setState(() {
+                    _dosjugadores = value;
+                  });
+                },
+              ),
+              Text("2 Jugadores"),
+            ],
+          ),
+          Text(
+            "Tuno de : ${_turno ? 'X' : 'O'}",
+            style: TextStyle(fontSize: 20),
+          ),
+          Expanded(
+            child: GridView.builder(
+              itemCount: 9,
+              gridDelegate:
+                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+              itemBuilder: (context, index) => Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: FlipCard(
+                  key: tarjetas[index],
+                  flipOnTouch: jugadas[index] == "",
+                  onFlip: () {
+                    if (tarjetas[index].currentState.isFront) {
+                      _jugar(index, context);
+                    }
+                  },
+                  front: Container(
+                    color: Colors.amber,
+                  ),
+                  back: Container(
+                    color: Colors.amber,
+                    child: Center(child: Text(jugadas[index])),
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
