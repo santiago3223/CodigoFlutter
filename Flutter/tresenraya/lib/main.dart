@@ -90,6 +90,19 @@ class _TresEnRayaState extends State<TresEnRaya> {
     });
   }
 
+  void _jugarMaquina() {
+    if (!_dosjugadores) {
+      if (!_turno) {
+        for (int j = 0; j < jugadas.length; j++) {
+          if (jugadas[j] == "") {
+            tarjetas[j].currentState.toggleCard();
+            break;
+          }
+        }
+      }
+    }
+  }
+
   bool _hayGanador() {
     String resp = "O";
     if (_turno) {
@@ -160,6 +173,9 @@ class _TresEnRayaState extends State<TresEnRaya> {
                 child: FlipCard(
                   key: tarjetas[index],
                   flipOnTouch: jugadas[index] == "",
+                  onFlipDone: (isFront) {
+                    _jugarMaquina();
+                  },
                   onFlip: () {
                     if (tarjetas[index].currentState.isFront) {
                       _jugar(index, context);
