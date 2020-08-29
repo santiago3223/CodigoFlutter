@@ -25,6 +25,7 @@ class TresEnRaya extends StatefulWidget {
 
 class _TresEnRayaState extends State<TresEnRaya> {
   bool _turno = true; // true: X  , false: O
+  bool _singanador = true;
   bool _dosjugadores = true;
   List<String> jugadas = [];
   List<GlobalKey<FlipCardState>> tarjetas = [];
@@ -60,6 +61,7 @@ class _TresEnRayaState extends State<TresEnRaya> {
         "",
         "",
       ];
+      _singanador = true;
       _turno = true;
     });
 
@@ -87,6 +89,7 @@ class _TresEnRayaState extends State<TresEnRaya> {
       if (_hayGanador()) {
         print("Gano ${_turno ? 'X' : 'O'}");
         _mostrarGanador(context, _turno ? 'X' : 'O');
+        _singanador = false;
       }
       _turno = !_turno;
     });
@@ -97,7 +100,6 @@ class _TresEnRayaState extends State<TresEnRaya> {
       if (!_turno) {
         int inicioh = _obtenerJugadaHorizontal();
         int iniciov = _obtenerJugadaVertical();
-        print(iniciov);
         if (iniciov >= 0) {
           for (int j = iniciov; j < 3; j++) {
             for (int i = 0; i < 3; i++) {
@@ -216,7 +218,7 @@ class _TresEnRayaState extends State<TresEnRaya> {
                 padding: const EdgeInsets.all(8.0),
                 child: FlipCard(
                   key: tarjetas[index],
-                  flipOnTouch: jugadas[index] == "",
+                  flipOnTouch: jugadas[index] == "" && _singanador,
                   onFlipDone: (isFront) {
                     _jugarMaquina();
                   },
