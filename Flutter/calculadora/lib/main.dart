@@ -21,6 +21,7 @@ class Calculadora extends StatefulWidget {
 
 class _CalculadoraState extends State<Calculadora> {
   String _display = "0";
+  List<String> _historial = [];
   double num1 = null;
   String operador = "";
 
@@ -45,7 +46,24 @@ class _CalculadoraState extends State<Calculadora> {
   void _ingresarOperador(String op) {
     num1 = double.tryParse(_display);
     operador = op;
+    _historial.add(num1.toString() + " " + op);
     _limpiarDisplay();
+  }
+
+  void _obtenerResultado() {
+    double num2 = double.tryParse(_display);
+    setState(() {
+      if (operador == "+") {
+        _display = (num1 + num2).toString();
+      } else if (operador == "-") {
+        _display = (num1 - num2).toString();
+      } else if (operador == "*") {
+        _display = (num1 * num2).toString();
+      } else if (operador == "/") {
+        _display = (num1 / num2).toString();
+      }
+      _historial.last += " $num2 = " + _display;
+    });
   }
 
   @override
@@ -58,16 +76,16 @@ class _CalculadoraState extends State<Calculadora> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
-              child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              num1 != null ? num1.toString() + operador : "",
-              textAlign: TextAlign.right,
-              style: TextStyle(
-                fontSize: 20,
+            child: Container(
+              child: ListView.builder(
+                itemCount: _historial.length,
+                itemBuilder: (context, index) => Text(
+                  _historial[index],
+                  textAlign: TextAlign.right,
+                ),
               ),
             ),
-          )),
+          ),
           Expanded(
               child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -85,8 +103,12 @@ class _CalculadoraState extends State<Calculadora> {
               children: [
                 Expanded(
                   child: RaisedButton(
-                    onPressed: () {},
-                    child: Text(""),
+                    onPressed: () {
+                      setState(() {
+                        _display = _display.substring(0, _display.length - 1);
+                      });
+                    },
+                    child: Icon(Icons.backspace),
                   ),
                 ),
                 Expanded(
@@ -255,7 +277,9 @@ class _CalculadoraState extends State<Calculadora> {
                 ),
                 Expanded(
                   child: RaisedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      _obtenerResultado();
+                    },
                     child: Text("="),
                   ),
                 ),
