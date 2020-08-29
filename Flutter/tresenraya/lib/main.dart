@@ -232,7 +232,19 @@ class _TresEnRayaState extends State<TresEnRaya> {
                   ),
                   back: Container(
                     color: Colors.amber,
-                    child: Center(child: Text(jugadas[index])),
+                    child: Center(
+                      child: jugadas[index] == "O"
+                          ? Icon(
+                              Icons.radio_button_unchecked,
+                              size: 40,
+                            )
+                          : jugadas[index] == "X"
+                              ? Icon(
+                                  Icons.close,
+                                  size: 40,
+                                )
+                              : Text(""),
+                    ),
                   ),
                 ),
               ),
