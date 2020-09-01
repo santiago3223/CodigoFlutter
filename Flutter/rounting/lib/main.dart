@@ -61,8 +61,8 @@ class _PrimeraPaginaState extends State<PrimeraPagina> {
             Text("Nombre: ${_userDetails.nombre}"),
             Text("Nombre: ${_userDetails.apellido}"),
             RaisedButton(
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                UserDetails resultado = await Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) {
@@ -70,6 +70,11 @@ class _PrimeraPaginaState extends State<PrimeraPagina> {
                     },
                   ),
                 );
+                if (resultado != null) {
+                  setState(() {
+                    _userDetails = resultado;
+                  });
+                }
               },
               child: Text("Ir a segunda Página"),
             ),

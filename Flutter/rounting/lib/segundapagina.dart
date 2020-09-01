@@ -28,6 +28,12 @@ class _SegundaPaginaState extends State<SegundaPagina> {
           TextFormField(
             initialValue: _userDetails.apellido,
           ),
+          RaisedButton(
+            onPressed: () {
+              Navigator.pop(context, UserDetails("editado", "enpagina2"));
+            },
+            child: Text("editar"),
+          )
         ],
       ),
     );
