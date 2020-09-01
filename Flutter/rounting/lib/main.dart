@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rounting/segundapagina.dart';
 
 void main() {
   runApp(MyApp());
@@ -34,7 +35,20 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class PrimeraPagina extends StatelessWidget {
+class UserDetails {
+  String nombre;
+  String apellido;
+  UserDetails(this.nombre, this.apellido);
+}
+
+class PrimeraPagina extends StatefulWidget {
+  @override
+  _PrimeraPaginaState createState() => _PrimeraPaginaState();
+}
+
+class _PrimeraPaginaState extends State<PrimeraPagina> {
+  UserDetails _userDetails = UserDetails("Frank", "Cornejo");
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,10 +58,18 @@ class PrimeraPagina extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            TextField(),
+            Text("Nombre: ${_userDetails.nombre}"),
+            Text("Nombre: ${_userDetails.apellido}"),
             RaisedButton(
               onPressed: () {
-                Navigator.pushNamed(context, "/pagina2");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return SegundaPagina(_userDetails);
+                    },
+                  ),
+                );
               },
               child: Text("Ir a segunda Página"),
             ),
