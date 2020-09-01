@@ -14,6 +14,9 @@ class _SegundaPaginaState extends State<SegundaPagina> {
   UserDetails _userDetails;
   _SegundaPaginaState(this._userDetails);
 
+  GlobalKey<FormFieldState<String>> keyNombre = GlobalKey();
+  GlobalKey<FormFieldState<String>> keyApellido = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,14 +26,19 @@ class _SegundaPaginaState extends State<SegundaPagina> {
       body: Column(
         children: [
           TextFormField(
+            key: keyNombre,
             initialValue: _userDetails.nombre,
           ),
           TextFormField(
+            key: keyApellido,
             initialValue: _userDetails.apellido,
           ),
           RaisedButton(
             onPressed: () {
-              Navigator.pop(context, UserDetails("editado", "enpagina2"));
+              Navigator.pop(
+                  context,
+                  UserDetails(keyNombre.currentState.value,
+                      keyApellido.currentState.value));
             },
             child: Text("editar"),
           )

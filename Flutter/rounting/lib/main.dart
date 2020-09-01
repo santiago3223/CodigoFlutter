@@ -12,23 +12,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       home: PrimeraPagina(),
-      routes: {
-        '/pagina2': (context) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text("pagina2"),
-            ),
-            body: Column(
-              children: [
-                TextField(),
-                Container(
-                  height: 200,
-                  width: 200,
-                  color: Colors.greenAccent,
-                ),
-              ],
-            ),
-          );
+      onGenerateRoute: (settings) {
+        if (settings.name == '/pagina2') {
+          return MaterialPageRoute<UserDetails>(builder: (context) {
+            {
+              return SegundaPagina(settings.arguments);
+            }
+          });
         }
       },
     );
@@ -62,14 +52,9 @@ class _PrimeraPaginaState extends State<PrimeraPagina> {
             Text("Nombre: ${_userDetails.apellido}"),
             RaisedButton(
               onPressed: () async {
-                UserDetails resultado = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return SegundaPagina(_userDetails);
-                    },
-                  ),
-                );
+                UserDetails resultado = await Navigator.pushNamed(
+                    context, "/pagina2",
+                    arguments: _userDetails);
                 if (resultado != null) {
                   setState(() {
                     _userDetails = resultado;
