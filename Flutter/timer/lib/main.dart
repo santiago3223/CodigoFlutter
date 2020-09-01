@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.grey,
+        primarySwatch: Colors.blueGrey,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: HomePage(),
@@ -27,11 +27,69 @@ class HomePage extends StatelessWidget {
         title: Text("Timer"),
       ),
       body: Center(
-        child: TimerButton(
-            color: Color(0xff009688),
-            text: "Trabajo",
-            size: 100,
-            onPressed: () {}),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TimerButton(
+                        color: Color(0xff009688),
+                        text: "Trabajo",
+                        size: 100,
+                        onPressed: () {}),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Expanded(
+                    child: TimerButton(
+                        color: Color(0xff607D8B),
+                        text: "Break corto",
+                        size: 100,
+                        onPressed: () {}),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Expanded(
+                    child: TimerButton(
+                        color: Color(0xff455A64),
+                        text: "Break largo",
+                        size: 100,
+                        onPressed: () {}),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(child: Text("Timer")),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TimerButton(
+                        color: Color(0xff212121),
+                        text: "Stop",
+                        size: 100,
+                        onPressed: () {}),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Expanded(
+                    child: TimerButton(
+                        color: Color(0xff009688),
+                        text: "Restart",
+                        size: 100,
+                        onPressed: () {}),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
