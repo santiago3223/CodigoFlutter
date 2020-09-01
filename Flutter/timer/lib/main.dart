@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:timer/models/timer.dart';
 import 'package:timer/widgets/timerButton.dart';
+
+import 'models/timerModel.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,8 +24,12 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
+  CountDownTimer timer = CountDownTimer();
+
   @override
   Widget build(BuildContext context) {
+    timer.startWork();
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Timer"),
@@ -64,18 +71,23 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
-            Expanded(
-              child: CircularPercentIndicator(
-                radius: 200,
-                lineWidth: 10,
-                percent: 0.5,
-                center: Text(
-                  "30:00",
-                  style: Theme.of(context).textTheme.headline2,
-                ),
-                progressColor: Color(0xff009688),
-              ),
-            ),
+            StreamBuilder<Object>(
+                stream: timer.steam(),
+                builder: (context, snapshot) {
+                  TimerModel model = snapshot.data;
+                  return Expanded(
+                    child: CircularPercentIndicator(
+                      radius: 200,
+                      lineWidth: 10,
+                      percent: model.percent,
+                      center: Text(
+                        model.time,
+                        style: Theme.of(context).textTheme.headline2,
+                      ),
+                      progressColor: Color(0xff009688),
+                    ),
+                  );
+                }),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
