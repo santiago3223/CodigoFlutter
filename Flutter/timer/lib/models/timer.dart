@@ -30,6 +30,10 @@ class CountDownTimer {
     _isActive = false;
   }
 
+  void startTimer() {
+    _isActive = true;
+  }
+
   String returnTime(Duration t) {
     String minutes = t.inMinutes < 10
         ? '0' + t.inMinutes.toString()

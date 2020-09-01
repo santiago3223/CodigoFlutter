@@ -119,7 +119,7 @@ class HomePage extends StatelessWidget {
                         text: "Restart",
                         size: 100,
                         onPressed: () {
-                          timer.startWork();
+                          timer.startTimer();
                         }),
                   ),
                 ],
