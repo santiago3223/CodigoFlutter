@@ -28,8 +28,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    timer.startWork();
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Timer"),
@@ -46,7 +44,9 @@ class HomePage extends StatelessWidget {
                         color: Color(0xff009688),
                         text: "Trabajo",
                         size: 100,
-                        onPressed: () {}),
+                        onPressed: () {
+                          timer.startWork();
+                        }),
                   ),
                   SizedBox(
                     width: 5,
@@ -56,7 +56,9 @@ class HomePage extends StatelessWidget {
                         color: Color(0xff607D8B),
                         text: "Break corto",
                         size: 100,
-                        onPressed: () {}),
+                        onPressed: () {
+                          timer.startBreak(true);
+                        }),
                   ),
                   SizedBox(
                     width: 5,
@@ -66,7 +68,9 @@ class HomePage extends StatelessWidget {
                         color: Color(0xff455A64),
                         text: "Break largo",
                         size: 100,
-                        onPressed: () {}),
+                        onPressed: () {
+                          timer.startBreak(false);
+                        }),
                   ),
                 ],
               ),
@@ -74,7 +78,12 @@ class HomePage extends StatelessWidget {
             StreamBuilder<Object>(
                 stream: timer.steam(),
                 builder: (context, snapshot) {
-                  TimerModel model = snapshot.data;
+                  TimerModel model;
+                  if (snapshot.data != null) {
+                    model = snapshot.data;
+                  } else {
+                    model = TimerModel("00:00", 0);
+                  }
                   return Expanded(
                     child: CircularPercentIndicator(
                       radius: 200,
@@ -97,7 +106,9 @@ class HomePage extends StatelessWidget {
                         color: Color(0xff212121),
                         text: "Stop",
                         size: 100,
-                        onPressed: () {}),
+                        onPressed: () {
+                          timer.stopTimer();
+                        }),
                   ),
                   SizedBox(
                     width: 5,
@@ -107,7 +118,9 @@ class HomePage extends StatelessWidget {
                         color: Color(0xff009688),
                         text: "Restart",
                         size: 100,
-                        onPressed: () {}),
+                        onPressed: () {
+                          timer.startWork();
+                        }),
                   ),
                 ],
               ),
