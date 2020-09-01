@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:timer/widgets/timerButton.dart';
 
 void main() {
@@ -63,7 +64,18 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
-            Expanded(child: Text("Timer")),
+            Expanded(
+              child: CircularPercentIndicator(
+                radius: 200,
+                lineWidth: 10,
+                percent: 0.5,
+                center: Text(
+                  "30:00",
+                  style: Theme.of(context).textTheme.headline2,
+                ),
+                progressColor: Color(0xff009688),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
