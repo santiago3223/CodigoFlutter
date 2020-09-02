@@ -72,9 +72,16 @@ class CountDownTimer {
         _radius = _time.inSeconds / _fullTime.inSeconds;
         if (_time.inSeconds <= 0) {
           _isActive = false;
-          player.play('alerta.mp3');
         }
       }
+      if (_time.inSeconds % 10 == 0) {
+        player.play('alerta.mp3');
+      }
+
+      if (_time.inSeconds <= 0 && !_isActive) {
+        player.play('alerta.mp3');
+      }
+
       time = returnTime(_time);
       return TimerModel(time, _radius);
     });
