@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timer/widgets/timerButton.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -19,11 +20,51 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  TextEditingController txtWork;
+  TextEditingController txtShort;
+  TextEditingController txtLong;
+
+  SharedPreferences prefs;
+
+  void readSettings() async {
+    prefs = await SharedPreferences.getInstance();
+    print(prefs);
+    int workTime = prefs.getInt("workTime");
+    int shortTime = prefs.getInt("shortTime");
+    int longTime = prefs.getInt("longTime");
+    setState(() {
+      txtWork.text = workTime.toString();
+      txtShort.text = shortTime.toString();
+      txtLong.text = longTime.toString();
+    });
+  }
+
+  void updateSettings() {
+    prefs.setInt("workTime", 45);
+    prefs.setInt("shortTime", 2);
+    prefs.setInt("longTime", 5);
+  }
+
+  @override
+  void initState() {
+    txtWork = TextEditingController();
+    txtShort = TextEditingController();
+    txtLong = TextEditingController();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
         children: [
+          RaisedButton(onPressed: () {
+            updateSettings();
+          }),
+          RaisedButton(onPressed: () {
+            readSettings();
+          }),
           SizedBox(
             height: 20,
           ),
@@ -40,6 +81,7 @@ class _SettingsState extends State<Settings> {
                     onPressed: () {}),
                 Expanded(
                   child: TextField(
+                    controller: txtWork,
                     keyboardType: TextInputType.number,
                   ),
                 ),
@@ -64,6 +106,7 @@ class _SettingsState extends State<Settings> {
                     onPressed: () {}),
                 Expanded(
                   child: TextField(
+                    controller: txtShort,
                     keyboardType: TextInputType.number,
                   ),
                 ),
@@ -88,6 +131,7 @@ class _SettingsState extends State<Settings> {
                     onPressed: () {}),
                 Expanded(
                   child: TextField(
+                    controller: txtLong,
                     keyboardType: TextInputType.number,
                   ),
                 ),
