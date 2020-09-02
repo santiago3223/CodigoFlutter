@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:audioplayers/audio_cache.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timer/models/timerModel.dart';
 
@@ -13,6 +14,7 @@ class CountDownTimer {
   int longBreak = 20;
   int shortBreak = 2;
   SharedPreferences prefs;
+  AudioCache player = AudioCache();
 
   void startBreak(bool isShort) async {
     await readSettings();
@@ -70,6 +72,7 @@ class CountDownTimer {
         _radius = _time.inSeconds / _fullTime.inSeconds;
         if (_time.inSeconds <= 0) {
           _isActive = false;
+          player.play('alerta.mp3');
         }
       }
       time = returnTime(_time);

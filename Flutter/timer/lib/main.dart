@@ -28,7 +28,6 @@ class MyApp extends StatelessWidget {
 
 class HomePage extends StatelessWidget {
   CountDownTimer timer = CountDownTimer();
-  AudioCache player = AudioCache();
 
   void goToSettings(BuildContext context) {
     Navigator.push(
@@ -64,9 +63,6 @@ class HomePage extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  RaisedButton(onPressed: () async {
-                    player.play('alerta.mp3');
-                  }),
                   Expanded(
                     child: TimerButton(
                         color: Color(0xff009688),
