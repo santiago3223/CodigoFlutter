@@ -1,3 +1,4 @@
+import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
 
 class HomePage extends StatelessWidget {
   CountDownTimer timer = CountDownTimer();
-  AudioPlayer audioPlayer = AudioPlayer();
+  AudioCache player = AudioCache();
 
   void goToSettings(BuildContext context) {
     Navigator.push(
@@ -64,8 +65,7 @@ class HomePage extends StatelessWidget {
               child: Row(
                 children: [
                   RaisedButton(onPressed: () async {
-                    int result = await audioPlayer.play("assets/alerta.mp3",
-                        isLocal: true);
+                    player.play('alerta.mp3');
                   }),
                   Expanded(
                     child: TimerButton(
