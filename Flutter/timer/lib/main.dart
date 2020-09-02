@@ -4,6 +4,7 @@ import 'package:timer/models/timer.dart';
 import 'package:timer/widgets/timerButton.dart';
 
 import 'models/timerModel.dart';
+import 'screens/settings.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,11 +27,32 @@ class MyApp extends StatelessWidget {
 class HomePage extends StatelessWidget {
   CountDownTimer timer = CountDownTimer();
 
+  void goToSettings(BuildContext context) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => SettingsScreen()));
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<PopupMenuItem> menuItems = List();
+    menuItems
+        .add(PopupMenuItem(child: Text('Configuración'), value: "settings"));
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Timer"),
+        actions: [
+          PopupMenuButton(
+            itemBuilder: (_) {
+              return menuItems.toList();
+            },
+            onSelected: (route) {
+              if (route == "settings") {
+                goToSettings(context);
+              }
+            },
+          )
+        ],
       ),
       body: Center(
         child: Column(

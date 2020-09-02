@@ -14,6 +14,11 @@ class CountDownTimer {
 
   void startBreak(bool isShort) {
     _radius = 1;
+    if (isShort) {
+      _time = Duration(minutes: shortBreak);
+    } else {
+      _time = Duration(minutes: longBreak);
+    }
     _time = Duration(minutes: isShort ? shortBreak : longBreak);
     _fullTime = _time;
     _isActive = true;
