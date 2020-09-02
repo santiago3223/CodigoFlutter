@@ -40,9 +40,9 @@ class _SettingsState extends State<Settings> {
   }
 
   void updateSettings() {
-    prefs.setInt("workTime", 45);
-    prefs.setInt("shortTime", 2);
-    prefs.setInt("longTime", 5);
+    prefs.setInt("workTime", int.parse(txtWork.text));
+    prefs.setInt("shortTime", int.parse(txtShort.text));
+    prefs.setInt("longTime", int.parse(txtLong.text));
   }
 
   @override
@@ -52,6 +52,14 @@ class _SettingsState extends State<Settings> {
     txtLong = TextEditingController();
     readSettings();
     super.initState();
+  }
+
+  void increaseValue(TextEditingController controller) {
+    controller.text = (int.parse(controller.text) + 1).toString();
+  }
+
+  void decreaseValue(TextEditingController controller) {
+    controller.text = (int.parse(controller.text) - 1).toString();
   }
 
   @override
@@ -72,7 +80,9 @@ class _SettingsState extends State<Settings> {
                     color: Color(0xff009688),
                     text: "-",
                     size: 100,
-                    onPressed: () {}),
+                    onPressed: () {
+                      decreaseValue(txtWork);
+                    }),
                 Expanded(
                   child: TextField(
                     controller: txtWork,
@@ -83,7 +93,9 @@ class _SettingsState extends State<Settings> {
                     color: Color(0xff009688),
                     text: "+",
                     size: 100,
-                    onPressed: () {}),
+                    onPressed: () {
+                      increaseValue(txtWork);
+                    }),
               ],
             ),
           ),
