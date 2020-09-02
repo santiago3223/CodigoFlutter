@@ -50,7 +50,7 @@ class _SettingsState extends State<Settings> {
     txtWork = TextEditingController();
     txtShort = TextEditingController();
     txtLong = TextEditingController();
-
+    readSettings();
     super.initState();
   }
 
@@ -59,12 +59,6 @@ class _SettingsState extends State<Settings> {
     return Container(
       child: Column(
         children: [
-          RaisedButton(onPressed: () {
-            updateSettings();
-          }),
-          RaisedButton(onPressed: () {
-            readSettings();
-          }),
           SizedBox(
             height: 20,
           ),
@@ -143,6 +137,12 @@ class _SettingsState extends State<Settings> {
               ],
             ),
           ),
+          RaisedButton(
+            onPressed: () {
+              updateSettings();
+            },
+            child: Text("Guardar"),
+          )
         ],
       ),
     );
