@@ -13,10 +13,10 @@ class _AnimatedContainerWidgetState extends State<AnimatedContainerWidget> {
 
   _increaseWidth() {
     setState(() {
-      if (_width < 250) {
+      if (_width + 50 <= MediaQuery.of(context).size.width) {
         _width += 50;
       } else {
-        _height += 50;
+        if (_height + 50 <= MediaQuery.of(context).size.height) _height += 50;
       }
       _color = Colors.blue;
     });
@@ -28,7 +28,7 @@ class _AnimatedContainerWidgetState extends State<AnimatedContainerWidget> {
       children: [
         AnimatedContainer(
           color: _color,
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 1),
           curve: Curves.bounceInOut,
           height: _height,
           width: _width,
