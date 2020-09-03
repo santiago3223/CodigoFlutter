@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import 'ball.dart';
@@ -13,6 +15,10 @@ class _PongState extends State<Pong> with SingleTickerProviderStateMixin {
   AnimationController controller;
   int movX = 1;
   int movY = 1;
+  int score = 0;
+
+  double randX = 0;
+  double randY = 0;
 
   double width = 0;
   double heigth = 0;
@@ -33,8 +39,8 @@ class _PongState extends State<Pong> with SingleTickerProviderStateMixin {
     animation = Tween(begin: 0.0, end: 100.0).animate(controller);
     animation.addListener(() {
       setState(() {
-        posX += movX;
-        posY += movY;
+        posX += movX * 5 * randX;
+        posY += movY * 5 * randY;
       });
       checkBorders();
     });
@@ -44,15 +50,33 @@ class _PongState extends State<Pong> with SingleTickerProviderStateMixin {
 
   void checkBorders() {
     if (posX >= width - 50) {
+      setState(() {
+        randX = (Random().nextInt(10) + 1) / 10;
+      });
       movX = -1;
     }
-    if (posY >= heigth - 50) {
+    if (posY >= heigth - 50 - batHeight) {
+      setState(() {
+        randY = (Random().nextInt(10) + 1) / 10;
+      });
+
       movY = -1;
+      if (batPosition <= posX && batPosition + batWidth >= posX) {
+        setState(() {
+          score++;
+        });
+      }
     }
     if (posX <= 0) {
+      setState(() {
+        randX = (Random().nextInt(10) + 1) / 10;
+      });
       movX = 1;
     }
     if (posY <= 0) {
+      setState(() {
+        randY = (Random().nextInt(10) + 1) / 10;
+      });
       movY = 1;
     }
   }
@@ -68,13 +92,25 @@ class _PongState extends State<Pong> with SingleTickerProviderStateMixin {
       return Stack(
         children: [
           Positioned(
+            child: Text("Score: $randX"),
+            top: 10,
+            right: 10,
+          ),
+          Positioned(
             child: Ball(),
             top: posY,
             left: posX,
           ),
           Positioned(
-            child: Bat(batWidth, batHeight),
+            child: GestureDetector(
+                onHorizontalDragUpdate: (update) {
+                  setState(() {
+                    batPosition += update.delta.dx;
+                  });
+                },
+                child: Bat(batWidth, batHeight)),
             bottom: 0,
+            left: batPosition,
           )
         ],
       );
