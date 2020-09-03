@@ -1,3 +1,4 @@
+import 'package:animaciones/widgets/animated_opacity.dart';
 import 'package:animaciones/widgets/animated_container.dart';
 import 'package:animaciones/widgets/animated_cross_fade.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class Animaciones extends StatelessWidget {
       appBar: AppBar(
         title: Text("Animaciones"),
       ),
-      body: AnimatedCrossFadeWidget(),
+      body: AnimatedOpacityWidget(),
     );
   }
 }
