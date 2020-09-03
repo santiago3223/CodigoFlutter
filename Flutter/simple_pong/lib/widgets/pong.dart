@@ -11,9 +11,11 @@ class Pong extends StatefulWidget {
 class _PongState extends State<Pong> with SingleTickerProviderStateMixin {
   Animation<double> animation;
   AnimationController controller;
+  int movX = 1;
+  int movY = 1;
 
-  double width;
-  double heigth;
+  double width = 0;
+  double heigth = 0;
   double posX = 0;
   double posY = 0;
   double batWidth = 0;
@@ -31,12 +33,28 @@ class _PongState extends State<Pong> with SingleTickerProviderStateMixin {
     animation = Tween(begin: 0.0, end: 100.0).animate(controller);
     animation.addListener(() {
       setState(() {
-        posX++;
-        posY++;
+        posX += movX;
+        posY += movY;
       });
+      checkBorders();
     });
     controller.forward();
     super.initState();
+  }
+
+  void checkBorders() {
+    if (posX >= width - 50) {
+      movX = -1;
+    }
+    if (posY >= heigth - 50) {
+      movY = -1;
+    }
+    if (posX <= 0) {
+      movX = 1;
+    }
+    if (posY <= 0) {
+      movY = 1;
+    }
   }
 
   @override
