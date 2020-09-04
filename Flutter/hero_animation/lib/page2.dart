@@ -4,7 +4,6 @@ import 'package:flutter/scheduler.dart';
 class Page2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    timeDilation = 5;
     return Scaffold(
       appBar: AppBar(
         title: Text("Hero animation"),

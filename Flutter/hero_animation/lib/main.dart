@@ -39,6 +39,24 @@ class _Page1State extends State<Page1> {
       appBar: AppBar(
         title: Text("Hero animation"),
       ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(
+              child: Text("CodiGo"),
+              decoration: BoxDecoration(color: Colors.blue),
+            ),
+            ListTile(
+              title: Text("Ir Pag2"),
+              leading: Icon(Icons.ac_unit),
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (b) => Page2()));
+              },
+            )
+          ],
+        ),
+      ),
       body: Navigator(
         key: navigatorkey,
         initialRoute: '/',
@@ -61,34 +79,48 @@ class _Page1State extends State<Page1> {
           return MaterialPageRoute(builder: builder, settings: settings);
         },
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _currentIndex,
-        items: [
-          BottomNavigationBarItem(
-            title: Text("Home"),
-            icon: Icon(Icons.home),
-          ),
-          BottomNavigationBarItem(
-            title: Text("Cumpleaños"),
-            icon: Icon(Icons.cake),
-          ),
-          BottomNavigationBarItem(
-            title: Text("Calendario"),
-            icon: Icon(Icons.calendar_today),
-          ),
-          BottomNavigationBarItem(
-            title: Text("Alarma"),
-            icon: Icon(Icons.alarm),
-          ),
-        ],
-        onTap: (index) {
-          navigatorkey.currentState.pushNamed(rutas[index]);
-          setState(() {
-            _currentIndex = index;
-          });
-        },
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.blue,
+        shape: CircularNotchedRectangle(),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              icon: Icon(Icons.home),
+              color: Colors.white,
+              onPressed: () {
+                navigatorkey.currentState.pushNamed(rutas[0]);
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.cake),
+              color: Colors.white,
+              onPressed: () {
+                navigatorkey.currentState.pushNamed(rutas[1]);
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.calendar_today),
+              color: Colors.white,
+              onPressed: () {
+                navigatorkey.currentState.pushNamed(rutas[2]);
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.alarm),
+              color: Colors.white,
+              onPressed: () {
+                navigatorkey.currentState.pushNamed(rutas[3]);
+              },
+            ),
+          ],
+        ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
