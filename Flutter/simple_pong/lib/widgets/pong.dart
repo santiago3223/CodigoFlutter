@@ -16,6 +16,7 @@ class _PongState extends State<Pong> with SingleTickerProviderStateMixin {
   int movX = 1;
   int movY = 1;
   int score = 0;
+  int life = 3;
 
   double randX = 0;
   double randY = 0;
@@ -39,8 +40,8 @@ class _PongState extends State<Pong> with SingleTickerProviderStateMixin {
     animation = Tween(begin: 0.0, end: 100.0).animate(controller);
     animation.addListener(() {
       setState(() {
-        posX += movX * 5 * randX;
-        posY += movY * 5 * randY;
+        posX += movX * randX * score;
+        posY += movY * randY * score;
       });
       checkBorders();
     });
@@ -49,14 +50,18 @@ class _PongState extends State<Pong> with SingleTickerProviderStateMixin {
   }
 
   void checkBorders() {
+    // llega al lado derecho
     if (posX >= width - 50) {
       setState(() {
         randX = (Random().nextInt(10) + 1) / 10;
+        randY = (Random().nextInt(10) + 1) / 10;
       });
       movX = -1;
     }
+    // llega abajo
     if (posY >= heigth - 50 - batHeight) {
       setState(() {
+        randX = (Random().nextInt(10) + 1) / 10;
         randY = (Random().nextInt(10) + 1) / 10;
       });
 
@@ -65,16 +70,29 @@ class _PongState extends State<Pong> with SingleTickerProviderStateMixin {
         setState(() {
           score++;
         });
+      } else {
+        setState(() {
+          life--;
+        });
+        if (life <= 0) {
+          controller.stop();
+        }
       }
     }
+
+    //Llegando al lado derecho
     if (posX <= 0) {
       setState(() {
         randX = (Random().nextInt(10) + 1) / 10;
+        randY = (Random().nextInt(10) + 1) / 10;
       });
       movX = 1;
     }
+
+    //llegando a arriba
     if (posY <= 0) {
       setState(() {
+        randX = (Random().nextInt(10) + 1) / 10;
         randY = (Random().nextInt(10) + 1) / 10;
       });
       movY = 1;
@@ -92,7 +110,12 @@ class _PongState extends State<Pong> with SingleTickerProviderStateMixin {
       return Stack(
         children: [
           Positioned(
-            child: Text("Score: $randX"),
+            child: Text("Life: $life"),
+            top: 10,
+            left: 10,
+          ),
+          Positioned(
+            child: Text("Score: $score"),
             top: 10,
             right: 10,
           ),
