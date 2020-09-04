@@ -29,24 +29,9 @@ class _Page1State extends State<Page1> {
   int _currentIndex = 0;
   List _listPages = List();
   Widget _currentPage;
+  GlobalKey<NavigatorState> navigatorkey = GlobalKey();
 
-  @override
-  void initState() {
-    super.initState();
-    _listPages.add(Home());
-    _listPages.add(Birthday());
-    _listPages.add(Calendar());
-    _listPages.add(Alarm());
-    _currentIndex = 0;
-    _currentPage = _listPages[0];
-  }
-
-  void cambiarPagina(int i) {
-    setState(() {
-      _currentIndex = i;
-      _currentPage = _listPages[i];
-    });
-  }
+  List<String> rutas = ["/", "/birthday", "/calendar", "/alarm"];
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +39,28 @@ class _Page1State extends State<Page1> {
       appBar: AppBar(
         title: Text("Hero animation"),
       ),
-      body: _currentPage,
+      body: Navigator(
+        key: navigatorkey,
+        initialRoute: '/',
+        onGenerateRoute: (settings) {
+          WidgetBuilder builder;
+          switch (settings.name) {
+            case "/":
+              builder = (context) => Home();
+              break;
+            case "/birthday":
+              builder = (context) => Birthday();
+              break;
+            case "/calendar":
+              builder = (context) => Calendar();
+              break;
+            case "/alarm":
+              builder = (context) => Alarm();
+              break;
+          }
+          return MaterialPageRoute(builder: builder, settings: settings);
+        },
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
@@ -76,7 +82,12 @@ class _Page1State extends State<Page1> {
             icon: Icon(Icons.alarm),
           ),
         ],
-        onTap: (index) => cambiarPagina(index),
+        onTap: (index) {
+          navigatorkey.currentState.pushNamed(rutas[index]);
+          setState(() {
+            _currentIndex = index;
+          });
+        },
       ),
     );
   }
