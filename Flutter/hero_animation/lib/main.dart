@@ -39,7 +39,7 @@ class _Page1State extends State<Page1> {
       appBar: AppBar(
         title: Text("Hero animation"),
       ),
-      drawer: Drawer(
+      endDrawer: Drawer(
         child: ListView(
           children: [
             DrawerHeader(
