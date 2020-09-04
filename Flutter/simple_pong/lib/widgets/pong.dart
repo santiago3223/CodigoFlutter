@@ -40,8 +40,8 @@ class _PongState extends State<Pong> with SingleTickerProviderStateMixin {
     animation = Tween(begin: 0.0, end: 100.0).animate(controller);
     animation.addListener(() {
       setState(() {
-        posX += movX * randX * score;
-        posY += movY * randY * score;
+        posX += movX * randX * 5;
+        posY += movY * randY * 5;
       });
       checkBorders();
     });
@@ -75,12 +75,13 @@ class _PongState extends State<Pong> with SingleTickerProviderStateMixin {
           life--;
         });
         if (life <= 0) {
+          showLoseDialog();
           controller.stop();
         }
       }
     }
 
-    //Llegando al lado derecho
+    //Llegando al lado izquierdo
     if (posX <= 0) {
       setState(() {
         randX = (Random().nextInt(10) + 1) / 10;
@@ -97,6 +98,30 @@ class _PongState extends State<Pong> with SingleTickerProviderStateMixin {
       });
       movY = 1;
     }
+  }
+
+  showLoseDialog() {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Perdiste"),
+          actions: [
+            FlatButton(
+              onPressed: () {
+                setState(() {
+                  score = 0;
+                  life = 3;
+                });
+                controller.forward();
+                Navigator.pop(context);
+              },
+              child: Text("Reiniciar"),
+            )
+          ],
+        );
+      },
+    );
   }
 
   @override

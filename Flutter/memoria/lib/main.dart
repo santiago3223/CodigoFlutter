@@ -80,6 +80,7 @@ class _MemoriaState extends State<Memoria> {
         for (double i = 0; i < cantidadTarjetas; i += 1)
           Tarjeta(imagenesCards[(i / 2).floor() % imagenesCards.length])
       ];
+
       tarjetas.shuffle();
       primerValor = -1;
       segundoValor = -1;

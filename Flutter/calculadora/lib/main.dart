@@ -62,7 +62,7 @@ class _CalculadoraState extends State<Calculadora> {
       } else if (operador == "/") {
         _display = (num1 / num2).toString();
       }
-      _historial.last += " $num2 = " + _display;
+      _historial.last += " $num2 =" + _display;
     });
   }
 

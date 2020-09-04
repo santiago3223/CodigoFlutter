@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:timer/models/timer.dart';
 import 'package:timer/widgets/timerButton.dart';
+import 'package:video_player/video_player.dart';
 
 import 'models/timerModel.dart';
 import 'screens/settings.dart';
@@ -26,12 +27,34 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   CountDownTimer timer = CountDownTimer();
+  VideoPlayerController _controller;
 
   void goToSettings(BuildContext context) {
     Navigator.push(
         context, MaterialPageRoute(builder: (_) => SettingsScreen()));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.network(
+        'https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_480_1_5MG.mp4')
+      ..initialize().then((_) {
+        setState(() {});
+      });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
   }
 
   @override
@@ -59,6 +82,17 @@ class HomePage extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
+            Center(
+              child: _controller.value.initialized
+                  ? AspectRatio(
+                      aspectRatio: _controller.value.aspectRatio,
+                      child: VideoPlayer(_controller),
+                    )
+                  : Container(
+                      height: 200,
+                      width: 200,
+                    ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -150,6 +184,18 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            _controller.value.isPlaying
+                ? _controller.pause()
+                : _controller.play();
+          });
+        },
+        child: Icon(
+          _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
         ),
       ),
     );

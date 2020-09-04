@@ -1,4 +1,4 @@
-name: timer
+name: hero_animation
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -23,10 +23,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  percent_indicator: ^2.1.5
-  shared_preferences: ^0.5.10
-  audioplayers: ^0.16.0
-  video_player: ^0.10.12+2
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -49,8 +45,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  assets:
-    - assets/
+  # assets:
+  #   - images/a_dot_burr.jpeg
+  #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
