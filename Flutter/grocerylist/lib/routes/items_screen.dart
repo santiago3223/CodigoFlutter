@@ -35,13 +35,26 @@ class _ItemsScreenState extends State<ItemsScreen> {
       appBar: AppBar(
         title: Text(shoppingList.name),
       ),
-      body: ListView.builder(
-          itemCount: listItems != null ? listItems.length : 0,
-          itemBuilder: (c, i) {
-            return ListTile(
-              title: Text(listItems[i].name),
-            );
-          }),
+      body: Column(
+        children: [
+          RaisedButton(
+            onPressed: () async {
+              await helper.insertItem(ListItem(
+                  0, shoppingList.id, "Item Agreado Boton", "10kg", "obs"));
+              showData();
+            },
+          ),
+          Expanded(
+            child: ListView.builder(
+                itemCount: listItems != null ? listItems.length : 0,
+                itemBuilder: (c, i) {
+                  return ListTile(
+                    title: Text(listItems[i].name),
+                  );
+                }),
+          ),
+        ],
+      ),
     );
   }
 }
