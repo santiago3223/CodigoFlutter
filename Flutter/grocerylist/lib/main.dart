@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grocerylist/models/shopping_list.dart';
+import 'package:grocerylist/routes/items_screen.dart';
 import 'package:grocerylist/util/dbhelper.dart';
 
 void main() {
@@ -45,6 +46,9 @@ class _ShListState extends State<ShList> {
   Future showData() async {
     await helper.openDb();
     shoppingList = await helper.getLists();
+    setState(() {
+      shoppingList = shoppingList;
+    });
   }
 
   @override
@@ -60,7 +64,12 @@ class _ShListState extends State<ShList> {
             ),
             trailing: IconButton(
               icon: Icon(Icons.edit),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (c) => ItemsScreen(shoppingList[index])));
+              },
             ),
           );
         });

@@ -51,4 +51,13 @@ class DbHelper {
         (i) =>
             ShoppingList(maps[i]['id'], maps[i]['name'], maps[i]['priority']));
   }
+
+  Future<List<ListItem>> getItems(int idList) async {
+    List<Map<String, dynamic>> maps =
+        await db.query('items', where: 'idList = ?', whereArgs: [idList]);
+    return List.generate(
+        maps.length,
+        (i) => ListItem(maps[i]['id'], maps[i]['idList'], maps[i]['name'],
+            maps[i]['quantity'], maps[i]['note']));
+  }
 }
