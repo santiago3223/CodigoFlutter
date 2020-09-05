@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grocerylist/models/shopping_list.dart';
 import 'package:grocerylist/util/dbhelper.dart';
 
 void main() {
@@ -23,8 +24,45 @@ class MyApp extends StatelessWidget {
 class GroceryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    DbHelper helper = DbHelper();
-    helper.testDb();
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Lista de compras"),
+      ),
+      body: ShList(),
+    );
+  }
+}
+
+class ShList extends StatefulWidget {
+  @override
+  _ShListState createState() => _ShListState();
+}
+
+class _ShListState extends State<ShList> {
+  DbHelper helper = DbHelper();
+  List<ShoppingList> shoppingList;
+
+  Future showData() async {
+    await helper.openDb();
+    shoppingList = await helper.getLists();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    showData();
+    return ListView.builder(
+        itemCount: shoppingList != null ? shoppingList.length : 0,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(shoppingList[index].name),
+            leading: CircleAvatar(
+              child: Text(shoppingList[index].priority.toString()),
+            ),
+            trailing: IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () {},
+            ),
+          );
+        });
   }
 }
