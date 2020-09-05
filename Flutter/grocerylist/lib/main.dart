@@ -54,24 +54,37 @@ class _ShListState extends State<ShList> {
   @override
   Widget build(BuildContext context) {
     showData();
-    return ListView.builder(
-        itemCount: shoppingList != null ? shoppingList.length : 0,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(shoppingList[index].name),
-            leading: CircleAvatar(
-              child: Text(shoppingList[index].priority.toString()),
-            ),
-            trailing: IconButton(
-              icon: Icon(Icons.edit),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (c) => ItemsScreen(shoppingList[index])));
-              },
-            ),
-          );
-        });
+    return Column(
+      children: [
+        RaisedButton(
+          onPressed: () async {
+            await helper.insertList(ShoppingList(0, "Lista Agreada Boton", 1));
+            showData();
+          },
+        ),
+        Expanded(
+          child: ListView.builder(
+              itemCount: shoppingList != null ? shoppingList.length : 0,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(shoppingList[index].name),
+                  leading: CircleAvatar(
+                    child: Text(shoppingList[index].priority.toString()),
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) =>
+                                  ItemsScreen(shoppingList[index])));
+                    },
+                  ),
+                );
+              }),
+        ),
+      ],
+    );
   }
 }
