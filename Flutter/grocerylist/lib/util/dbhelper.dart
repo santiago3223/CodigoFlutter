@@ -7,6 +7,14 @@ class DbHelper {
   int version = 1;
   Database db;
 
+  static final DbHelper _dbHelper = DbHelper._internal();
+
+  DbHelper._internal();
+
+  factory DbHelper() {
+    return _dbHelper;
+  }
+
   Future<Database> openDb() async {
     //await deleteDatabase(join(await getDatabasesPath(), 'shopping.db'));
     if (db == null) {

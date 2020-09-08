@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:grocerylist/models/shopping_list.dart';
+import 'package:grocerylist/util/dbhelper.dart';
 
 class ShoppingListDialog {
   TextEditingController txtName = TextEditingController();
   TextEditingController txtPriority = TextEditingController();
 
   Widget buildDialog(BuildContext context, ShoppingList list, bool isNew) {
+    if (!isNew) {
+      txtName.text = list.name;
+      txtPriority.text = list.priority.toString();
+    } else {
+      txtName.text = "";
+      txtPriority.text = "";
+    }
+
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       title: Text(isNew ? "Nueva Lista" : "Editar lista"),
@@ -23,7 +32,13 @@ class ShoppingListDialog {
             ),
             RaisedButton(
               child: Text("Guardar Lista"),
-              onPressed: () {},
+              onPressed: () async {
+                list.name = txtName.text;
+                list.priority = int.tryParse(txtPriority.text);
+                DbHelper helper = DbHelper();
+                await helper.insertList(list);
+                Navigator.pop(context);
+              },
             )
           ],
         ),
