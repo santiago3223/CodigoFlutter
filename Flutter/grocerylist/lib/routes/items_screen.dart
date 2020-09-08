@@ -50,6 +50,12 @@ class _ItemsScreenState extends State<ItemsScreen> {
                 itemBuilder: (c, i) {
                   return ListTile(
                     title: Text(listItems[i].name),
+                    subtitle:
+                        Text(listItems[i].quantity + " - " + listItems[i].note),
+                    trailing: IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () {},
+                    ),
                   );
                 }),
           ),

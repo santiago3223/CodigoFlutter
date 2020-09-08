@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grocerylist/models/shopping_list.dart';
 import 'package:grocerylist/routes/items_screen.dart';
 import 'package:grocerylist/util/dbhelper.dart';
+import 'package:grocerylist/widgets/shopping_list_dialog.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,12 +26,7 @@ class MyApp extends StatelessWidget {
 class GroceryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Lista de compras"),
-      ),
-      body: ShList(),
-    );
+    return ShList();
   }
 }
 
@@ -42,6 +38,7 @@ class ShList extends StatefulWidget {
 class _ShListState extends State<ShList> {
   DbHelper helper = DbHelper();
   List<ShoppingList> shoppingList;
+  ShoppingListDialog dialog = ShoppingListDialog();
 
   Future showData() async {
     await helper.openDb();
@@ -54,37 +51,51 @@ class _ShListState extends State<ShList> {
   @override
   Widget build(BuildContext context) {
     showData();
-    return Column(
-      children: [
-        RaisedButton(
-          onPressed: () async {
-            await helper.insertList(ShoppingList(0, "Lista Agreada Boton", 1));
-            showData();
-          },
-        ),
-        Expanded(
-          child: ListView.builder(
-              itemCount: shoppingList != null ? shoppingList.length : 0,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(shoppingList[index].name),
-                  leading: CircleAvatar(
-                    child: Text(shoppingList[index].priority.toString()),
-                  ),
-                  trailing: IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (c) =>
-                                  ItemsScreen(shoppingList[index])));
-                    },
-                  ),
-                );
-              }),
-        ),
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Lista de compras"),
+      ),
+      body: Column(
+        children: [
+          RaisedButton(
+            onPressed: () async {
+              await helper
+                  .insertList(ShoppingList(0, "Lista Agreada Boton", 1));
+              showData();
+            },
+          ),
+          Expanded(
+            child: ListView.builder(
+                itemCount: shoppingList != null ? shoppingList.length : 0,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(shoppingList[index].name),
+                    leading: CircleAvatar(
+                      child: Text(shoppingList[index].priority.toString()),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => dialog.buildDialog(
+                                context, shoppingList[index], false));
+                      },
+                    ),
+                  );
+                }),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (context) =>
+                  dialog.buildDialog(context, ShoppingList(0, "", 0), true));
+        },
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
