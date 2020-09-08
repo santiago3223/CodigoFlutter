@@ -68,4 +68,10 @@ class DbHelper {
         (i) => ListItem(maps[i]['id'], maps[i]['idList'], maps[i]['name'],
             maps[i]['quantity'], maps[i]['note']));
   }
+
+  Future<int> deleteList(ShoppingList list) async {
+    int result =
+        await db.delete("lists", where: "id = ?", whereArgs: [list.id]);
+    return result;
+  }
 }
