@@ -57,24 +57,21 @@ class _ShListState extends State<ShList> {
       ),
       body: Column(
         children: [
-          RaisedButton(
-            onPressed: () async {
-              await helper
-                  .insertList(ShoppingList(0, "Lista Agreada Boton", 1));
-              showData();
-            },
-          ),
           Expanded(
             child: ListView.builder(
                 itemCount: shoppingList != null ? shoppingList.length : 0,
                 itemBuilder: (context, index) {
                   return Dismissible(
                     key: Key(shoppingList[index].name),
+                    background: Container(color: Colors.red),
                     onDismissed: (_) {
+                      String name = shoppingList[index].name;
                       helper.deleteList(shoppingList[index]);
                       setState(() {
                         shoppingList.removeAt(index);
                       });
+                      Scaffold.of(context).showSnackBar(
+                          SnackBar(content: Text("Eliminado: $name ")));
                     },
                     child: ListTile(
                       title: Text(shoppingList[index].name),
@@ -90,6 +87,13 @@ class _ShListState extends State<ShList> {
                                   context, shoppingList[index], false));
                         },
                       ),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (c) =>
+                                    ItemsScreen(shoppingList[index])));
+                      },
                     ),
                   );
                 }),
