@@ -1,3 +1,4 @@
+import 'package:controlTareas/widgets/task_list.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -39,7 +40,7 @@ class ControlTareas extends StatelessWidget {
             )
           ]),
         ),
-        body: TabBarView(children: [Text("todo"), Text("doing"), Text("done")]),
+        body: TabBarView(children: [TaskList(), Text("doing"), Text("done")]),
       ),
     );
   }
