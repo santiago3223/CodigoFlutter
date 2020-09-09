@@ -56,7 +56,8 @@ class DbHelper {
   }
 
   Future<int> insertSubTask(SubTask subTask, int idTask) async {
-    int id = await db.insert("subtasks", subTask.toMap(idTask));
+    int id = await db.insert("subtasks", subTask.toMap(idTask),
+        conflictAlgorithm: ConflictAlgorithm.replace);
     return id;
   }
 }

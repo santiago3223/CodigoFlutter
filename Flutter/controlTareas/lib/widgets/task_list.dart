@@ -1,6 +1,7 @@
 import 'package:controlTareas/models/subtask.dart';
 import 'package:controlTareas/models/task.dart';
 import 'package:controlTareas/util/dbhelper.dart';
+import 'package:controlTareas/widgets/subtask_dialog.dart';
 import 'package:flutter/material.dart';
 
 class TaskList extends StatefulWidget {
@@ -12,6 +13,7 @@ class _TaskListState extends State<TaskList> {
   List<Task> list = List();
   DbHelper helper = DbHelper();
   List<Color> colores = [Colors.red, Colors.amber, Colors.green];
+  SubTaskDialog subTaskDialog = SubTaskDialog();
 
   Future showData() async {
     await helper.openDb();
@@ -38,16 +40,20 @@ class _TaskListState extends State<TaskList> {
               trailing: IconButton(
                   icon: Icon(Icons.add),
                   onPressed: () async {
-                    print(await helper.insertSubTask(
-                        SubTask(null, "prueba", "prueba", 1), list[index].id));
+                    showDialog(
+                        context: context,
+                        builder: (context) => subTaskDialog.buildDialog(context,
+                            SubTask(null, "", "", 0), true, list[index]));
                   }),
             )
           : ExpansionTile(
               trailing: IconButton(
                   icon: Icon(Icons.add),
                   onPressed: () async {
-                    print(await helper.insertSubTask(
-                        SubTask(null, "prueba", "prueba", 1), list[index].id));
+                    showDialog(
+                        context: context,
+                        builder: (context) => subTaskDialog.buildDialog(context,
+                            SubTask(null, "", "", 0), true, list[index]));
                   }),
               initiallyExpanded: true,
               title: Text(
