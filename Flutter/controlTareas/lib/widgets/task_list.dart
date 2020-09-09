@@ -65,27 +65,57 @@ class _TaskListState extends State<TaskList> {
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: list[index].subTasks.length,
-                    itemBuilder: (c, i) => Card(
-                      color: list[index].subTasks[i].state == null
-                          ? colores[0]
-                          : colores[list[index].subTasks[i].state],
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Center(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(list[index].subTasks[i].name),
-                              Text(list[index].subTasks[i].priority),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    itemBuilder: (c, i) => buildSubTaskCard(index, i, context),
                   ),
                 ),
               ],
             ),
+    );
+  }
+
+  Card buildSubTaskCard(int index, int i, BuildContext context) {
+    return Card(
+      color: list[index].subTasks[i].state == null
+          ? colores[0]
+          : colores[list[index].subTasks[i].state],
+      child: Padding(
+        padding: const EdgeInsets.only(left: 8, right: 8),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              height: 25,
+              child: IconButton(
+                  iconSize: 15,
+                  icon: Icon(Icons.edit),
+                  onPressed: () async {
+                    showDialog(
+                        context: context,
+                        builder: (context) => subTaskDialog.buildDialog(context,
+                            list[index].subTasks[i], false, list[index]));
+                  }),
+            ),
+            Text(list[index].subTasks[i].name),
+            Text(list[index].subTasks[i].priority),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 25,
+                  child: IconButton(
+                      icon: Icon(Icons.arrow_left), onPressed: () async {}),
+                ),
+                Container(
+                  height: 25,
+                  child: IconButton(
+                      icon: Icon(Icons.arrow_right), onPressed: () async {}),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
 }

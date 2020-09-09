@@ -9,6 +9,14 @@ class SubTaskDialog {
 
   Widget buildDialog(
       BuildContext context, SubTask subTask, bool isNew, Task task) {
+    if (isNew) {
+      txtName.text = "";
+      txtPriority.text = "";
+    } else {
+      txtName.text = subTask.name;
+      txtPriority.text = subTask.priority;
+    }
+
     return AlertDialog(
       title: Text(isNew ? "Nueva SubTarea" : "Editar SubTarea"),
       content: SingleChildScrollView(
