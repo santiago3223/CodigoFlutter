@@ -5,15 +5,21 @@ import 'package:controlTareas/widgets/subtask_dialog.dart';
 import 'package:flutter/material.dart';
 
 class TaskList extends StatefulWidget {
+  int state;
+  TaskList(this.state);
+
   @override
-  _TaskListState createState() => _TaskListState();
+  _TaskListState createState() => _TaskListState(state);
 }
 
 class _TaskListState extends State<TaskList> {
+  int state;
   List<Task> list = List();
   DbHelper helper = DbHelper();
   List<Color> colores = [Colors.red, Colors.amber, Colors.green];
   SubTaskDialog subTaskDialog = SubTaskDialog();
+
+  _TaskListState(this.state);
 
   Future showData() async {
     await helper.openDb();
@@ -104,12 +110,26 @@ class _TaskListState extends State<TaskList> {
                 Container(
                   height: 25,
                   child: IconButton(
-                      icon: Icon(Icons.arrow_left), onPressed: () async {}),
+                      icon: Icon(Icons.arrow_left),
+                      onPressed: () async {
+                        if (list[index].subTasks[i].state > 0) {
+                          list[index].subTasks[i].state--;
+                          helper.insertSubTask(
+                              list[index].subTasks[i], list[index].id);
+                        }
+                      }),
                 ),
                 Container(
                   height: 25,
                   child: IconButton(
-                      icon: Icon(Icons.arrow_right), onPressed: () async {}),
+                      icon: Icon(Icons.arrow_right),
+                      onPressed: () async {
+                        if (list[index].subTasks[i].state < 2) {
+                          list[index].subTasks[i].state++;
+                          helper.insertSubTask(
+                              list[index].subTasks[i], list[index].id);
+                        }
+                      }),
                 ),
               ],
             )

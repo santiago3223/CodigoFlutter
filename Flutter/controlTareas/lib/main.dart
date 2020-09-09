@@ -41,7 +41,7 @@ class ControlTareas extends StatelessWidget {
             )
           ]),
         ),
-        body: TabBarView(children: [TaskList(), Text("doing"), Text("done")]),
+        body: TabBarView(children: [TaskList(0), TaskList(1), TaskList(2)]),
         floatingActionButton: FloatingActionButton(onPressed: () {
           DbHelper helper = DbHelper();
           helper.testDb();
