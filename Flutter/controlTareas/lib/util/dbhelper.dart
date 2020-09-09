@@ -1,3 +1,4 @@
+import 'package:controlTareas/models/subtask.dart';
 import 'package:controlTareas/models/task.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -42,5 +43,10 @@ class DbHelper {
       (index) => Task(maps[index]["id"], maps[index]["name"],
           maps[index]["priority"], maps[index]["status"]),
     );
+  }
+
+  Future<int> insertSubTask(SubTask subTask, int idTask) async {
+    int id = await db.insert("subtasks", values);
+    return id;
   }
 }
