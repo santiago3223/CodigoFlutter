@@ -41,12 +41,22 @@ class DbHelper {
     return List.generate(
       maps.length,
       (index) => Task(maps[index]["id"], maps[index]["name"],
-          maps[index]["priority"], maps[index]["status"]),
+          maps[index]["priority"], maps[index]["state"]),
+    );
+  }
+
+  Future<List<SubTask>> getSubTasks(int idTask) async {
+    List<Map<String, dynamic>> maps =
+        await db.query("subtasks", where: "idTask=?", whereArgs: [idTask]);
+    return List.generate(
+      maps.length,
+      (index) => SubTask(maps[index]["id"], maps[index]["name"],
+          maps[index]["priority"], maps[index]["state"]),
     );
   }
 
   Future<int> insertSubTask(SubTask subTask, int idTask) async {
-    int id = await db.insert("subtasks", values);
+    int id = await db.insert("subtasks", subTask.toMap(idTask));
     return id;
   }
 }
