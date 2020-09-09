@@ -1,3 +1,4 @@
+import 'package:controlTareas/models/task.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -29,8 +30,17 @@ class DbHelper {
   Future testDb() async {
     db = await openDb();
     await db.execute(
-        'INSERT INTO tasks VALUES ( 0, "Programar", "Muy Urgente", 0)');
+        'INSERT INTO tasks VALUES ( null, "Programar", "Muy Urgente", 0)');
     List items = await db.rawQuery("select * from tasks");
     print(items[0].toString());
+  }
+
+  Future<List<Task>> getTasks() async {
+    List<Map<String, dynamic>> maps = await db.query("tasks");
+    return List.generate(
+      maps.length,
+      (index) => Task(maps[index]["id"], maps[index]["name"],
+          maps[index]["priority"], maps[index]["status"]),
+    );
   }
 }

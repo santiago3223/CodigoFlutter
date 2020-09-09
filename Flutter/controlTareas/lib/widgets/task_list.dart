@@ -1,5 +1,6 @@
 import 'package:controlTareas/models/subtask.dart';
 import 'package:controlTareas/models/task.dart';
+import 'package:controlTareas/util/dbhelper.dart';
 import 'package:flutter/material.dart';
 
 class TaskList extends StatefulWidget {
@@ -9,25 +10,29 @@ class TaskList extends StatefulWidget {
 
 class _TaskListState extends State<TaskList> {
   List<Task> list = List();
+  DbHelper helper = DbHelper();
+  List<Color> colores = [Colors.red, Colors.amber, Colors.green];
+
+  Future showData() async {
+    await helper.openDb();
+    list = await helper.getTasks();
+    setState(() {
+      list = list;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    list.add(Task("Programar mucho", "urgente", 0));
-    list.add(Task("Programar mucho mas", " mas urgente", 0));
-    list.add(Task("Programar mucho mas 3", " mas urgente", 0));
-    list[0].subTasks.add(SubTask("programar", "recontra urgente", 0));
-    list[0].subTasks.add(SubTask("descanzar", "recontra urgente", 1));
-    list[0].subTasks.add(SubTask("descanzar", "recontra urgente", 2));
-
-    List<Color> colores = [Colors.red, Colors.amber, Colors.green];
+    showData();
 
     return ListView.builder(
       itemCount: list.length,
       itemBuilder: (context, index) => list[index].subTasks.length == 0
           ? ListTile(
               title: Text(
-                list[index].name,
+                list[index].id.toString() + " " + list[index].name,
               ),
+              trailing: IconButton(icon: Icon(Icons.add), onPressed: () {}),
             )
           : ExpansionTile(
               initiallyExpanded: true,

@@ -4,5 +4,5 @@ class SubTask {
   String priority;
   int state = 0; // 0 = TODO, 1 = DOING, 2 = DONE
 
-  SubTask(this.name, this.priority, this.state);
+  SubTask(this.id, this.name, this.priority, this.state);
 }

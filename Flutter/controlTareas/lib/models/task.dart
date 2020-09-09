@@ -7,5 +7,5 @@ class Task {
   int state = 0; // 0 = TODO, 1 = DOING, 2 = DONE
   List<SubTask> subTasks = List();
 
-  Task(this.name, this.priority, this.state);
+  Task(this.id, this.name, this.priority, this.state);
 }
