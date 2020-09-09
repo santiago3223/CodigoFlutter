@@ -1,3 +1,4 @@
+import 'package:controlTareas/util/dbhelper.dart';
 import 'package:controlTareas/widgets/task_list.dart';
 import 'package:flutter/material.dart';
 
@@ -41,6 +42,10 @@ class ControlTareas extends StatelessWidget {
           ]),
         ),
         body: TabBarView(children: [TaskList(), Text("doing"), Text("done")]),
+        floatingActionButton: FloatingActionButton(onPressed: () {
+          DbHelper helper = DbHelper();
+          helper.testDb();
+        }),
       ),
     );
   }
