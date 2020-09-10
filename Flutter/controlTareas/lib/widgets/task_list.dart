@@ -23,7 +23,7 @@ class _TaskListState extends State<TaskList> {
 
   Future showData() async {
     await helper.openDb();
-    list = await helper.getTasks();
+    list = await helper.getTasks(state);
     for (int i = 0; i < list.length; i++) {
       list[i].subTasks = await helper.getSubTasks(list[i].id);
     }
