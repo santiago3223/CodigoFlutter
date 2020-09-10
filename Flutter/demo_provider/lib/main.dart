@@ -1,4 +1,5 @@
 import 'package:demo_provider/providers/counter_provider.dart';
+import 'package:demo_provider/widgets/boton_contador_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,35 +24,23 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: MyHomePage(title: 'Flutter Demo Home Page'),
+        home: MyHomePage(),
       ),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    CounterProvider cProvider = Provider.of<CounterProvider>(context);
     print("Redibuja Todo");
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text("Hola Codigo"),
         actions: [
           IconButton(
             icon: Icon(Icons.remove),
-            onPressed: () {
-              cProvider.decrementCounter();
-            },
+            onPressed: () {},
           )
         ],
       ),
@@ -62,14 +51,13 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               'You have pushed the button this many times:',
             ),
-            ContadorWidget()
+            ContadorWidget(),
+            BotonContador(),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          cProvider.incrementCounter();
-        },
+        onPressed: () {},
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
