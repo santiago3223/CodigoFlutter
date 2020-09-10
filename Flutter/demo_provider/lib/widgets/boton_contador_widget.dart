@@ -5,9 +5,9 @@ import 'package:provider/provider.dart';
 class BotonContador extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    CounterProvider cProvider = Provider.of<CounterProvider>(context);
+    //CounterProvider cProvider = Provider.of<CounterProvider>(context);
     return RaisedButton(
-      onPressed: () => cProvider.incrementCounter(),
+      onPressed: () {},
     );
   }
 }
