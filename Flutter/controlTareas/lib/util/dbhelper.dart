@@ -59,11 +59,14 @@ class DbHelper {
   Future<int> insertSubTask(SubTask subTask, int idTask) async {
     int id = await db.insert("subtasks", subTask.toMap(idTask),
         conflictAlgorithm: ConflictAlgorithm.replace);
-/*
+
     List<Map<String, dynamic>> maps =
         await db.query("tasks", where: "id=?", whereArgs: [idTask]);
     Task t = Task(
         maps[0]["id"], maps[0]["name"], maps[0]["priority"], maps[0]["state"]);
+    t.state = 1;
+    await insertTask(t);
+    /*
     List<Map<String, dynamic>> subtareas = await db.query("subtasks",
         where: "idTask=? AND state=?", whereArgs: [idTask, 1]);
     if (subtareas.length > 0) {

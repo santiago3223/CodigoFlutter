@@ -8,4 +8,13 @@ class Task {
   List<SubTask> subTasks = List();
 
   Task(this.id, this.name, this.priority, this.state);
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'priority': priority,
+      'state': state,
+    };
+  }
 }
