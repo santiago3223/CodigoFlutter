@@ -10,11 +10,25 @@ class MovieList extends StatefulWidget {
 class _MovieListState extends State<MovieList> {
   List result;
   HttpHelper helper;
+  Icon visibleIcon = Icon(Icons.search);
+  Widget searchBar = Text('Estrenos');
 
   @override
   void initState() {
     helper = HttpHelper();
+    helper.getUpcoming().then((value) {
+      setState(() {
+        result = value;
+      });
+    });
     super.initState();
+  }
+
+  Future search(String text) async {
+    result = await helper.findMovies(text);
+    setState(() {
+      result = result;
+    });
   }
 
   @override
@@ -24,14 +38,31 @@ class _MovieListState extends State<MovieList> {
 
     String imageBaseUrl = 'https://image.tmdb.org/t/p/w92/';
 
-    helper.getUpcoming().then((value) {
-      setState(() {
-        result = value;
-      });
-    });
     return Scaffold(
       appBar: AppBar(
-        title: Text("Proximas Peliculas"),
+        title: searchBar,
+        actions: [
+          IconButton(
+            icon: visibleIcon,
+            onPressed: () {
+              if (visibleIcon.icon == Icons.search) {
+                setState(() {
+                  visibleIcon = Icon(Icons.cancel);
+                  searchBar = TextField(
+                    onSubmitted: (text) {
+                      search(text);
+                    },
+                  );
+                });
+              } else {
+                setState(() {
+                  visibleIcon = Icon(Icons.search);
+                  searchBar = Text("Estrenos");
+                });
+              }
+            },
+          )
+        ],
       ),
       body: ListView.builder(
           itemCount: (result == null) ? 0 : result.length,
