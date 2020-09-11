@@ -15,6 +15,6 @@ class Movie {
     this.voteAverage = json['vote_average'] * 1.0;
     this.releaseDate = json['release_date'];
     this.overview = json['overview'];
-    this.posterPath = json['posterPath'];
+    this.posterPath = json['poster_path'];
   }
 }
