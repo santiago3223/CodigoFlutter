@@ -26,12 +26,14 @@ class _PokemonTypesState extends State<PokemonTypes> {
           builder: (c, snapshot) {
             if (snapshot.hasData) {
               List types = snapshot.data;
-              return ListView.builder(
+              return GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3),
                   itemCount: types.length,
                   itemBuilder: (c, i) => Card(
                         color: colorsType[types[i]],
-                        child: ListTile(
-                          title: Text(types[i]),
+                        child: Center(
+                          child: Text(types[i]),
                         ),
                       ));
             } else if (snapshot.hasError) {

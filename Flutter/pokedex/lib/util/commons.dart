@@ -9,7 +9,7 @@ Map colorsType = {
   "water": Colors.blue,
   "normal": Colors.grey,
   "psychic": Colors.deepPurple,
-  "fight": Colors.red,
+  "fighting": Colors.red,
   "electric": Colors.yellow,
   "ground": Colors.yellow.shade800,
   "ice": Colors.lightBlue,

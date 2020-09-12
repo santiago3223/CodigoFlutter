@@ -60,6 +60,14 @@ class _PokeHomeState extends State<PokeHome> {
                         image: NetworkImage(
                             "https://i.ebayimg.com/images/g/CLAAAOxyRhBSq3b5/s-l300.jpg"))),
               ),
+            ),
+            ListTile(
+              leading: Icon(Icons.grid_on),
+              title: Text("Tipos"),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => PokemonTypes()));
+              },
             )
           ],
         ),
