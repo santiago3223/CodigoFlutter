@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/route/pokemon_detail.dart';
+import 'package:pokedex/route/pokemon_types.dart';
 import 'package:pokedex/util/http_helper.dart';
 
 void main() {
@@ -73,7 +74,8 @@ class _PokeHomeState extends State<PokeHome> {
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
-            helper.getPokemons(150);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => PokemonTypes()));
           }),
     );
   }

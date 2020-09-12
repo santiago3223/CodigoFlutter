@@ -30,4 +30,17 @@ class HttpHelper {
       print(response.statusCode);
     }
   }
+
+  Future<List> getTypes() async {
+    var response = await http.get(baseUrl + "type/");
+    if (response.statusCode == 200) {
+      var jsonReponse = convert.jsonDecode(response.body);
+      List types = jsonReponse["results"];
+      List typeNames = types.map((e) => e["name"]).toList();
+      print(typeNames);
+      return typeNames;
+    } else {
+      print(response.statusCode);
+    }
+  }
 }

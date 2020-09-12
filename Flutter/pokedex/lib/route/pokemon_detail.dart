@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/models/pokemon.dart';
+import 'package:pokedex/util/commons.dart';
 import 'package:pokedex/util/http_helper.dart';
 
 class PokemonDetail extends StatefulWidget {
@@ -15,22 +16,6 @@ class _PokemonDetailState extends State<PokemonDetail> {
   int id;
   HttpHelper helper;
   String imageUrl = "https://pokeres.bastionbot.org/images/pokemon/";
-  Map colorsType = {
-    "grass": Colors.lightGreen,
-    "poison": Colors.purple,
-    "fire": Colors.orange,
-    "flying": Colors.grey,
-    "bug": Colors.green,
-    "water": Colors.blue,
-    "normal": Colors.grey,
-    "psychic": Colors.deepPurple,
-    "fight": Colors.red,
-    "electric": Colors.yellow,
-    "ice": Colors.lightBlue,
-    "rock": Colors.brown,
-    "ghost": Colors.deepPurple,
-    "dragon": Colors.blueGrey,
-  };
 
   @override
   void initState() {
@@ -97,6 +82,7 @@ class _PokemonDetailState extends State<PokemonDetail> {
         Container(
           height: 60,
           child: ListView.builder(
+              shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               itemCount: pokemon.types.length,
               itemBuilder: (c, i) {
@@ -120,6 +106,7 @@ class _PokemonDetailState extends State<PokemonDetail> {
         Container(
           height: 100,
           child: ListView(
+            shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             children: [
               Image.network(pokemon.sprites.frontDefault),
