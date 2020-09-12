@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex/util/http_helper.dart';
 
 class PokemonDetail extends StatefulWidget {
   int id;
@@ -11,7 +12,14 @@ class PokemonDetail extends StatefulWidget {
 
 class _PokemonDetailState extends State<PokemonDetail> {
   int id;
+  HttpHelper helper;
   String imageUrl = "https://pokeres.bastionbot.org/images/pokemon/";
+
+  @override
+  void initState() {
+    helper = HttpHelper();
+    super.initState();
+  }
 
   _PokemonDetailState(this.id);
   @override
@@ -24,7 +32,15 @@ class _PokemonDetailState extends State<PokemonDetail> {
         children: [
           Hero(
               tag: id.toString(),
-              child: Image.network(imageUrl + id.toString() + ".png"))
+              child: Image.network(imageUrl + id.toString() + ".png")),
+          FutureBuilder(
+              future: helper.getPokemon(id),
+              builder: (c, snapshot) {
+                if (snapshot.hasData) {
+                  return Text(snapshot.data.name);
+                } else if (snapshot.hasError) {}
+                return Text("Cargando");
+              })
         ],
       ),
     );
