@@ -43,4 +43,16 @@ class HttpHelper {
       print(response.statusCode);
     }
   }
+
+  Future<List> getPokemonByType(int id) async {
+    var response = await http.get(baseUrl + "type/" + id.toString() + "/");
+    if (response.statusCode == 200) {
+      var jsonReponse = convert.jsonDecode(response.body);
+      var pokemons = jsonReponse["pokemon"];
+      List pokemon = pokemons.map((e) => e["pokemon"]).toList();
+      return pokemon;
+    } else {
+      print(response.statusCode);
+    }
+  }
 }

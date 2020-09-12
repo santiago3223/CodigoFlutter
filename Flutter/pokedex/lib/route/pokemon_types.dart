@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex/route/pokemon_list.dart';
 import 'package:pokedex/util/commons.dart';
 import 'package:pokedex/util/http_helper.dart';
 
@@ -30,10 +31,18 @@ class _PokemonTypesState extends State<PokemonTypes> {
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3),
                   itemCount: types.length,
-                  itemBuilder: (c, i) => Card(
-                        color: colorsType[types[i]],
-                        child: Center(
-                          child: Text(types[i]),
+                  itemBuilder: (c, i) => GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (c) => PokemonList(i + 1)));
+                        },
+                        child: Card(
+                          color: colorsType[types[i]],
+                          child: Center(
+                            child: Text(types[i]),
+                          ),
                         ),
                       ));
             } else if (snapshot.hasError) {

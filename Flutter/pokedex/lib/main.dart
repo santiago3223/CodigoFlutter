@@ -34,11 +34,29 @@ class PokeHome extends StatefulWidget {
 class _PokeHomeState extends State<PokeHome> {
   HttpHelper helper;
   String imageUrl = "https://pokeres.bastionbot.org/images/pokemon/";
+  List filteredPokemons = [];
+  List allPokemons = [];
 
   @override
   void initState() {
     helper = HttpHelper();
     super.initState();
+  }
+
+  void filterPokemon(String str) {
+    if (str.length > 0) {
+      filteredPokemons = [];
+      allPokemons.forEach((element) {
+        if (element.contains(str)) {
+          filteredPokemons.add(element);
+        }
+      });
+    } else {
+      filteredPokemons = allPokemons;
+    }
+    setState(() {
+      filteredPokemons = filteredPokemons;
+    });
   }
 
   @override
@@ -72,35 +90,47 @@ class _PokeHomeState extends State<PokeHome> {
           ],
         ),
       ),
-      body: FutureBuilder<List>(
-          future: helper.getPokemons(151),
-          builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-            if (snapshot.hasData) {
-              List pokemons = snapshot.data;
-              return ListView.builder(
-                  itemCount: pokemons.length,
-                  itemBuilder: (c, i) => ListTile(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (c) => PokemonDetail(i + 1)));
-                        },
-                        leading: Text((i + 1).toString()),
-                        title: Text(pokemons[i]),
-                        trailing: Hero(
-                          tag: (i + 1).toString(),
-                          child: Image.network(
-                              imageUrl + (i + 1).toString() + ".png"),
-                        ),
-                      ));
-            } else if (snapshot.hasError) {
-              return Text("Tiene Error");
-            }
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }),
+      body: Column(
+        children: [
+          TextField(
+            onChanged: (value) {
+              filterPokemon(value);
+            },
+          ),
+          Expanded(
+            child: FutureBuilder<List>(
+                future: helper.getPokemons(151),
+                builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+                  if (snapshot.hasData) {
+                    allPokemons = snapshot.data;
+                    List pokemons = filteredPokemons;
+                    return ListView.builder(
+                        itemCount: pokemons.length,
+                        itemBuilder: (c, i) => ListTile(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (c) => PokemonDetail(i + 1)));
+                              },
+                              leading: Text((i + 1).toString()),
+                              title: Text(pokemons[i]),
+                              trailing: Hero(
+                                tag: (i + 1).toString(),
+                                child: Image.network(
+                                    imageUrl + (i + 1).toString() + ".png"),
+                              ),
+                            ));
+                  } else if (snapshot.hasError) {
+                    return Text("Tiene Error");
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }),
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
