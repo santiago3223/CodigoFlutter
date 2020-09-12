@@ -47,6 +47,23 @@ class _PokeHomeState extends State<PokeHome> {
       appBar: AppBar(
         title: Text("Pokedex"),
       ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            UserAccountsDrawerHeader(
+              accountName: Text("PokeCodiGo"),
+              accountEmail: null,
+              currentAccountPicture: Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: NetworkImage(
+                            "https://i.ebayimg.com/images/g/CLAAAOxyRhBSq3b5/s-l300.jpg"))),
+              ),
+            )
+          ],
+        ),
+      ),
       body: FutureBuilder<List>(
           future: helper.getPokemons(151),
           builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
