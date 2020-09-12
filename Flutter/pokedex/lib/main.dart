@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokedex/route/pokemon_detail.dart';
 import 'package:pokedex/route/pokemon_types.dart';
 import 'package:pokedex/util/http_helper.dart';
+import 'package:splashscreen/splashscreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,7 +17,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: PokeHome(),
+      home: SplashScreen(
+        imageBackground: AssetImage("assets/pokedex.jpg"),
+        seconds: 2,
+        navigateAfterSeconds: PokeHome(),
+      ),
     );
   }
 }
