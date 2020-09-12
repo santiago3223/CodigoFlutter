@@ -15,6 +15,22 @@ class _PokemonDetailState extends State<PokemonDetail> {
   int id;
   HttpHelper helper;
   String imageUrl = "https://pokeres.bastionbot.org/images/pokemon/";
+  Map colorsType = {
+    "grass": Colors.lightGreen,
+    "poison": Colors.purple,
+    "fire": Colors.orange,
+    "flying": Colors.grey,
+    "bug": Colors.green,
+    "water": Colors.blue,
+    "normal": Colors.grey,
+    "psychic": Colors.deepPurple,
+    "fight": Colors.red,
+    "electric": Colors.yellow,
+    "ice": Colors.lightBlue,
+    "rock": Colors.brown,
+    "ghost": Colors.deepPurple,
+    "dragon": Colors.blueGrey,
+  };
 
   @override
   void initState() {
@@ -31,29 +47,31 @@ class _PokemonDetailState extends State<PokemonDetail> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Hero(
-                tag: id.toString(),
-                child: Image.network(
-                  imageUrl + id.toString() + ".png",
-                  height: 200,
-                )),
-            FutureBuilder(
-                future: helper.getPokemon(id),
-                builder: (c, snapshot) {
-                  if (snapshot.hasData) {
-                    Pokemon pokemon = snapshot.data;
-                    return buildPokemonDetail(pokemon);
-                  } else if (snapshot.hasError) {
-                    return Text("Error");
-                  }
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                })
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Hero(
+                  tag: id.toString(),
+                  child: Image.network(
+                    imageUrl + id.toString() + ".png",
+                    height: 200,
+                  )),
+              FutureBuilder(
+                  future: helper.getPokemon(id),
+                  builder: (c, snapshot) {
+                    if (snapshot.hasData) {
+                      Pokemon pokemon = snapshot.data;
+                      return buildPokemonDetail(pokemon);
+                    } else if (snapshot.hasError) {
+                      return Text("Error");
+                    }
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  })
+            ],
+          ),
         ),
       ),
     );
@@ -77,6 +95,29 @@ class _PokemonDetailState extends State<PokemonDetail> {
           ],
         ),
         Container(
+          height: 60,
+          child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: pokemon.types.length,
+              itemBuilder: (c, i) {
+                return Container(
+                    margin: EdgeInsets.all(15),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: colorsType[pokemon.types[i].type.name]),
+                    child: Center(
+                        child: Text(
+                      pokemon.types[i].type.name,
+                      style: TextStyle(color: Colors.white),
+                    )));
+              }),
+        ),
+        Text("Sprites:"),
+        SizedBox(
+          height: 16,
+        ),
+        Container(
           height: 100,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -86,6 +127,22 @@ class _PokemonDetailState extends State<PokemonDetail> {
               Image.network(pokemon.sprites.frontShiny),
               Image.network(pokemon.sprites.backShiny)
             ],
+          ),
+        ),
+        Text("Movimientos:"),
+        SizedBox(
+          height: 16,
+        ),
+        Container(
+          height: 100,
+          child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3, childAspectRatio: 8),
+            itemCount: pokemon.moves.length,
+            scrollDirection: Axis.vertical,
+            itemBuilder: (c, i) {
+              return Text(pokemon.moves[i].move.name);
+            },
           ),
         )
       ],
