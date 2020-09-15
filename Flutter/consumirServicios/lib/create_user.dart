@@ -11,17 +11,20 @@ class CreateUser extends StatefulWidget {
 class _CreateUserState extends State<CreateUser> {
   TextEditingController usuario = TextEditingController();
   TextEditingController trabajo = TextEditingController();
+  GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey();
 
   Future<String> crearUsuario() async {
     var response = await http.post("https://reqres.in/api/users",
         body: {"name": usuario.text, "job": trabajo.text});
     print(response.statusCode);
     print(response.body.toString());
+    return response.body.toString();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -54,8 +57,13 @@ class _CreateUserState extends State<CreateUser> {
             ),
             RaisedButton(
               child: Text("Crear"),
-              onPressed: () {
-                crearUsuario();
+              onPressed: () async {
+                String usr = await crearUsuario();
+                scaffoldKey.currentState.showSnackBar(
+                  SnackBar(
+                    content: Text(usr),
+                  ),
+                );
               },
             )
           ],
