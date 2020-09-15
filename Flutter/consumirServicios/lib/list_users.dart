@@ -9,7 +9,7 @@ class ListUsers extends StatefulWidget {
 
 class _ListUsersState extends State<ListUsers> {
   Future<List> obtenerUsuarios() async {
-    var respuesta = await http.get("https://reqres.in/api/users?page=2");
+    var respuesta = await http.get("https://reqres.in/api/users");
     var resp = convert.jsonDecode(respuesta.body)["data"];
     return resp;
   }

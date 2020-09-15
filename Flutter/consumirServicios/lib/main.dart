@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'create_user.dart';
 import 'get_user.dart';
 import 'list_users.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: GetUser(),
+      home: CreateUser(),
     );
   }
 }
