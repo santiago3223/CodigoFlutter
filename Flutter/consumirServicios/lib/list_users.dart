@@ -23,14 +23,18 @@ class _ListUsersState extends State<ListUsers> {
             future: obtenerUsuarios(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
+                List listaPersonas = snapshot.data;
                 return ListView.builder(
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (c, i) => ListTile(
-                          leading: Image.network(snapshot.data[i]["avatar"]),
-                          title: Text(snapshot.data[i]["first_name"] +
-                              snapshot.data[i]["last_name"]),
-                          subtitle: Text(snapshot.data[i]["email"]),
-                        ));
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, index) {
+                    Map persona = listaPersonas[index];
+                    return ListTile(
+                      leading: Image.network(persona["avatar"]),
+                      title: Text(persona["first_name"] + persona["last_name"]),
+                      subtitle: Text(persona["email"]),
+                    );
+                  },
+                );
               }
               return Text("espera");
             }),
