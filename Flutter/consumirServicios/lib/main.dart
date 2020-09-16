@@ -1,3 +1,4 @@
+import 'package:consumirServicios/login.dart';
 import 'package:flutter/material.dart';
 
 import 'create_user.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: PutUser(),
+      home: Login(),
     );
   }
 }
