@@ -16,9 +16,12 @@ class LocationView extends StatelessWidget {
     return Column(
       children: [
         Text(
-          city,
+          city.toUpperCase(),
           style: TextStyle(
               fontSize: 40, fontWeight: FontWeight.w300, color: Colors.white),
+        ),
+        SizedBox(
+          height: 8,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,

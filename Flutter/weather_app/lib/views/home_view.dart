@@ -66,6 +66,21 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
               LocationView(city: city, location: location),
+              Row(
+                children: [
+                  Column(
+                    children: [
+                      Text("30°"),
+                      Text("Sensación termina 20°"),
+                    ],
+                  ),
+                  Image.asset(
+                    "assets/images/021-cloud.png",
+                    height: 150,
+                    width: 150,
+                  )
+                ],
+              )
             ],
           )),
     );
