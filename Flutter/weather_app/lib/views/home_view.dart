@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/api/owm_api.dart';
+import 'package:weather_app/models/forecast.dart';
+import 'package:weather_app/models/location.dart';
 import 'package:weather_app/models/weather.dart';
 
 import 'gradient_container.dart';
+import 'location_view.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -9,12 +13,16 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  WeatherCondition condition;
+  Location location = new Location(latitude: 0, longitude: 0);
+  String city = "Ciudad";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _buildGradientContainer(
           true,
-          WeatherCondition.clear,
+          condition,
           ListView(
             children: [
               Container(
@@ -40,11 +48,24 @@ class _HomeViewState extends State<HomeView> {
                       child: TextField(
                         decoration: InputDecoration.collapsed(
                             hintText: "Ingrese Ciudad"),
+                        onSubmitted: (value) async {
+                          city = value;
+                          OpenWeatherMapAPI api = OpenWeatherMapAPI();
+                          location = await api.getLocation(value);
+                          Forecast f = await api.getForecast(location);
+                          print(f.current.condition.toString());
+                          setState(() {
+                            city = city;
+                            location = location;
+                            condition = f.current.condition;
+                          });
+                        },
                       ),
                     ),
                   ],
                 ),
-              )
+              ),
+              LocationView(city: city, location: location),
             ],
           )),
     );
