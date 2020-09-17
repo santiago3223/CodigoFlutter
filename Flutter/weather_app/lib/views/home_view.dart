@@ -13,7 +13,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  WeatherCondition condition;
+  Forecast forecast;
   Location location = new Location(latitude: 0, longitude: 0);
   String city = "Ciudad";
 
@@ -22,7 +22,9 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       body: _buildGradientContainer(
           true,
-          condition,
+          forecast == null
+              ? WeatherCondition.clear
+              : forecast.current.condition,
           ListView(
             children: [
               Container(
@@ -52,12 +54,12 @@ class _HomeViewState extends State<HomeView> {
                           city = value;
                           OpenWeatherMapAPI api = OpenWeatherMapAPI();
                           location = await api.getLocation(value);
-                          Forecast f = await api.getForecast(location);
-                          print(f.current.condition.toString());
+                          forecast = await api.getForecast(location);
+                          print(forecast.current.condition.toString());
                           setState(() {
                             city = city;
                             location = location;
-                            condition = f.current.condition;
+                            forecast = forecast;
                           });
                         },
                       ),
@@ -66,18 +68,34 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
               LocationView(city: city, location: location),
+              SizedBox(
+                height: 24,
+              ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Column(
                     children: [
-                      Text("30°"),
-                      Text("Sensación termina 20°"),
+                      Text(
+                        "${forecast.current.temp}°",
+                        style: TextStyle(
+                            fontSize: 50,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w300),
+                      ),
+                      Text(
+                        "Sensación termica ${forecast.current.feelLikeTemp}°",
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w300),
+                      ),
                     ],
                   ),
                   Image.asset(
                     "assets/images/021-cloud.png",
-                    height: 150,
-                    width: 150,
+                    height: 100,
+                    width: 100,
                   )
                 ],
               )
