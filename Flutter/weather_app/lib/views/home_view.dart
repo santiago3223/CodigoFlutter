@@ -3,6 +3,7 @@ import 'package:weather_app/api/owm_api.dart';
 import 'package:weather_app/models/forecast.dart';
 import 'package:weather_app/models/location.dart';
 import 'package:weather_app/models/weather.dart';
+import 'package:weather_app/views/weather_info.dart';
 
 import 'gradient_container.dart';
 import 'location_view.dart';
@@ -71,34 +72,7 @@ class _HomeViewState extends State<HomeView> {
               SizedBox(
                 height: 24,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    children: [
-                      Text(
-                        "${forecast.current.temp}°",
-                        style: TextStyle(
-                            fontSize: 50,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w300),
-                      ),
-                      Text(
-                        "Sensación termica ${forecast.current.feelLikeTemp}°",
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w300),
-                      ),
-                    ],
-                  ),
-                  Image.asset(
-                    "assets/images/021-cloud.png",
-                    height: 100,
-                    width: 100,
-                  )
-                ],
-              )
+              WeatherInfo(forecast: forecast)
             ],
           )),
     );
