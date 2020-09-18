@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app/api/owm_api.dart';
 import 'package:weather_app/models/forecast.dart';
 import 'package:weather_app/models/location.dart';
 import 'package:weather_app/models/weather.dart';
