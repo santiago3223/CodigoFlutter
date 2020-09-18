@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:weather_app/api/owm_api.dart';
 import 'package:weather_app/models/forecast.dart';
 import 'package:weather_app/models/location.dart';
 import 'package:weather_app/models/weather.dart';
+import 'package:weather_app/viewmodels/weather_provider.dart';
 import 'package:weather_app/views/weather_info.dart';
 
 import 'daily_forecast_view.dart';
 import 'gradient_container.dart';
 import 'location_view.dart';
 
-class HomeView extends StatefulWidget {
-  @override
-  _HomeViewState createState() => _HomeViewState();
-}
-
-class _HomeViewState extends State<HomeView> {
-  Forecast forecast;
-  Location location = new Location(latitude: 0, longitude: 0);
-  String city = "Ciudad";
-
+class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Forecast forecast = Provider.of<WeatherProvider>(context).forecast;
+    Location location = Provider.of<WeatherProvider>(context).location;
+    String city = Provider.of<WeatherProvider>(context).city;
+
     return Scaffold(
       body: _buildGradientContainer(
           true,
@@ -53,16 +51,8 @@ class _HomeViewState extends State<HomeView> {
                         decoration: InputDecoration.collapsed(
                             hintText: "Ingrese Ciudad"),
                         onSubmitted: (value) async {
-                          city = value;
-                          OpenWeatherMapAPI api = OpenWeatherMapAPI();
-                          location = await api.getLocation(value);
-                          forecast = await api.getForecast(location);
-                          print(forecast.current.condition.toString());
-                          setState(() {
-                            city = city;
-                            location = location;
-                            forecast = forecast;
-                          });
+                          Provider.of<WeatherProvider>(context, listen: false)
+                              .fetchForecast(value);
                         },
                       ),
                     ),
@@ -79,14 +69,25 @@ class _HomeViewState extends State<HomeView> {
               ),
               Center(
                 child: Text(
-                  forecast.current.description,
+                  forecast != null ? forecast.current.description : "Clima",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 35,
                       fontWeight: FontWeight.w300),
                 ),
               ),
-              DailyForecastView(forecast: forecast)
+              SizedBox(
+                height: 50,
+              ),
+              DailyForecastView(forecast: forecast),
+              SizedBox(
+                height: 20,
+              ),
+              Center(
+                  child: forecast != null
+                      ? Text("Last Update: " +
+                          DateFormat.Hm().format(forecast.lastUpdated))
+                      : Text("00:00"))
             ],
           )),
     );
