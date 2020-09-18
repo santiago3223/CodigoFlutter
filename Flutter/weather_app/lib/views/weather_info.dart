@@ -12,7 +12,7 @@ class WeatherInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (forecast == null) {
-      return null;
+      return Container();
     }
 
     return Row(
