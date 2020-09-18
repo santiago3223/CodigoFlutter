@@ -5,6 +5,7 @@ import 'package:weather_app/models/location.dart';
 import 'package:weather_app/models/weather.dart';
 import 'package:weather_app/views/weather_info.dart';
 
+import 'daily_forecast_view.dart';
 import 'gradient_container.dart';
 import 'location_view.dart';
 
@@ -72,7 +73,20 @@ class _HomeViewState extends State<HomeView> {
               SizedBox(
                 height: 24,
               ),
-              WeatherInfo(forecast: forecast)
+              WeatherInfo(forecast: forecast),
+              SizedBox(
+                height: 24,
+              ),
+              Center(
+                child: Text(
+                  forecast.current.description,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 35,
+                      fontWeight: FontWeight.w300),
+                ),
+              ),
+              DailyForecastView(forecast: forecast)
             ],
           )),
     );
