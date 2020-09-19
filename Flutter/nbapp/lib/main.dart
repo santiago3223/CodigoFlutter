@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:nbapp/models/equipo.dart';
+import 'package:nbapp/routes/players_team.dart';
 import 'package:nbapp/util/httphelper.dart';
 
 void main() {
@@ -105,7 +106,14 @@ class _HomeState extends State<Home> {
                                   children: [
                                     RaisedButton(
                                       color: Colors.black,
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PlayersPerTeam(),
+                                            ));
+                                      },
                                       child: Text(
                                         "Jugadores",
                                         style: TextStyle(color: Colors.white),
