@@ -10,12 +10,7 @@ class HttpHelper {
     var response = await http.get(urlBase + "teams");
     if (response.statusCode == 200) {
       List equipos = jsonDecode(response.body)["data"];
-      List<Equipo> listeq = [];
-      for (int i = 0; i < equipos.length; i++) {
-        listeq.add(Equipo.fromJson(equipos[i]));
-      }
-      return listeq;
-      //return equipos.map((e) => Equipo.fromJson(e)).toList();
+      return equipos.map((e) => Equipo.fromJson(e)).toList();
     } else {
       print("Error obteniendo Equipos");
       return [];
