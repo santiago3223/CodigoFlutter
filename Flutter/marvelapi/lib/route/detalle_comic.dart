@@ -27,11 +27,11 @@ class DetalleComic extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  comic.title,
+                  comic.title == null ? "" : comic.title,
                   style: Theme.of(context).textTheme.headline4,
                 ),
                 Text(
-                  comic.description,
+                  comic.description == null ? "" : comic.description,
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],

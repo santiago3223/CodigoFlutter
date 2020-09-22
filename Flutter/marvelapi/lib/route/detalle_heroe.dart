@@ -42,6 +42,28 @@ class DetalleHeroe extends StatelessWidget {
                       ))
                   .toList(),
             ),
+          ),
+          Text(
+            "Events:",
+            style: Theme.of(context).textTheme.headline4,
+          ),
+          Expanded(
+            child: ListView(
+              children: superHeroe.events.items
+                  .map((e) => ListTile(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    DetalleComic(e.resourceUri),
+                              ));
+                        },
+                        title: Text(e.name),
+                        subtitle: Text(e.resourceUri),
+                      ))
+                  .toList(),
+            ),
           )
         ],
       ),
