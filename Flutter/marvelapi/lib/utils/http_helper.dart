@@ -10,11 +10,12 @@ class HttpHelper {
   String privateKey = "00763b7723ab2b6d06242cc5a3e2f8ecb42741ec";
 
   Future<List<SuperHeroe>> obtenerSuperHeroes(int page) async {
+    page = page - 1;
     String hash =
         md5.convert(utf8.encode("1" + privateKey + publicKey)).toString();
 
-    var response = await http
-        .get(urlBase + "characters?apikey=$publicKey&hash=$hash&ts=1");
+    var response = await http.get(urlBase +
+        "characters?apikey=$publicKey&hash=$hash&ts=1&limit=100&offset=${page * 100}");
     List jsonResponse = jsonDecode(response.body)["data"]["results"];
     List<SuperHeroe> heroes =
         jsonResponse.map((e) => SuperHeroe.fromJson(e)).toList();
