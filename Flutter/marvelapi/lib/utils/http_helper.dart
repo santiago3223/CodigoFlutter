@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
+import 'package:marvelapi/modelos/comic.dart';
 import 'package:marvelapi/modelos/super_heroe.dart';
 
 class HttpHelper {
@@ -22,5 +23,17 @@ class HttpHelper {
 
     print(response.body);
     return heroes;
+  }
+
+  Future<Comic> obtenerComic(String url) async {
+    String hash =
+        md5.convert(utf8.encode("1" + privateKey + publicKey)).toString();
+
+    var response = await http.get("$url?apikey=$publicKey&hash=$hash&ts=1");
+    print(response.body);
+    var jsonResponse = jsonDecode(response.body)["data"]["results"][0];
+    Comic comic = Comic.fromJson(jsonResponse);
+
+    return comic;
   }
 }
