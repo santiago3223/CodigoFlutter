@@ -35,6 +35,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   DateFormat fomatoFecha = DateFormat("dd/MM/yy");
+  DateTime fechaSeleccionada = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -42,36 +43,41 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: FutureBuilder(
-        future: HttpHelper().fetchNoticias(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            List<Noticia> noticias = snapshot.data;
-            return Column(
-              children: [
-                FlatButton(
-                    onPressed: () {
-                      DatePicker.showDatePicker(context,
-                          showTitleActions: true,
-                          minTime: DateTime(2018, 3, 5),
-                          maxTime: DateTime(2019, 6, 7), onChanged: (date) {
-                        print('change $date');
-                      }, onConfirm: (date) {
-                        print('confirm $date');
-                      }, currentTime: DateTime.now(), locale: LocaleType.es);
-                    },
-                    child: Text(
-                      'show date time picker (Chinese)',
-                      style: TextStyle(color: Colors.blue),
-                    )),
-                Expanded(
-                  child: ListView.builder(
+      body: Column(
+        children: [
+          FlatButton(
+              onPressed: () {
+                DatePicker.showDatePicker(context,
+                    showTitleActions: true,
+                    minTime: DateTime(2018, 1, 1),
+                    maxTime: DateTime.now(), onChanged: (date) {
+                  print('change $date');
+                }, onConfirm: (date) {
+                  setState(() {
+                    fechaSeleccionada = date;
+                  });
+                }, currentTime: DateTime.now(), locale: LocaleType.es);
+              },
+              child: Text(
+                fomatoFecha.format(fechaSeleccionada),
+                style: TextStyle(color: Colors.blue),
+              )),
+          Expanded(
+            child: FutureBuilder(
+              future: HttpHelper().fetchNoticias(fechaSeleccionada),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  List<Noticia> noticias = snapshot.data;
+                  if (noticias.length == 0)
+                    return Center(child: Text("Este dia no hay noticias"));
+
+                  return ListView.builder(
                     itemCount: noticias.length,
                     itemBuilder: (context, index) => Card(
                       child: Row(
                         children: [
                           Image.network(
-                            noticias[index].urlToImage,
+                            noticias[index].urlToImage.toString(),
                             height: 150,
                             width: 150,
                             fit: BoxFit.cover,
@@ -83,28 +89,29 @@ class _MyHomePageState extends State<MyHomePage> {
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
                                   Text(
-                                    noticias[index].title,
+                                    noticias[index].title.toString(),
                                     style: TextStyle(fontSize: 16),
                                   ),
                                   SizedBox(
                                     height: 10,
                                   ),
                                   Text(
-                                    noticias[index].source.name +
+                                    noticias[index].source.name.toString() +
                                         " - " +
-                                        fomatoFecha.format(
-                                            noticias[index].publishedAt),
+                                        fomatoFecha
+                                            .format(noticias[index].publishedAt)
+                                            .toString(),
                                     textAlign: TextAlign.end,
                                     style: TextStyle(fontSize: 12),
                                   ),
                                   Text(
-                                    noticias[index].description,
+                                    noticias[index].description.toString(),
                                     textAlign: TextAlign.justify,
                                   ),
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  Text(noticias[index].author,
+                                  Text(noticias[index].author.toString(),
                                       textAlign: TextAlign.end,
                                       style: TextStyle(fontSize: 12)),
                                 ],
@@ -114,25 +121,20 @@ class _MyHomePageState extends State<MyHomePage> {
                         ],
                       ),
                     ),
-                  ),
-                ),
-              ],
-            );
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text(snapshot.error.toString()),
-            );
-          } else {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          HttpHelper().fetchNoticias();
-        },
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text(snapshot.error.toString()),
+                  );
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
