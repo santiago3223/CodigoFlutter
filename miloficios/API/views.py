@@ -23,3 +23,11 @@ class CategoriasList(generics.ListCreateAPIView):
 class CategoriasGet(generics.RetrieveUpdateDestroyAPIView):
     queryset = Categoria.objects.all()
     serializer_class = CategoriaSerializer
+
+class SubCategoriaList(generics.ListCreateAPIView):
+    queryset = Subcategoria.objects.all()
+    serializer_class = SubCategoriaSerializer
+
+class SubCategoriaGet(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Subcategoria.objects.all()
+    serializer_class = SubCategoriaSerializer
