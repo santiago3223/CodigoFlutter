@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:miloficios_app/utils/http_helper.dart';
 
+import 'models/categoria.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -34,7 +36,20 @@ class _CategoriasState extends State<Categorias> {
           future: HttpHelper().fetchCategorias(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return Text(snapshot.data.toString());
+              List<Categoria> categorias = snapshot.data;
+              return GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3),
+                itemCount: categorias.length,
+                itemBuilder: (context, index) => Card(
+                  child: Column(
+                    children: [
+                      Expanded(child: Image.network(categorias[index].urlLogo)),
+                      Text(categorias[index].nombre),
+                    ],
+                  ),
+                ),
+              );
             } else if (snapshot.hasError) {
               return Text(snapshot.error.toString());
             } else {
