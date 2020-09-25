@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:miloficios_app/models/banner_publicitario.dart';
 import 'package:miloficios_app/models/categoria.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,5 +11,11 @@ class HttpHelper {
     var response = await http.get(urlBase + "categoriasList/");
     List categoriasJson = jsonDecode(response.body);
     return categoriasJson.map((e) => Categoria.fromJson(e)).toList();
+  }
+
+  Future<List<BannerPublicitario>> fetchBannersPublicitarios() async {
+    var response = await http.get(urlBase + "bannerspublicitarios/");
+    List categoriasJson = jsonDecode(response.body);
+    return categoriasJson.map((e) => BannerPublicitario.fromJson(e)).toList();
   }
 }

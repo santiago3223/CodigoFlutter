@@ -9,11 +9,21 @@ class ListarDetalleCategorias extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
-          itemCount: categoria.subcategorias.length,
-          itemBuilder: (context, index) => ListTile(
-                title: Text(categoria.subcategorias[index].nombre),
-              )),
+      appBar: AppBar(
+        title: Text(categoria.nombre),
+      ),
+      body: Column(
+        children: [
+          Image.network(categoria.urlBanner),
+          Expanded(
+            child: ListView.builder(
+                itemCount: categoria.subcategorias.length,
+                itemBuilder: (context, index) => ListTile(
+                      title: Text(categoria.subcategorias[index].nombre),
+                    )),
+          ),
+        ],
+      ),
     );
   }
 }
