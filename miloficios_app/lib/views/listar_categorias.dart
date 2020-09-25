@@ -11,6 +11,8 @@ class Categorias extends StatefulWidget {
 }
 
 class _CategoriasState extends State<Categorias> {
+  int bannerActual = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,6 +33,11 @@ class _CategoriasState extends State<Categorias> {
                           viewportFraction: 1.0,
                           autoPlay: true,
                           autoPlayInterval: Duration(seconds: 5),
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              bannerActual = index;
+                            });
+                          },
                         ),
                         itemCount: banners.length,
                         itemBuilder: (BuildContext context, int itemIndex) =>
@@ -40,8 +47,20 @@ class _CategoriasState extends State<Categorias> {
                         ),
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: banners.map((img) {
-                          return Text("1");
+                          int indTemp = banners.indexOf(img);
+                          return Container(
+                            margin: EdgeInsets.all(8),
+                            height: 8,
+                            width: 8,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: bannerActual == indTemp
+                                  ? Colors.black
+                                  : Colors.black.withOpacity(0.3),
+                            ),
+                          );
                         }).toList(),
                       )
                     ],
