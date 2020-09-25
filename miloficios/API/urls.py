@@ -9,5 +9,6 @@ urlpatterns = [
     path('categoriasList/<int:pk>/', views.CategoriasGet.as_view()),
     path('subcategoriasList/', views.SubCategoriaList.as_view()),
     path('subcategoriasList/<int:pk>/', views.SubCategoriaGet.as_view()),
+    path('bannerspublicitarios/', views.BannersPublicitariosGet.as_view()),
 
 ]

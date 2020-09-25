@@ -31,3 +31,7 @@ class SubCategoriaList(generics.ListCreateAPIView):
 class SubCategoriaGet(generics.RetrieveUpdateDestroyAPIView):
     queryset = Subcategoria.objects.all()
     serializer_class = SubCategoriaSerializer
+
+class BannersPublicitariosGet(generics.ListAPIView):
+    queryset = BannerPublicitario.objects.all()
+    serializer_class = BannerPublicitarioSerializer

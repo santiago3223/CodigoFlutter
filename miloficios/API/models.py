@@ -18,3 +18,5 @@ class Subcategoria(models.Model):
     def __str__(self):
         return self.nombre
     
+class BannerPublicitario(models.Model):
+    urlBanner = models.TextField(null=True, blank=True)

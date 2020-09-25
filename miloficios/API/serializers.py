@@ -15,3 +15,11 @@ class CategoriaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Categoria
         fields = ['nombre', 'urlBanner', 'urlLogo', 'subcategorias']
+
+
+class BannerPublicitarioSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = BannerPublicitario
+        fields = ['urlBanner']
+
