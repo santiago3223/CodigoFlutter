@@ -10,6 +10,7 @@ class HttpHelper {
   Future<List<Categoria>> fetchCategorias() async {
     var response = await http.get(urlBase + "categoriasList/");
     List categoriasJson = jsonDecode(response.body);
+
     return categoriasJson.map((e) => Categoria.fromJson(e)).toList();
   }
 

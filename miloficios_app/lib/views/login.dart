@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:miloficios_app/providers/user_provider.dart';
 import 'package:miloficios_app/utils/http_helper.dart';
 import 'package:miloficios_app/utils/session_helper.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:provider/provider.dart';
 
 import '../main.dart';
 
 class Login extends StatefulWidget {
-  MyAppState myApp;
-
-  Login(this.myApp);
-
   @override
-  _LoginState createState() => _LoginState(myApp);
+  _LoginState createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
@@ -20,21 +18,20 @@ class _LoginState extends State<Login> {
   String error = "";
   bool inAsyncCall = false;
 
-  MyAppState myApp;
-
-  _LoginState(this.myApp);
-
   void iniciarSesion() async {
     setState(() {
       inAsyncCall = true;
     });
+
     String token = await HttpHelper()
         .iniciarSesion(controllerUsuario.text, controllerPassword.text);
+
     setState(() {
       inAsyncCall = false;
     });
+
     if (token.length > 0) {
-      myApp.setLogedIn(true);
+      Provider.of<UserProvider>(context, listen: false).saveUserData(token);
     } else {
       setState(() {
         error = "Credenciales incorrectas";

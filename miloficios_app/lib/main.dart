@@ -1,36 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:miloficios_app/providers/user_provider.dart';
 import 'package:miloficios_app/views/listar_categorias.dart';
+import 'package:provider/provider.dart';
 
 import 'utils/session_helper.dart';
 import 'views/login.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(
+      create: (context) => UserProvider(),
+    )
+  ], child: MyApp()));
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  MyAppState createState() => MyAppState();
-}
-
-class MyAppState extends State<MyApp> {
-  bool logedIn = false;
-
-  setLogedIn(bool iniciaSesion) {
-    setState(() {
-      logedIn = iniciaSesion;
-    });
-  }
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Provider.of<UserProvider>(context, listen: false).fetchUserData();
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: logedIn ? Categorias() : Login(this),
+      home: (Provider.of<UserProvider>(context).token.length > 0)
+          ? Categorias()
+          : Login(),
     );
   }
 }
