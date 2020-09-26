@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:miloficios_app/utils/http_helper.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -6,6 +7,17 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  TextEditingController controllerUsuario = TextEditingController();
+  TextEditingController controllerPassword = TextEditingController();
+
+  void iniciarSesion() async {
+    String token = await HttpHelper()
+        .iniciarSesion(controllerUsuario.text, controllerPassword.text);
+    //controllerUsuario.clear();
+    //controllerPassword.clear();
+    print(token);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,6 +64,7 @@ class _LoginState extends State<Login> {
                         height: 8,
                       ),
                       TextField(
+                        controller: controllerUsuario,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.account_circle),
                           hintText: "Usuario",
@@ -71,6 +84,7 @@ class _LoginState extends State<Login> {
                         height: 8,
                       ),
                       TextField(
+                        controller: controllerPassword,
                         obscureText: true,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.lock),
@@ -92,7 +106,9 @@ class _LoginState extends State<Login> {
                       ),
                       RaisedButton(
                         color: Colors.blue,
-                        onPressed: () {},
+                        onPressed: () {
+                          iniciarSesion();
+                        },
                         child: Text(
                           "Iniciar Sesión",
                           style: TextStyle(color: Colors.white, fontSize: 20),
