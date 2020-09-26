@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:miloficios_app/views/listar_categorias.dart';
 
-import 'models/categoria.dart';
+import 'views/login.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Categorias(),
+      home: Login(),
     );
   }
 }
