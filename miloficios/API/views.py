@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from .models import *
 from rest_framework import generics
 from .serializers import *
+from rest_framework.permissions import AllowAny
+from rest_framework.decorators import permission_classes
 
 # Create your views here.
 def index(request):
@@ -16,6 +18,7 @@ def retornarCategorias(request):
     jsonCategorias += ']'
     return HttpResponse(jsonCategorias)
 
+@permission_classes((AllowAny, ))
 class CategoriasList(generics.ListCreateAPIView):
     queryset = Categoria.objects.all()
     serializer_class = CategoriaSerializer
@@ -32,6 +35,7 @@ class SubCategoriaGet(generics.RetrieveUpdateDestroyAPIView):
     queryset = Subcategoria.objects.all()
     serializer_class = SubCategoriaSerializer
 
+@permission_classes((AllowAny, ))
 class BannersPublicitariosGet(generics.ListAPIView):
     queryset = BannerPublicitario.objects.all()
     serializer_class = BannerPublicitarioSerializer
