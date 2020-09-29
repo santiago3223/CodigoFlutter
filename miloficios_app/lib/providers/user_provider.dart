@@ -8,6 +8,7 @@ class UserProvider extends ChangeNotifier {
     this.token = token;
     var prefs = await SharedPreferences.getInstance();
     token = prefs.getString("token");
+    if (token == null) token = "";
     notifyListeners();
   }
 

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/painting.dart';
 import 'package:miloficios_app/models/banner_publicitario.dart';
 import 'package:miloficios_app/models/categoria.dart';
 import 'package:http/http.dart' as http;
@@ -29,5 +30,18 @@ class HttpHelper {
       return token;
     }
     return "";
+  }
+
+  Future registrarUsuario(String usuario, String password, String correo,
+      String nombre, String apellido, String dni) async {
+    var response = await http.post(urlBase + "clienteRegister/", body: {
+      "username": usuario,
+      "password": password,
+      "email": correo,
+      "first_name": nombre,
+      "last_name": apellido,
+      "dni": dni
+    });
+    print(response.body);
   }
 }

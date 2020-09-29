@@ -38,57 +38,7 @@ class _CategoriasState extends State<Categorias> {
       body: Center(
         child: Column(
           children: [
-            FutureBuilder(
-              future: HttpHelper().fetchBannersPublicitarios(),
-              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                if (snapshot.hasData) {
-                  List<BannerPublicitario> banners = snapshot.data;
-                  return Column(
-                    children: [
-                      CarouselSlider.builder(
-                        options: CarouselOptions(
-                          enlargeCenterPage: true,
-                          viewportFraction: 1.0,
-                          autoPlay: true,
-                          autoPlayInterval: Duration(seconds: 5),
-                          onPageChanged: (index, reason) {
-                            setState(() {
-                              bannerActual = index;
-                            });
-                          },
-                        ),
-                        itemCount: banners.length,
-                        itemBuilder: (BuildContext context, int itemIndex) =>
-                            Container(
-                          child: Image.network(banners[itemIndex].urlBanner,
-                              fit: BoxFit.fill),
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: banners.map((img) {
-                          int indTemp = banners.indexOf(img);
-                          return Container(
-                            margin: EdgeInsets.all(8),
-                            height: 8,
-                            width: 8,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: bannerActual == indTemp
-                                  ? Colors.black
-                                  : Colors.black.withOpacity(0.3),
-                            ),
-                          );
-                        }).toList(),
-                      )
-                    ],
-                  );
-                }
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
-            ),
+            BannerPublicitarioView(),
             Expanded(
               child: FutureBuilder(
                 future: HttpHelper().fetchCategorias(),
@@ -133,6 +83,73 @@ class _CategoriasState extends State<Categorias> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class BannerPublicitarioView extends StatefulWidget {
+  const BannerPublicitarioView({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  _BannerPublicitarioViewState createState() => _BannerPublicitarioViewState();
+}
+
+class _BannerPublicitarioViewState extends State<BannerPublicitarioView> {
+  int bannerActual;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: HttpHelper().fetchBannersPublicitarios(),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.hasData) {
+          List<BannerPublicitario> banners = snapshot.data;
+          return Column(
+            children: [
+              CarouselSlider.builder(
+                options: CarouselOptions(
+                  enlargeCenterPage: true,
+                  viewportFraction: 1.0,
+                  autoPlay: true,
+                  autoPlayInterval: Duration(seconds: 5),
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      bannerActual = index;
+                    });
+                  },
+                ),
+                itemCount: banners.length,
+                itemBuilder: (BuildContext context, int itemIndex) => Container(
+                  child: Image.network(banners[itemIndex].urlBanner,
+                      fit: BoxFit.fill),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: banners.map((img) {
+                  int indTemp = banners.indexOf(img);
+                  return Container(
+                    margin: EdgeInsets.all(8),
+                    height: 8,
+                    width: 8,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: bannerActual == indTemp
+                          ? Colors.black
+                          : Colors.black.withOpacity(0.3),
+                    ),
+                  );
+                }).toList(),
+              )
+            ],
+          );
+        }
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 }

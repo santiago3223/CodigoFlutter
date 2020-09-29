@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:miloficios_app/providers/user_provider.dart';
 import 'package:miloficios_app/utils/http_helper.dart';
 import 'package:miloficios_app/utils/session_helper.dart';
+import 'package:miloficios_app/views/register.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 
@@ -54,6 +55,35 @@ class _LoginState extends State<Login> {
                     "https://st2.depositphotos.com/1752173/12158/v/950/depositphotos_121587406-stock-illustration-seamless-pattern-construction-tools-vector.jpg",
                   ),
                   fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 18),
+                child: FlatButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Register(),
+                        ));
+                  },
+                  child: Text(
+                    " No tienes una cuenta? Registrate",
+                    style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        shadows: [
+                          Shadow(
+                            offset: Offset(2.0, 2.0),
+                            blurRadius: 5.0,
+                            color: Color.fromARGB(255, 255, 255, 255),
+                          ),
+                        ]),
+                  ),
                 ),
               ),
             ),

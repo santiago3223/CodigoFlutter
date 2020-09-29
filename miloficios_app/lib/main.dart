@@ -17,7 +17,8 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Provider.of<UserProvider>(context, listen: false).fetchUserData();
+    if (Provider.of<UserProvider>(context, listen: false).token == null)
+      Provider.of<UserProvider>(context, listen: false).fetchUserData();
 
     return MaterialApp(
       title: 'Flutter Demo',
