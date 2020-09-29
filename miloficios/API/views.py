@@ -40,6 +40,12 @@ class BannersPublicitariosGet(generics.ListAPIView):
     queryset = BannerPublicitario.objects.all()
     serializer_class = BannerPublicitarioSerializer
 
+@permission_classes((AllowAny, ))
 class ClienteCreate(generics.CreateAPIView):
+    queryset = Cliente.objects.all()
+    serializer_class = ClienteSerializer
+
+@permission_classes((AllowAny, ))
+class ClienteRetrieve(generics.RetrieveAPIView):
     queryset = Cliente.objects.all()
     serializer_class = ClienteSerializer
