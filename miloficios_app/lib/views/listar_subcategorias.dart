@@ -24,7 +24,8 @@ class ListarDetalleCategorias extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => CrearSolicitud(),
+                              builder: (context) => CrearSolicitud(
+                                  categoria.subcategorias[index]),
                             ));
                       },
                       title: Text(categoria.subcategorias[index].nombre),
