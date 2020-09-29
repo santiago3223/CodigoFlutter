@@ -23,13 +23,25 @@ class _RegisterState extends State<Register> {
     setState(() {
       inAsyncCall = true;
     });
-    await HttpHelper().registrarUsuario(
+    bool exito = await HttpHelper().registrarUsuario(
         controllerUsuario.text,
         controllerPassword.text,
         controllerCorreo.text,
         controllerNombre.text,
         controllerApellido.text,
         controllerDni.text);
+    if (exito) {
+      String token = await HttpHelper()
+          .iniciarSesion(controllerUsuario.text, controllerPassword.text);
+      if (token.length > 0) {
+        Navigator.pop(context);
+        Provider.of<UserProvider>(context, listen: false).saveUserData(token);
+      } else {
+        setState(() {
+          error = "Credenciales incorrectas";
+        });
+      }
+    }
     setState(() {
       inAsyncCall = false;
     });

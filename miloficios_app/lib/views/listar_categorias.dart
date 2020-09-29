@@ -25,6 +25,10 @@ class _CategoriasState extends State<Categorias> {
       drawer: Drawer(
         child: ListView(
           children: [
+            UserAccountsDrawerHeader(
+                currentAccountPicture: CircleAvatar(),
+                accountName: Text("Santiago"),
+                accountEmail: Text("asdas@gmail.com")),
             ListTile(
               title: Text("Cerrar Sesión"),
               onTap: () {

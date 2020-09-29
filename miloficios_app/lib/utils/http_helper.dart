@@ -32,7 +32,7 @@ class HttpHelper {
     return "";
   }
 
-  Future registrarUsuario(String usuario, String password, String correo,
+  Future<bool> registrarUsuario(String usuario, String password, String correo,
       String nombre, String apellido, String dni) async {
     var response = await http.post(urlBase + "clienteRegister/", body: {
       "username": usuario,
@@ -43,5 +43,10 @@ class HttpHelper {
       "dni": dni
     });
     print(response.body);
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
