@@ -15,6 +15,6 @@ urlpatterns = [
     path('subcategoriasList/<int:pk>/', views.SubCategoriaGet.as_view()),
     path('bannerspublicitarios/', views.BannersPublicitariosGet.as_view()),
     path('clienteRegister/', views.ClienteCreate.as_view()),
-    path('clienteRetrieve/<int:pk>/', views.ClienteRetrieve.as_view()),
+    path('clienteRetrieve/', views.ClienteRetrieve.as_view()),
 
 ]

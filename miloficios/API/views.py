@@ -49,3 +49,7 @@ class ClienteCreate(generics.CreateAPIView):
 class ClienteRetrieve(generics.RetrieveAPIView):
     queryset = Cliente.objects.all()
     serializer_class = ClienteSerializer
+
+    def get_object(self):
+        #return Cliente.objects.filter(id=self.request.user.id).first()
+        return self.request.user
