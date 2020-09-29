@@ -49,4 +49,16 @@ class HttpHelper {
       return false;
     }
   }
+
+  Future<bool> consultarUsuario() async {
+    var response = await http.get(
+      urlBase + "/clienteRetrieve/8/",
+    );
+    print(response.body);
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

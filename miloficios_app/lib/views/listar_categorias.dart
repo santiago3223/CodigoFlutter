@@ -26,7 +26,6 @@ class _CategoriasState extends State<Categorias> {
         child: ListView(
           children: [
             UserAccountsDrawerHeader(
-                currentAccountPicture: CircleAvatar(),
                 accountName: Text("Santiago"),
                 accountEmail: Text("asdas@gmail.com")),
             ListTile(

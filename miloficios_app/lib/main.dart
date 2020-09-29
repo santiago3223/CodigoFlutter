@@ -26,7 +26,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: (Provider.of<UserProvider>(context).token.length > 0)
+      home: (Provider.of<UserProvider>(context).token != null &&
+              Provider.of<UserProvider>(context).token.length > 0)
           ? Categorias()
           : Login(),
     );
