@@ -17,6 +17,17 @@ class _CategoriasState extends State<Categorias> {
   int bannerActual = 0;
 
   @override
+  void initState() {
+    super.initState();
+    consultarInfoUsuario();
+  }
+
+  void consultarInfoUsuario() async {
+    await HttpHelper().consultarUsuario();
+    Provider.of<UserProvider>(context, listen: false).fetchUserData();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -26,8 +37,11 @@ class _CategoriasState extends State<Categorias> {
         child: ListView(
           children: [
             UserAccountsDrawerHeader(
-                accountName: Text("Santiago"),
-                accountEmail: Text("asdas@gmail.com")),
+                accountName: Text(
+                    Provider.of<UserProvider>(context, listen: false)
+                        .first_name),
+                accountEmail: Text(
+                    Provider.of<UserProvider>(context, listen: false).email)),
             ListTile(
               title: Text("Cerrar Sesión"),
               onTap: () {

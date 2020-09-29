@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:miloficios_app/models/categoria.dart';
+import 'package:miloficios_app/views/solicitud.dart';
 
 class ListarDetalleCategorias extends StatelessWidget {
   Categoria categoria;
@@ -19,6 +20,13 @@ class ListarDetalleCategorias extends StatelessWidget {
             child: ListView.builder(
                 itemCount: categoria.subcategorias.length,
                 itemBuilder: (context, index) => ListTile(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CrearSolicitud(),
+                            ));
+                      },
                       title: Text(categoria.subcategorias[index].nombre),
                     )),
           ),

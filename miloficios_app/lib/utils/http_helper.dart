@@ -4,6 +4,7 @@ import 'package:flutter/painting.dart';
 import 'package:miloficios_app/models/banner_publicitario.dart';
 import 'package:miloficios_app/models/categoria.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HttpHelper {
   String urlBase = "http://192.168.1.5:8000/API/";
@@ -50,15 +51,19 @@ class HttpHelper {
     }
   }
 
-  Future<bool> consultarUsuario() async {
+  Future consultarUsuario() async {
     var response = await http.get(
-      urlBase + "/clienteRetrieve/8/",
+      urlBase + "clienteRetrieve/8/",
     );
     print(response.body);
     if (response.statusCode == 200) {
-      return true;
-    } else {
-      return false;
+      var json = jsonDecode(response.body);
+      var prefs = await SharedPreferences.getInstance();
+      prefs.setString("username", json["username"]);
+      prefs.setString("email", json["email"]);
+      prefs.setString("first_name", json["first_name"]);
+      prefs.setString("last_name", json["last_name"]);
+      prefs.setString("dni", json["dni"]);
     }
   }
 }
