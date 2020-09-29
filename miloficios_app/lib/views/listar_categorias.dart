@@ -23,7 +23,8 @@ class _CategoriasState extends State<Categorias> {
   }
 
   void consultarInfoUsuario() async {
-    await HttpHelper().consultarUsuario();
+    await HttpHelper().consultarUsuario(
+        Provider.of<UserProvider>(context, listen: false).token);
     Provider.of<UserProvider>(context, listen: false).fetchUserData();
   }
 

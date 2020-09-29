@@ -51,10 +51,9 @@ class HttpHelper {
     }
   }
 
-  Future consultarUsuario() async {
-    var response = await http.get(
-      urlBase + "clienteRetrieve/8/",
-    );
+  Future consultarUsuario(String token) async {
+    var response = await http.get(urlBase + "clienteRetrieve/",
+        headers: {"Authorization": "JWT " + token});
     print(response.body);
     if (response.statusCode == 200) {
       var json = jsonDecode(response.body);
