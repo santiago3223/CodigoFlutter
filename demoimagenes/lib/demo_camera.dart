@@ -24,6 +24,14 @@ class _DemoCamaraState extends State<DemoCamara> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            _controller != null && _controller.value.initialized
+                ? Container(
+                    height: 100,
+                    width: 100,
+                    child: VideoPlayer(
+                      _controller,
+                    ))
+                : Container(),
             RaisedButton(
               onPressed: () {
                 _displayPickImageDialog(context);
