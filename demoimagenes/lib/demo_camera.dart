@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:video_player/video_player.dart';
+
+import 'main.dart';
 
 class DemoCamara extends StatefulWidget {
   @override
@@ -9,6 +14,7 @@ class DemoCamara extends StatefulWidget {
 class _DemoCamaraState extends State<DemoCamara> {
   final ImagePicker _picker = ImagePicker();
   PickedFile _imageFile;
+  VideoPlayerController _controller;
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +52,14 @@ class _DemoCamaraState extends State<DemoCamara> {
               FlatButton(
                   child: const Text('CAMARA'),
                   onPressed: () async {
-                    final pickedFile = await _picker.getImage(
+                    final pickedFile = await _picker.getVideo(
                       source: ImageSource.camera,
                     );
                     setState(() {
                       _imageFile = pickedFile;
                     });
+                    _playVideo(_imageFile);
+                    Navigator.of(context).pop();
                   }),
               FlatButton(
                   child: const Text('GALERIA'),
@@ -62,9 +70,22 @@ class _DemoCamaraState extends State<DemoCamara> {
                     setState(() {
                       _imageFile = pickedFile;
                     });
+                    Navigator.of(context).pop();
                   }),
             ],
           );
         });
+  }
+
+  Future<void> _playVideo(PickedFile file) async {
+    if (file != null && mounted) {
+      _controller = VideoPlayerController.file(File(file.path));
+      await _controller.setVolume(1.0);
+
+      await _controller.initialize();
+      await _controller.setLooping(true);
+      await _controller.play();
+      setState(() {});
+    }
   }
 }
