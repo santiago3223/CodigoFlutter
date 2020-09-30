@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class DemoCamara extends StatefulWidget {
   @override
@@ -6,6 +7,9 @@ class DemoCamara extends StatefulWidget {
 }
 
 class _DemoCamaraState extends State<DemoCamara> {
+  final ImagePicker _picker = ImagePicker();
+  PickedFile _imageFile;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,8 +43,26 @@ class _DemoCamaraState extends State<DemoCamara> {
                   Navigator.of(context).pop();
                 },
               ),
-              FlatButton(child: const Text('CAMARA'), onPressed: () {}),
-              FlatButton(child: const Text('GALERIA'), onPressed: () {}),
+              FlatButton(
+                  child: const Text('CAMARA'),
+                  onPressed: () async {
+                    final pickedFile = await _picker.getImage(
+                      source: ImageSource.camera,
+                    );
+                    setState(() {
+                      _imageFile = pickedFile;
+                    });
+                  }),
+              FlatButton(
+                  child: const Text('GALERIA'),
+                  onPressed: () async {
+                    final pickedFile = await _picker.getImage(
+                      source: ImageSource.gallery,
+                    );
+                    setState(() {
+                      _imageFile = pickedFile;
+                    });
+                  }),
             ],
           );
         });
