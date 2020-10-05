@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:video_player/video_player.dart';
 
 import 'main.dart';
@@ -24,6 +25,13 @@ class _DemoCamaraState extends State<DemoCamara> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Container(
+              height: 200,
+              width: 100,
+              child: PhotoView(
+                  imageProvider: NetworkImage(
+                      "https://www.mediaan.com/wp-content/uploads/2019/08/flutter-vs-react-native.jpg")),
+            ),
             _controller != null && _controller.value.initialized
                 ? Container(
                     height: 100,

@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HttpHelper {
-  String urlBase = "http://192.168.1.5:8000/API/";
+  String urlBase = "http://gateway.evolutionsoluciones.com:8000/API/";
 
   Future<List<Categoria>> fetchCategorias() async {
     var response = await http.get(urlBase + "categoriasList/");
