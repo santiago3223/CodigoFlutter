@@ -66,10 +66,11 @@ class HttpHelper {
     }
   }
 
-  Future<bool> registrarSolicitud(String usuario, String descripcion,
-      String precio, String subcategoria) async {
-    var response = await http.post(urlBase + "solicitudes/", body: {
-      "cliente": usuario,
+  Future<bool> registrarSolicitud(String descripcion, String precio,
+      String subcategoria, String token) async {
+    var response = await http.post(urlBase + "solicitudes/", headers: {
+      "Authorization": "JWT " + token
+    }, body: {
       "descripcion": descripcion,
       "precio": precio,
       "subCategoria": subcategoria,

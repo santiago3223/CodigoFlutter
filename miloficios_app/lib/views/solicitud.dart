@@ -20,8 +20,11 @@ class _CrearSolicitudState extends State<CrearSolicitud> {
   TextEditingController _controllerPrecio = TextEditingController();
 
   void RegistrarSolicitud() {
-    HttpHelper().registrarSolicitud("1", _controllerDescripcion.text,
-        _controllerPrecio.text, categoria.id.toString());
+    HttpHelper().registrarSolicitud(
+        _controllerDescripcion.text,
+        _controllerPrecio.text,
+        categoria.id.toString(),
+        Provider.of<UserProvider>(context, listen: false).token);
   }
 
   @override
