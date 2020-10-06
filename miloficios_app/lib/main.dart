@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:miloficios_app/providers/user_provider.dart';
 import 'package:miloficios_app/views/listar_categorias.dart';
 import 'package:provider/provider.dart';
-
-import 'utils/session_helper.dart';
 import 'views/login.dart';
 
 void main() {

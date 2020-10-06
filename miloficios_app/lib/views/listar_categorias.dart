@@ -5,6 +5,7 @@ import 'package:miloficios_app/models/categoria.dart';
 import 'package:miloficios_app/providers/user_provider.dart';
 import 'package:miloficios_app/utils/http_helper.dart';
 import 'package:miloficios_app/utils/session_helper.dart';
+import 'package:miloficios_app/views/historial_solicitudes.dart';
 import 'package:miloficios_app/views/listar_subcategorias.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +33,7 @@ class _CategoriasState extends State<Categorias> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(Provider.of<UserProvider>(context).token),
+        title: Text("Mil oficios"),
       ),
       drawer: Drawer(
         child: ListView(
@@ -43,6 +44,16 @@ class _CategoriasState extends State<Categorias> {
                         .first_name),
                 accountEmail: Text(
                     Provider.of<UserProvider>(context, listen: false).email)),
+            ListTile(
+              title: Text("Historial"),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HistorialSolicitudes(),
+                    ));
+              },
+            ),
             ListTile(
               title: Text("Cerrar Sesión"),
               onTap: () {

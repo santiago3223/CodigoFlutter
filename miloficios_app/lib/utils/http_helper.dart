@@ -82,4 +82,17 @@ class HttpHelper {
       return false;
     }
   }
+
+  Future consultarSolicitudes(String token) async {
+    var response = await http.get(
+      urlBase + "solicitudes/",
+      headers: {"Authorization": "JWT " + token},
+    );
+    print(response.body);
+    if (response.statusCode == 200) {
+      print(response.body);
+    } else {
+      print(response.body);
+    }
+  }
 }

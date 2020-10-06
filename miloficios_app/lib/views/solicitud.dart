@@ -19,19 +19,21 @@ class _CrearSolicitudState extends State<CrearSolicitud> {
   TextEditingController _controllerDescripcion = TextEditingController();
   TextEditingController _controllerPrecio = TextEditingController();
 
-  void RegistrarSolicitud() {
-    HttpHelper().registrarSolicitud(
+  void RegistrarSolicitud() async {
+    await HttpHelper().registrarSolicitud(
         _controllerDescripcion.text,
         _controllerPrecio.text,
         categoria.id.toString(),
         Provider.of<UserProvider>(context, listen: false).token);
+
+    Navigator.pop(context, "Solicitud Enviada");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(categoria.nombre),
+        title: Text("Solicitud: " + categoria.nombre),
       ),
       body: SingleChildScrollView(
         child: Padding(
