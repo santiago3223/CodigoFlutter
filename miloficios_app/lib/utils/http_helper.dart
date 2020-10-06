@@ -65,4 +65,20 @@ class HttpHelper {
       prefs.setString("dni", json["dni"]);
     }
   }
+
+  Future<bool> registrarSolicitud(String usuario, String descripcion,
+      String precio, String subcategoria) async {
+    var response = await http.post(urlBase + "solicitudes/", body: {
+      "cliente": usuario,
+      "descripcion": descripcion,
+      "precio": precio,
+      "subCategoria": subcategoria,
+    });
+    print(response.body);
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

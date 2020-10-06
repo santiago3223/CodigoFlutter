@@ -10,6 +10,7 @@ String categoriaToJson(Categoria data) => json.encode(data.toJson());
 
 class Categoria {
   Categoria({
+    this.id,
     this.nombre,
     this.urlBanner,
     this.urlLogo,
@@ -17,6 +18,7 @@ class Categoria {
     this.categoria,
   });
 
+  int id;
   String nombre;
   String urlBanner;
   String urlLogo;
@@ -24,6 +26,7 @@ class Categoria {
   int categoria;
 
   factory Categoria.fromJson(Map<String, dynamic> json) => Categoria(
+        id: json["id"],
         nombre: json["nombre"],
         urlBanner: json["urlBanner"],
         urlLogo: json["urlLogo"],
@@ -35,6 +38,7 @@ class Categoria {
       );
 
   Map<String, dynamic> toJson() => {
+        "id": id,
         "nombre": nombre,
         "urlBanner": urlBanner,
         "urlLogo": urlLogo,
