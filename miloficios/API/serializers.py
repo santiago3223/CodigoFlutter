@@ -6,7 +6,7 @@ class SubCategoriaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Subcategoria
-        fields = ['categoria', 'nombre', 'urlBanner', 'urlLogo']
+        fields = ['id', 'categoria', 'nombre', 'urlBanner', 'urlLogo']
 
 
 class CategoriaSerializer(serializers.ModelSerializer):
@@ -47,3 +47,9 @@ class ClienteSerializer(serializers.ModelSerializer):
         return user
 
 
+class SolicitudSerializer(serializers.ModelSerializer):
+    
+
+    class Meta:
+        model = Solicitud
+        fields = ['subCategoria', 'descripcion', 'precio', 'cliente']

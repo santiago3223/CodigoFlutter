@@ -16,5 +16,6 @@ urlpatterns = [
     path('bannerspublicitarios/', views.BannersPublicitariosGet.as_view()),
     path('clienteRegister/', views.ClienteCreate.as_view()),
     path('clienteRetrieve/', views.ClienteRetrieve.as_view()),
+    path('solicitudes/', views.SolicitudCreate.as_view()),
 
 ]

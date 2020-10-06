@@ -25,3 +25,9 @@ class BannerPublicitario(models.Model):
 
 class Cliente(AbstractUser):
     dni = models.CharField(max_length=10)
+
+class Solicitud(models.Model):
+    subCategoria = models.ForeignKey(Subcategoria, on_delete=models.CASCADE, related_name="solicitudes")
+    descripcion = models.TextField(null=True, blank=True)
+    precio = models.FloatField(null=True, blank=True)
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, blank=True, null=True)
