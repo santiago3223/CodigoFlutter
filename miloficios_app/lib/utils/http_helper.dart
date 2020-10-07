@@ -4,6 +4,7 @@ import 'package:flutter/painting.dart';
 import 'package:miloficios_app/models/banner_publicitario.dart';
 import 'package:miloficios_app/models/categoria.dart';
 import 'package:http/http.dart' as http;
+import 'package:miloficios_app/models/solicitud_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HttpHelper {
@@ -83,16 +84,24 @@ class HttpHelper {
     }
   }
 
-  Future consultarSolicitudes(String token) async {
+  Future<List<SolicitudModel>> consultarSolicitudes(String token) async {
     var response = await http.get(
       urlBase + "solicitudes/",
       headers: {"Authorization": "JWT " + token},
     );
     print(response.body);
     if (response.statusCode == 200) {
-      print(response.body);
-    } else {
-      print(response.body);
+      List solicitudesJson = jsonDecode(response.body);
+      return solicitudesJson.map((e) => SolicitudModel.fromJson(e)).toList();
     }
+    return null;
+  }
+
+  Future consultarRespuestaSolicitud(String token) async {
+    var response = await http.get(
+      urlBase + "respuestassolicitud/",
+      headers: {"Authorization": "JWT " + token},
+    );
+    print(response.body);
   }
 }
