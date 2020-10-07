@@ -63,4 +63,14 @@ class SolicitudCreate(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(cliente=Cliente.objects.get(pk=self.request.user.id))
 
+    def get_queryset(self):
+        return Solicitud.objects.filter(cliente__pk=self.request.user.pk).all()
+
+
+@permission_classes((AllowAny, ))
+class RespuestaSolicitudList(generics.ListAPIView):
+    queryset = RespuestaSolicitud.objects.all()
+    serializer_class = RespuestaSolicitudSerializer
+
+
 

@@ -49,7 +49,13 @@ class ClienteSerializer(serializers.ModelSerializer):
 
 class SolicitudSerializer(serializers.ModelSerializer):
     
-
     class Meta:
         model = Solicitud
-        fields = ['subCategoria', 'descripcion', 'precio', 'cliente']
+        fields = ['subCategoria', 'descripcion', 'precio', 'cliente','estado']
+
+
+class RespuestaSolicitudSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = RespuestaSolicitud
+        fields = ['solicitud', 'descripcion', 'precio', 'numero_contacto']

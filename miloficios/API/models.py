@@ -31,3 +31,12 @@ class Solicitud(models.Model):
     descripcion = models.TextField(null=True, blank=True)
     precio = models.FloatField(null=True, blank=True)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, blank=True, null=True)
+    estado = models.IntegerField(default=1)# 1 : enviadas, 2: tienen al menos una respuesta, 3: se cerraron
+
+class RespuestaSolicitud(models.Model):
+    solicitud = models.ForeignKey(Solicitud, on_delete=models.CASCADE, related_name="respuestas")
+    descripcion = models.TextField(null=True, blank=True)
+    precio = models.FloatField(null=True, blank=True)
+    numero_contacto= models.CharField(null=True, blank=True, max_length=12)
+
+    
