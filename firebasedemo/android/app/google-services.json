@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "919662974506",
+    "firebase_url": "https://demofirebase-5840a.firebaseio.com",
+    "project_id": "demofirebase-5840a",
+    "storage_bucket": "demofirebase-5840a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:919662974506:android:13b67b70a3006cafeed553",
+        "android_client_info": {
+          "package_name": "com.tecsup.firebasedemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "919662974506-osfunnq98femjphaif16srq8v55r3olo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnEC4zI653Un22pz37XqUG3IvUfKqq9H0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "919662974506-osfunnq98femjphaif16srq8v55r3olo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
