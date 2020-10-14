@@ -21,4 +21,8 @@ class Authentication {
     User user = firebaseAuth.currentUser;
     return user;
   }
+
+  Future signOut() async {
+    return firebaseAuth.signOut();
+  }
 }

@@ -11,7 +11,7 @@ class Event {
       this.speaker, this.isFavourite);
 
   Event.fromMap(dynamic obj) {
-    //this.id = obj["id"];
+    this.id = obj.id;
     this.description = obj["description"];
     this.date = obj["date"];
     this.startTime = obj["start_time"];

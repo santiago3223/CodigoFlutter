@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebasedemo/route/events_route.dart';
 import 'package:firebasedemo/route/signup_route.dart';
+import 'package:firebasedemo/utils/authentication.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -27,6 +28,11 @@ class MyApp extends StatelessWidget {
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SingUpRoute();
+    Authentication auth = Authentication();
+    if (auth.getUser() != null) {
+      return EventsRoute();
+    } else {
+      return SingUpRoute();
+    }
   }
 }
