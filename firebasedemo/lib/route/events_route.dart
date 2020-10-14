@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebasedemo/models/event.dart';
+import 'package:firebasedemo/models/favourite.dart';
 import 'package:firebasedemo/route/signup_route.dart';
 import 'package:firebasedemo/utils/authentication.dart';
 import 'package:firebasedemo/utils/firestore_helper.dart';
@@ -13,6 +14,7 @@ class EventsRoute extends StatefulWidget {
 class _EventsRouteState extends State<EventsRoute> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   List<Event> eventos = [];
+  List<Favourite> favoritos = [];
 
   Future<List<Event>> getEvents() async {
     var data = await db.collection('event_details').get();
@@ -26,12 +28,29 @@ class _EventsRouteState extends State<EventsRoute> {
     return respuesta;
   }
 
+  bool isFavourite(String eventId) {
+    Favourite favourite =
+        favoritos.firstWhere((element) => element.eventId == eventId);
+    if (favourite != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     getEvents().then((value) {
       setState(() {
         eventos = value;
+      });
+    });
+    FirestoreHelper()
+        .getUserFavourites(Authentication().getUser().uid)
+        .then((value) {
+      setState(() {
+        favoritos = value;
       });
     });
   }
@@ -57,16 +76,23 @@ class _EventsRouteState extends State<EventsRoute> {
       ),
       body: ListView.builder(
         itemCount: eventos.length,
-        itemBuilder: (context, index) => ListTile(
-          title: Text(eventos[index].description),
-          trailing: IconButton(
-            icon: Icon(Icons.star),
-            onPressed: () {
-              FirestoreHelper().addFavourite(
-                  eventos[index].id, Authentication().getUser().uid);
-            },
-          ),
-        ),
+        itemBuilder: (context, index) {
+          Color starColor =
+              isFavourite(eventos[index].id) ? Colors.yellow : Colors.grey;
+          return ListTile(
+            title: Text(eventos[index].description),
+            trailing: IconButton(
+              icon: Icon(
+                Icons.star,
+                color: starColor,
+              ),
+              onPressed: () {
+                FirestoreHelper().addFavourite(
+                    eventos[index].id, Authentication().getUser().uid);
+              },
+            ),
+          );
+        },
       ),
     );
   }

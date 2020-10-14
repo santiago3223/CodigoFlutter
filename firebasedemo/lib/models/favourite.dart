@@ -14,4 +14,10 @@ class Favourite {
     map['userId'] = userId;
     return map;
   }
+
+  Favourite.fromMap(dynamic obj) {
+    this.id = obj.id;
+    this.eventId = obj["eventId"];
+    this.userId = obj["userId"];
+  }
 }

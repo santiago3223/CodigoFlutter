@@ -14,4 +14,17 @@ class FirestoreHelper {
         .catchError((error) => print(error));
     return result;
   }
+
+  Future<List<Favourite>> getUserFavourites(String uid) async {
+    List<Favourite> favs = [];
+    var colection = await db.collection("favourites").get();
+    if (colection != null) {
+      favs = colection.docs.map((e) => Favourite.fromMap(e)).toList();
+    }
+    return favs;
+  }
+
+  Future deleteFavourite(String favId) async {
+    await db.collection('favourites').doc(favId).delete();
+  }
 }
