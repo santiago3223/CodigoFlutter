@@ -28,11 +28,12 @@ class _EventsRouteState extends State<EventsRoute> {
     return respuesta;
   }
 
-  Future getFavourites(){
-    FirestoreHelper().getUserFavourites(Authentication().getUser().uid).then((value) => setState(() {
-                              favoritos = value;
-                            }));
-                            
+  Future getFavourites() {
+    FirestoreHelper()
+        .getUserFavourites(Authentication().getUser().uid)
+        .then((value) => setState(() {
+              favoritos = value;
+            }));
   }
 
   bool isFavourite(String eventId) {
@@ -99,13 +100,14 @@ class _EventsRouteState extends State<EventsRoute> {
                   Favourite favourite = favoritos.firstWhere(
                       (element) => element.eventId == eventos[index].id);
                   FirestoreHelper().deleteFavourite(favourite.id).then((value) {
-                     getFavourites();
+                    getFavourites();
                   });
                 } else {
                   FirestoreHelper()
                       .addFavourite(
                           eventos[index].id, Authentication().getUser().uid)
                       .then((value) => getFavourites());
+                }
               },
             ),
           );
