@@ -14,6 +14,7 @@ class _SingUpRouteState extends State<SingUpRoute> {
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtPwd = TextEditingController();
   TextEditingController txtTelefono = TextEditingController();
+  TextEditingController smsCode = TextEditingController();
   bool isLogIn = true;
 
   Future signUp() async {
@@ -39,9 +40,13 @@ class _SingUpRouteState extends State<SingUpRoute> {
     await firebaseAuth.verifyPhoneNumber(
       phoneNumber: phone,
       verificationCompleted: (phoneAuthCredential) {
-        firebaseAuth
-            .signInWithCredential(phoneAuthCredential)
-            .then((value) => print(value));
+        firebaseAuth.signInWithCredential(phoneAuthCredential).then((_) {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => EventsRoute(),
+              ));
+        });
       },
       verificationFailed: (error) {
         print(error.toString());
@@ -51,8 +56,24 @@ class _SingUpRouteState extends State<SingUpRoute> {
           context: context,
           builder: (context) => AlertDialog(
             title: Text("Ingrese el codigo"),
-            content: TextField(),
-            actions: [FlatButton(onPressed: () {}, child: Text("Verificar"))],
+            content: TextField(
+              controller: smsCode,
+            ),
+            actions: [
+              FlatButton(
+                  onPressed: () {
+                    var credencial = PhoneAuthProvider.credential(
+                        verificationId: verificationId, smsCode: smsCode.text);
+                    firebaseAuth.signInWithCredential(credencial).then((value) {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EventsRoute(),
+                          ));
+                    });
+                  },
+                  child: Text("Verificar"))
+            ],
           ),
         );
       },
