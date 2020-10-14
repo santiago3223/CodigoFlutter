@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebasedemo/utils/authentication.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,7 @@ class _SingUpRouteState extends State<SingUpRoute> {
   Authentication auth;
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtPwd = TextEditingController();
+  TextEditingController txtTelefono = TextEditingController();
   bool isLogIn = true;
 
   Future signUp() async {
@@ -30,6 +32,32 @@ class _SingUpRouteState extends State<SingUpRoute> {
             builder: (context) => EventsRoute(),
           ));
     }
+  }
+
+  Future<String> signUpPhone(String phone) async {
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    await firebaseAuth.verifyPhoneNumber(
+      phoneNumber: phone,
+      verificationCompleted: (phoneAuthCredential) {
+        firebaseAuth
+            .signInWithCredential(phoneAuthCredential)
+            .then((value) => print(value));
+      },
+      verificationFailed: (error) {
+        print(error.toString());
+      },
+      codeSent: (verificationId, forceResendingToken) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("Ingrese el codigo"),
+            content: TextField(),
+            actions: [FlatButton(onPressed: () {}, child: Text("Verificar"))],
+          ),
+        );
+      },
+      codeAutoRetrievalTimeout: (verificationId) {},
+    );
   }
 
   @override
@@ -64,6 +92,17 @@ class _SingUpRouteState extends State<SingUpRoute> {
               });
             },
             child: Text(!isLogIn ? "INGRESAR" : "REGISTRATE"),
+          ),
+          TextField(
+            controller: txtTelefono,
+            decoration:
+                InputDecoration(hintText: "Telefono", icon: Icon(Icons.mail)),
+          ),
+          RaisedButton(
+            onPressed: () {
+              signUpPhone(txtTelefono.text);
+            },
+            child: Text("INGRESAR CON TELEFONO"),
           )
         ],
       ),
