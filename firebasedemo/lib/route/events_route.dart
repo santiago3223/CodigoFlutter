@@ -28,9 +28,17 @@ class _EventsRouteState extends State<EventsRoute> {
     return respuesta;
   }
 
+  Future getFavourites(){
+    FirestoreHelper().getUserFavourites(Authentication().getUser().uid).then((value) => setState(() {
+                              favoritos = value;
+                            }));
+                            
+  }
+
   bool isFavourite(String eventId) {
-    Favourite favourite =
-        favoritos.firstWhere((element) => element.eventId == eventId);
+    Favourite favourite = favoritos.firstWhere(
+        (element) => element.eventId == eventId,
+        orElse: () => null);
     if (favourite != null) {
       return true;
     } else {
@@ -87,8 +95,17 @@ class _EventsRouteState extends State<EventsRoute> {
                 color: starColor,
               ),
               onPressed: () {
-                FirestoreHelper().addFavourite(
-                    eventos[index].id, Authentication().getUser().uid);
+                if (isFavourite(eventos[index].id)) {
+                  Favourite favourite = favoritos.firstWhere(
+                      (element) => element.eventId == eventos[index].id);
+                  FirestoreHelper().deleteFavourite(favourite.id).then((value) {
+                     getFavourites();
+                  });
+                } else {
+                  FirestoreHelper()
+                      .addFavourite(
+                          eventos[index].id, Authentication().getUser().uid)
+                      .then((value) => getFavourites());
               },
             ),
           );
