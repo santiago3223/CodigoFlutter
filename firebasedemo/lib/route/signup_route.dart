@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebasedemo/utils/authentication.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 import 'events_route.dart';
 
@@ -16,6 +17,27 @@ class _SingUpRouteState extends State<SingUpRoute> {
   TextEditingController txtTelefono = TextEditingController();
   TextEditingController smsCode = TextEditingController();
   bool isLogIn = true;
+  RemoteConfig remoteConfig;
+  String remoteColor = "0xFFFFFF";
+
+  obtenerColor() async {
+    remoteConfig = await RemoteConfig.instance;
+    var defaults = <String, dynamic>{'color': "0xFF4286f4"};
+    remoteConfig.setDefaults(defaults);
+    await remoteConfig.fetch(expiration: const Duration(seconds: 10));
+    await remoteConfig.activateFetched();
+    String color = remoteConfig.getString("color");
+    print(color);
+    setState(() {
+      remoteColor = color;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    obtenerColor();
+  }
 
   Future signUp() async {
     auth = Authentication();
@@ -86,6 +108,7 @@ class _SingUpRouteState extends State<SingUpRoute> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Registro"),
+        backgroundColor: Color(int.parse(remoteColor)),
       ),
       body: Column(
         children: [
