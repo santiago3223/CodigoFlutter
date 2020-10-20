@@ -1,5 +1,6 @@
 import 'package:codigoChat/services/auth.dart';
 import 'package:codigoChat/services/database.dart';
+import 'package:codigoChat/views/chats.dart';
 import 'package:codigoChat/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,19 @@ class _LogInState extends State<LogIn> {
   AuthService authService = AuthService();
   FirestoreHelper firestoreHelper = FirestoreHelper();
 
-  logIn() async {}
+  logIn() async {
+    if (formKey.currentState.validate()) {
+      authService
+          .logIn(emailController.text, passwordController.text)
+          .then((value) {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Chats(),
+            ));
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

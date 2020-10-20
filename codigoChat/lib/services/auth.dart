@@ -9,4 +9,11 @@ class AuthService {
     User user = cred.user;
     return user;
   }
+
+  Future logIn(String email, String password) async {
+    UserCredential cred = await _auth.signInWithEmailAndPassword(
+        email: email, password: password);
+    User user = cred.user;
+    return user;
+  }
 }
