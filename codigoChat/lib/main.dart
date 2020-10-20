@@ -1,7 +1,12 @@
+import 'package:codigoChat/services/auth.dart';
+import 'package:codigoChat/services/database.dart';
 import 'package:codigoChat/widgets/widgets.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -33,10 +38,24 @@ class _SignUpState extends State<SignUp> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  AuthService authService = AuthService();
+  FirestoreHelper firestoreHelper = FirestoreHelper();
 
-  signUp() {
+  signUp() async {
     if (formKey.currentState.validate()) {
       print("registrar");
+      await authService
+          .singUp(emailController.text, passwordController.text)
+          .then((value) {
+        if (value != null) {
+          Map<String, String> user = {
+            "userName": usernameController.text,
+            "userEmail": emailController.text,
+            "uid": value.uid
+          };
+          firestoreHelper.addUserInfo(user);
+        }
+      });
     }
   }
 
