@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "126472878801",
+    "firebase_url": "https://codigochat-170cf.firebaseio.com",
+    "project_id": "codigochat-170cf",
+    "storage_bucket": "codigochat-170cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:126472878801:android:54a5979b5ac9bbfa6223f0",
+        "android_client_info": {
+          "package_name": "com.tecsup.codigoChat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "126472878801-jkd7ud0fr0aja2ec1q4obgv870fdvqok.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZjQb87AX7dlLIonAd2xgHwYujqW-RN5M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "126472878801-jkd7ud0fr0aja2ec1q4obgv870fdvqok.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
