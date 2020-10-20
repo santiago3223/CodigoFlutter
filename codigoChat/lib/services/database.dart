@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class FirestoreHelper {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -8,5 +7,12 @@ class FirestoreHelper {
     _firestore.collection("users").add(user).catchError((e) {
       print(e.toString());
     });
+  }
+
+  serachByName(String searchField) {
+    return _firestore
+        .collection("users")
+        .where('userName', isEqualTo: searchField)
+        .get();
   }
 }
