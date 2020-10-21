@@ -39,4 +39,21 @@ class FirestoreHelper {
         .where("users", arrayContains: myName)
         .snapshots();
   }
+
+  Future addMessage(String chatRoomId, chatMessage) {
+    _firestore
+        .collection("chatRoom")
+        .doc(chatRoomId)
+        .collection("chats")
+        .add(chatMessage);
+  }
+
+  getMessages(String chatRoomId) {
+    return _firestore
+        .collection("chatRoom")
+        .doc(chatRoomId)
+        .collection("chats")
+        .orderBy("time")
+        .snapshots();
+  }
 }

@@ -3,6 +3,8 @@ import 'package:codigoChat/utils/preferencias.dart';
 import 'package:codigoChat/views/search.dart';
 import 'package:flutter/material.dart';
 
+import 'chat.dart';
+
 class Chats extends StatefulWidget {
   @override
   _ChatsState createState() => _ChatsState();
@@ -10,10 +12,11 @@ class Chats extends StatefulWidget {
 
 class _ChatsState extends State<Chats> {
   Stream chats;
+  String userName = "";
 
   getUserChats() async {
-    String usr = await Preferencias().getUserName();
-    FirestoreHelper().getUserChats(usr).then((snapshots) {
+    userName = await Preferencias().getUserName();
+    FirestoreHelper().getUserChats(userName).then((snapshots) {
       setState(() {
         chats = snapshots;
       });
@@ -38,8 +41,24 @@ class _ChatsState extends State<Chats> {
                   ? ListView.builder(
                       itemCount: snapshot.data.documents.length,
                       itemBuilder: (context, index) => ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Chat(snapshot
+                                        .data.documents[index]["chatRoomId"]),
+                                  ));
+                            },
                             title: Text(
-                                snapshot.data.documents[index]["chatRoomId"]),
+                              snapshot.data.documents[index]["chatRoomId"]
+                                  .toString()
+                                  .replaceAll("_", "")
+                                  .replaceAll(userName, ""),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                            ),
                           ))
                   : Container();
             }),
