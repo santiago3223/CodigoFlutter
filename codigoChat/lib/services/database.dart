@@ -25,4 +25,11 @@ class FirestoreHelper {
       print(e);
     });
   }
+
+  getUserInfo(String email) async {
+    return _firestore
+        .collection("users")
+        .where("userEmail", isEqualTo: email)
+        .get();
+  }
 }

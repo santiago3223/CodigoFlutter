@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codigoChat/services/auth.dart';
 import 'package:codigoChat/services/database.dart';
+import 'package:codigoChat/utils/preferencias.dart';
 import 'package:codigoChat/views/chats.dart';
 import 'package:codigoChat/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +26,13 @@ class _LogInState extends State<LogIn> {
     if (formKey.currentState.validate()) {
       authService
           .logIn(emailController.text, passwordController.text)
-          .then((value) {
+          .then((value) async {
+        QuerySnapshot usr =
+            await firestoreHelper.getUserInfo(emailController.text);
+
+        Preferencias().saveEmail(emailController.text);
+        await Preferencias().saveUserName(usr.docs[0]["userName"]);
+        Preferencias().saveLogInState(true);
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
