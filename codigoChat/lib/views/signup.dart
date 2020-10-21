@@ -1,5 +1,7 @@
 import 'package:codigoChat/services/auth.dart';
 import 'package:codigoChat/services/database.dart';
+import 'package:codigoChat/utils/preferencias.dart';
+import 'package:codigoChat/views/chats.dart';
 import 'package:codigoChat/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -32,6 +34,14 @@ class _SignUpState extends State<SignUp> {
             "uid": value.uid
           };
           firestoreHelper.addUserInfo(user);
+          Preferencias().saveEmail(emailController.text);
+          Preferencias().saveUserName(usernameController.text);
+          Preferencias().saveLogInState(true);
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Chats(),
+              ));
         }
       });
     }

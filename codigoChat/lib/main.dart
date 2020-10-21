@@ -1,4 +1,6 @@
 import 'package:codigoChat/utils/authenticate.dart';
+import 'package:codigoChat/utils/preferencias.dart';
+import 'package:codigoChat/views/chats.dart';
 import 'package:codigoChat/views/login.dart';
 import 'package:codigoChat/views/signup.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -10,8 +12,32 @@ void main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   // This widget is the root of your application.
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool logeado = false;
+
+  estaLogeado() async {
+    Preferencias().getLogInState().then((value) {
+      if (value != null && value) {
+        setState(() {
+          logeado = value;
+        });
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    estaLogeado();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,7 +49,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "OverpassRegular",
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Authenticate(),
+      home: logeado ? Chats() : Authenticate(),
     );
   }
 }

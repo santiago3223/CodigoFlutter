@@ -15,4 +15,14 @@ class FirestoreHelper {
         .where('userName', isEqualTo: searchField)
         .get();
   }
+
+  Future addChatRoom(chatRoom, chatRoomId) {
+    _firestore
+        .collection("chatRoom")
+        .doc(chatRoomId)
+        .set(chatRoom)
+        .catchError((e) {
+      print(e);
+    });
+  }
 }
