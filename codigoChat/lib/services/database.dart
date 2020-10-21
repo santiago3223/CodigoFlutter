@@ -32,4 +32,11 @@ class FirestoreHelper {
         .where("userEmail", isEqualTo: email)
         .get();
   }
+
+  getUserChats(String myName) async {
+    return _firestore
+        .collection("chatRoom")
+        .where("users", arrayContains: myName)
+        .snapshots();
+  }
 }
