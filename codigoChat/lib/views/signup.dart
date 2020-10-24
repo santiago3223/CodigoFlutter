@@ -21,6 +21,27 @@ class _SignUpState extends State<SignUp> {
   AuthService authService = AuthService();
   FirestoreHelper firestoreHelper = FirestoreHelper();
 
+  signUpFacebook() async {
+    await authService.singUpFacebook().then((value) {
+      if (value != null) {
+        Map<String, String> user = {
+          "userName": value.displayName,
+          "userEmail": value.email,
+          "uid": value.uid
+        };
+        firestoreHelper.addUserInfo(user);
+        Preferencias().saveEmail(value.email);
+        Preferencias().saveUserName(value.displayName);
+        Preferencias().saveLogInState(true);
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Chats(),
+            ));
+      }
+    });
+  }
+
   signUp() async {
     if (formKey.currentState.validate()) {
       print("registrar");
@@ -109,6 +130,12 @@ class _SignUpState extends State<SignUp> {
                 signUp();
               },
               child: Text("Registrarse"),
+            ),
+            RaisedButton(
+              onPressed: () {
+                signUpFacebook();
+              },
+              child: Text("Registrarse con Facebook"),
             ),
             SizedBox(
               height: 16,
