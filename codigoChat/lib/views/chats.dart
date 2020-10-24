@@ -1,4 +1,6 @@
+import 'package:codigoChat/services/auth.dart';
 import 'package:codigoChat/services/database.dart';
+import 'package:codigoChat/utils/authenticate.dart';
 import 'package:codigoChat/utils/preferencias.dart';
 import 'package:codigoChat/views/search.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +34,21 @@ class _ChatsState extends State<Chats> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("Chats"),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.exit_to_app),
+              onPressed: () {
+                AuthService().logOut();
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Authenticate(),
+                    ));
+              })
+        ],
+      ),
       body: Container(
         child: StreamBuilder(
             stream: chats,

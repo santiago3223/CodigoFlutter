@@ -16,4 +16,8 @@ class AuthService {
     User user = cred.user;
     return user;
   }
+
+  Future logOut() async {
+    return await _auth.signOut();
+  }
 }
