@@ -19,6 +19,8 @@ class AuthService {
   }
 
   Future logOut() async {
+    final facebookLogin = FacebookLogin();
+    await facebookLogin.logOut();
     return await _auth.signOut();
   }
 

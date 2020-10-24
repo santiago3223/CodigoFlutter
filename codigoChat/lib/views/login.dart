@@ -25,20 +25,18 @@ class _LogInState extends State<LogIn> {
   FirestoreHelper firestoreHelper = FirestoreHelper();
 
   logInFacebook() async {
-    final facebookLogin = FacebookLogin();
-    final result = await facebookLogin.logIn(['email', 'public_profile']);
+    authService.singUpFacebook().then((value) async {
+      QuerySnapshot usr = await firestoreHelper.getUserInfo(value.email);
 
-    switch (result.status) {
-      case FacebookLoginStatus.loggedIn:
-        print(result.accessToken.token);
-        break;
-      case FacebookLoginStatus.cancelledByUser:
-        print("El usuario cancelo");
-        break;
-      case FacebookLoginStatus.error:
-        print(result.errorMessage);
-        break;
-    }
+      Preferencias().saveEmail(value.email);
+      await Preferencias().saveUserName(usr.docs[0]["userName"]);
+      Preferencias().saveLogInState(true);
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Chats(),
+          ));
+    });
   }
 
   logIn() async {

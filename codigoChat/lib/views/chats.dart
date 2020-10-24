@@ -41,6 +41,7 @@ class _ChatsState extends State<Chats> {
               icon: Icon(Icons.exit_to_app),
               onPressed: () {
                 AuthService().logOut();
+                Preferencias().saveLogInState(false);
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(

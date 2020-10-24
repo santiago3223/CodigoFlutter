@@ -4,6 +4,7 @@ import 'package:codigoChat/utils/preferencias.dart';
 import 'package:codigoChat/views/chats.dart';
 import 'package:codigoChat/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class SignUp extends StatefulWidget {
   Function cambiarVista;
@@ -20,6 +21,14 @@ class _SignUpState extends State<SignUp> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   AuthService authService = AuthService();
   FirestoreHelper firestoreHelper = FirestoreHelper();
+
+  signUpGoogle() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
+    print(googleSignInAuthentication.accessToken);
+  }
 
   signUpFacebook() async {
     await authService.singUpFacebook().then((value) {
@@ -136,6 +145,12 @@ class _SignUpState extends State<SignUp> {
                 signUpFacebook();
               },
               child: Text("Registrarse con Facebook"),
+            ),
+            RaisedButton(
+              onPressed: () {
+                signUpGoogle();
+              },
+              child: Text("Registrarse con Google"),
             ),
             SizedBox(
               height: 16,
