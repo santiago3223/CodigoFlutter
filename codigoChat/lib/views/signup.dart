@@ -23,11 +23,24 @@ class _SignUpState extends State<SignUp> {
   FirestoreHelper firestoreHelper = FirestoreHelper();
 
   signUpGoogle() async {
-    final GoogleSignIn googleSignIn = GoogleSignIn();
-    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
-    final GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
-    print(googleSignInAuthentication.accessToken);
+    await authService.singUpGoogle().then((value) {
+      if (value != null) {
+        Map<String, String> user = {
+          "userName": value.displayName,
+          "userEmail": value.email,
+          "uid": value.uid
+        };
+        firestoreHelper.addUserInfo(user);
+        Preferencias().saveEmail(value.email);
+        Preferencias().saveUserName(value.displayName);
+        Preferencias().saveLogInState(true);
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Chats(),
+            ));
+      }
+    });
   }
 
   signUpFacebook() async {
