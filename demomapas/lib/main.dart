@@ -1,7 +1,6 @@
-import 'dart:ffi';
-
 import 'package:demomapas/dbHelper.dart';
 import 'package:demomapas/place.dart';
+import 'package:demomapas/place_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -64,6 +63,8 @@ class _MainMapState extends State<MainMap> {
   Future _getData() async {
     await dbHelper.openDb();
     places = await dbHelper.getPlaces();
+
+    print("Got ${places.length} places");
     for (Place p in places) {
       print("Place " + Position(latitude: p.lat, longitude: p.lon).toString());
 
@@ -82,8 +83,8 @@ class _MainMapState extends State<MainMap> {
       print(value.toString());
       addMarker(value, "currpos", "Usted esta aqui");
       setState(() {
-        position = CameraPosition(
-            target: LatLng(value.target.latitude, value.target.longitude));
+        position =
+            CameraPosition(target: LatLng(value.latitude, value.longitude));
       });
     });
     dbHelper = DbHelper();
@@ -106,11 +107,13 @@ class _MainMapState extends State<MainMap> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.location_on),
         onPressed: () {
-          print(markers);
-          for (Marker m in markers) {
-            print(m.position.toString());
-          }
+          PlaceDialog pd = PlaceDialog(Place(0, "", 0, 0, ""), true);
+          showDialog(
+            context: context,
+            builder: (context) => pd.buildAlert(context),
+          );
         },
       ),
     );

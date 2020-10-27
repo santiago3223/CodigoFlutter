@@ -42,4 +42,11 @@ class DbHelper {
 
     return places;
   }
+
+  Future<int> insertPlace(Place place) async {
+    int id = await db.insert('places', place.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
+    print(id);
+    return id;
+  }
 }
