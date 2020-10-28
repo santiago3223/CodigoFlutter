@@ -49,4 +49,10 @@ class DbHelper {
     print(id);
     return id;
   }
+
+  Future<int> deletePlace(Place place) async {
+    int id = await db.delete('places', where: "ID=?", whereArgs: [place.id]);
+    print(id);
+    return id;
+  }
 }

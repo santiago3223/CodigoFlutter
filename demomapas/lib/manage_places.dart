@@ -34,6 +34,18 @@ class _ManagePlacesState extends State<ManagePlaces> {
       body: ListView.builder(
         itemCount: places.length,
         itemBuilder: (context, index) => Dismissible(
+          background: Container(
+            color: Colors.green,
+          ),
+          secondaryBackground: Container(
+            color: Colors.red,
+          ),
+          onDismissed: (direction) {
+            dbHelper.deletePlace(places[index]);
+            setState(() {
+              places.removeAt(index);
+            });
+          },
           key: Key(places[index].id.toString()),
           child: ListTile(
             title: Text(places[index].name),
