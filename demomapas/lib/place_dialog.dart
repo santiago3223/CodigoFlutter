@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:demomapas/camera_screen.dart';
 import 'package:demomapas/dbHelper.dart';
 import 'package:demomapas/place.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,6 +38,20 @@ class PlaceDialog {
               controller: txtLog,
               decoration: InputDecoration(hintText: 'Lon'),
             ),
+            (place.image != '')
+                ? Container(
+                    child: Image.file(File(place.image)),
+                  )
+                : Container(),
+            IconButton(
+                icon: Icon(Icons.camera_front),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CameraScreen(place),
+                      ));
+                }),
             RaisedButton(
                 child: Text("Ok"),
                 onPressed: () {

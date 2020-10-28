@@ -1,3 +1,4 @@
+import 'package:demomapas/camera_screen.dart';
 import 'package:demomapas/dbHelper.dart';
 import 'package:demomapas/manage_places.dart';
 import 'package:demomapas/place.dart';
@@ -50,11 +51,21 @@ class _MainMapState extends State<MainMap> {
     return _position;
   }
 
-  void addMarker(Position pos, String markerId, String markerTitle) {
+  void addMarker(
+      Position pos, String markerId, String markerTitle, Place place) {
     Marker marker = Marker(
         markerId: MarkerId(markerId),
         position: LatLng(pos.latitude, pos.longitude),
-        infoWindow: InfoWindow(title: markerTitle));
+        infoWindow: InfoWindow(title: markerTitle),
+        onTap: () async {
+          PlaceDialog pd = PlaceDialog(place, true);
+          await showDialog(
+            context: context,
+            builder: (context) => pd.buildAlert(context),
+          );
+          _getData();
+        },
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure));
     markers.add(marker);
   }
 
@@ -66,8 +77,8 @@ class _MainMapState extends State<MainMap> {
     for (Place p in places) {
       print("Place " + Position(latitude: p.lat, longitude: p.lon).toString());
 
-      addMarker(
-          Position(latitude: p.lat, longitude: p.lon), p.id.toString(), p.name);
+      addMarker(Position(latitude: p.lat, longitude: p.lon), p.id.toString(),
+          p.name, p);
     }
     setState(() {
       markers = markers;
@@ -78,7 +89,7 @@ class _MainMapState extends State<MainMap> {
   void initState() {
     _getCurrentLocation().then((value) {
       print(value.toString());
-      addMarker(value, "currpos", "Usted esta aqui");
+      addMarker(value, "currpos", "Usted esta aqui", Place(0, "", 0, 0, ""));
       setState(() {
         position =
             CameraPosition(target: LatLng(value.latitude, value.longitude));
@@ -98,12 +109,13 @@ class _MainMapState extends State<MainMap> {
         actions: [
           IconButton(
               icon: Icon(Icons.list),
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                await Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => ManagePlaces(),
                     ));
+                _getData();
               })
         ],
       ),

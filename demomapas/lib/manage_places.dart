@@ -1,5 +1,6 @@
 import 'package:demomapas/dbHelper.dart';
 import 'package:demomapas/place.dart';
+import 'package:demomapas/place_dialog.dart';
 import 'package:flutter/material.dart';
 
 class ManagePlaces extends StatefulWidget {
@@ -49,6 +50,17 @@ class _ManagePlacesState extends State<ManagePlaces> {
           key: Key(places[index].id.toString()),
           child: ListTile(
             title: Text(places[index].name),
+            trailing: IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () async {
+                PlaceDialog dialog = PlaceDialog(places[index], false);
+                await showDialog(
+                  context: context,
+                  builder: (context) => dialog.buildAlert(context),
+                );
+                _getData();
+              },
+            ),
           ),
         ),
       ),
