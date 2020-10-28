@@ -37,7 +37,7 @@ class DbHelper {
     List<Map<String, dynamic>> maps = await db.query('places');
     List<Place> places = List.generate(
         maps.length,
-        (index) => Place(maps[index]["id"], maps[index]["name"],
+        (index) => Place(maps[index]["ID"], maps[index]["name"],
             maps[index]["lat"], maps[index]["lon"], maps[index]["image"]));
 
     return places;

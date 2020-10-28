@@ -1,4 +1,5 @@
 import 'package:demomapas/dbHelper.dart';
+import 'package:demomapas/manage_places.dart';
 import 'package:demomapas/place.dart';
 import 'package:demomapas/place_dialog.dart';
 import 'package:flutter/material.dart';
@@ -55,9 +56,6 @@ class _MainMapState extends State<MainMap> {
         position: LatLng(pos.latitude, pos.longitude),
         infoWindow: InfoWindow(title: markerTitle));
     markers.add(marker);
-    setState(() {
-      markers = markers;
-    });
   }
 
   Future _getData() async {
@@ -73,7 +71,6 @@ class _MainMapState extends State<MainMap> {
     }
     setState(() {
       markers = markers;
-      places = places;
     });
   }
 
@@ -98,23 +95,32 @@ class _MainMapState extends State<MainMap> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Codigo mapa"),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.list),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ManagePlaces(),
+                    ));
+              })
+        ],
       ),
       body: Container(
         child: GoogleMap(
-          onTap: (argument) {},
+          onTap: (argument) async {
+            PlaceDialog pd = PlaceDialog(
+                Place(0, "", argument.latitude, argument.longitude, ""), true);
+            await showDialog(
+              context: context,
+              builder: (context) => pd.buildAlert(context),
+            );
+            _getData();
+          },
           initialCameraPosition: position,
           markers: Set<Marker>.of(markers),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.location_on),
-        onPressed: () {
-          PlaceDialog pd = PlaceDialog(Place(0, "", 0, 0, ""), true);
-          showDialog(
-            context: context,
-            builder: (context) => pd.buildAlert(context),
-          );
-        },
       ),
     );
   }
