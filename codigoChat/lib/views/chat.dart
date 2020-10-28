@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:codigoChat/services/database.dart';
 import 'package:codigoChat/utils/preferencias.dart';
 import 'package:codigoChat/widgets/widgets.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 
 class Chat extends StatefulWidget {
   String chatRoomId;
@@ -15,6 +20,7 @@ class _ChatState extends State<Chat> {
   Stream chats;
   String userName;
   TextEditingController messageController = TextEditingController();
+  ImagePicker picker = ImagePicker();
 
   getMessages() async {
     userName = await Preferencias().getUserName();
@@ -35,6 +41,23 @@ class _ChatState extends State<Chat> {
     setState(() {
       messageController.text = "";
     });
+  }
+
+  Future pickImage() async {
+    var pickedImage = await picker.getImage(
+      source: ImageSource.camera,
+    );
+    print(pickedImage.path);
+    uploadImageToFirebase(pickedImage.path);
+  }
+
+  Future uploadImageToFirebase(String imagepath) async {
+    String fileName = basename(imagepath);
+    StorageReference storageRef =
+        FirebaseStorage.instance.ref().child("upload/$fileName");
+    StorageUploadTask uploadTask = storageRef.putFile(File(imagepath));
+    StorageTaskSnapshot snapshot = await uploadTask.onComplete;
+    snapshot.ref.getDownloadURL().then((value) => print(value));
   }
 
   @override
@@ -86,6 +109,11 @@ class _ChatState extends State<Chat> {
             )
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          pickImage();
+        },
       ),
     );
   }
