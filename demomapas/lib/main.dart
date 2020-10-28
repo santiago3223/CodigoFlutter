@@ -58,7 +58,7 @@ class _MainMapState extends State<MainMap> {
         position: LatLng(pos.latitude, pos.longitude),
         infoWindow: InfoWindow(title: markerTitle),
         onTap: () async {
-          PlaceDialog pd = PlaceDialog(place, true);
+          PlaceDialog pd = PlaceDialog(place, false);
           await showDialog(
             context: context,
             builder: (context) => pd.buildAlert(context),
