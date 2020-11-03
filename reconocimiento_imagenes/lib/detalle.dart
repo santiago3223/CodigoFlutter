@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'dart:ui' as ui;
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +15,8 @@ class DetalleReconocimientoImagenes extends StatefulWidget {
 
 class _DetalleReconocimientoImagenesState
     extends State<DetalleReconocimientoImagenes> {
-  Image image;
+  ui.Image image;
+  List<Face> faces;
 
   void detectFaces() async {
     FirebaseVisionImage visionImage = FirebaseVisionImage.fromFile(widget.file);
@@ -28,11 +29,23 @@ class _DetalleReconocimientoImagenesState
     for (Face f in detectedFaces) {
       print("Sonrien? : " + f.smilingProbability.toString());
     }
+    faces = detectedFaces;
+    var data = await widget.file.readAsBytes();
+    decodeImageFromList(data).then((value) {
+      setState(() {
+        image = value;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    detectFaces();
   }
 
   @override
   Widget build(BuildContext context) {
-    detectFaces();
     return Scaffold(
       appBar: AppBar(
         title: Text("Reconocimiento de imagenes"),
@@ -42,18 +55,26 @@ class _DetalleReconocimientoImagenesState
               child: CircularProgressIndicator(),
             )
           : Center(
-              child: Container(),
+              child: FittedBox(
+                child: SizedBox(
+                  height: 150,
+                  width: 150,
+                  child: CustomPaint(
+                    painter: FacePainter(image, faces),
+                  ),
+                ),
+              ),
             ),
     );
   }
 }
 
 class FacePainter extends CustomPainter {
-  Image image;
+  ui.Image image;
   List<Face> faces;
   List<Rect> rect = [];
 
-  FacePainter(Image img, List<Face> faces) {
+  FacePainter(ui.Image img, List<Face> faces) {
     this.image = img;
     this.faces = faces;
     for (Face f in faces) {
