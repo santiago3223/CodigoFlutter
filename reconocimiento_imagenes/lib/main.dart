@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:reconocimiento_imagenes/detalle.dart';
 
 import 'image_labeler.dart';
+import 'text_recognizer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,7 +54,7 @@ class HomeScreen extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => EtiquetadorImagenes(file),
+                        builder: (context) => ReconocedorTexto(file),
                       ));
                 },
                 child: Text("Camara"),
@@ -66,7 +67,7 @@ class HomeScreen extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => EtiquetadorImagenes(file),
+                        builder: (context) => ReconocedorTexto(file),
                       ));
                 },
                 child: Text("Galleria"),
