@@ -13,6 +13,8 @@ class EtiquetadorImagenes extends StatefulWidget {
 }
 
 class _EtiquetadorImagenesState extends State<EtiquetadorImagenes> {
+  List<ImageLabel> labels = [];
+
   void etiquetarImagen() async {
     FirebaseVisionImage visionImage = FirebaseVisionImage.fromFile(widget.file);
     ImageLabeler imageLabeler = FirebaseVision.instance.imageLabeler();
@@ -22,17 +24,40 @@ class _EtiquetadorImagenesState extends State<EtiquetadorImagenes> {
     for (ImageLabel f in detectedLabels) {
       print(f.text);
     }
+
+    setState(() {
+      labels = detectedLabels;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    etiquetarImagen();
   }
 
   @override
   Widget build(BuildContext context) {
-    etiquetarImagen();
     return Scaffold(
       appBar: AppBar(
         title: Text("Etiquetador de imagenes"),
       ),
       body: Column(
-        children: [Expanded(child: Image.file(widget.file))],
+        children: [
+          Expanded(child: Image.file(widget.file)),
+          Expanded(
+            child: ListView.builder(
+              itemCount: labels.length,
+              itemBuilder: (context, index) => ListTile(
+                title: Text(
+                  labels[index].text,
+                ),
+                trailing: Text(labels[index].confidence.toString()),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
