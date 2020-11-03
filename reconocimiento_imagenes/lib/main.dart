@@ -1,7 +1,13 @@
+import 'dart:io';
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:reconocimiento_imagenes/detalle.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -39,13 +45,29 @@ class HomeScreen extends StatelessWidget {
             children: [
               RaisedButton(
                 onPressed: () async {
-                  var file = await picker.getImage(source: ImageSource.camera);
+                  var pickedfile =
+                      await picker.getImage(source: ImageSource.camera);
+                  File file = File(pickedfile.path);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            DetalleReconocimientoImagenes(file),
+                      ));
                 },
                 child: Text("Camara"),
               ),
               RaisedButton(
                 onPressed: () async {
-                  var file = await picker.getImage(source: ImageSource.gallery);
+                  var pickedfile =
+                      await picker.getImage(source: ImageSource.gallery);
+                  File file = File(pickedfile.path);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            DetalleReconocimientoImagenes(file),
+                      ));
                 },
                 child: Text("Galleria"),
               )
