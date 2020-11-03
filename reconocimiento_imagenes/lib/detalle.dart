@@ -26,6 +26,7 @@ class _DetalleReconocimientoImagenesState
             enableLandmarks: true,
             enableClassification: true));
     List<Face> detectedFaces = await faceDetector.processImage(visionImage);
+
     for (Face f in detectedFaces) {
       print("Sonrien? : " + f.smilingProbability.toString());
     }
@@ -55,12 +56,14 @@ class _DetalleReconocimientoImagenesState
               child: CircularProgressIndicator(),
             )
           : Center(
-              child: FittedBox(
-                child: SizedBox(
-                  height: 150,
-                  width: 150,
-                  child: CustomPaint(
-                    painter: FacePainter(image, faces),
+              child: Container(
+                child: FittedBox(
+                  child: SizedBox(
+                    height: image.width.toDouble(),
+                    width: image.width.toDouble(),
+                    child: CustomPaint(
+                      painter: FacePainter(image, faces),
+                    ),
                   ),
                 ),
               ),

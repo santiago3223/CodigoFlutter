@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:reconocimiento_imagenes/detalle.dart';
 
+import 'image_labeler.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -51,8 +53,7 @@ class HomeScreen extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            DetalleReconocimientoImagenes(file),
+                        builder: (context) => EtiquetadorImagenes(file),
                       ));
                 },
                 child: Text("Camara"),
@@ -65,8 +66,7 @@ class HomeScreen extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            DetalleReconocimientoImagenes(file),
+                        builder: (context) => EtiquetadorImagenes(file),
                       ));
                 },
                 child: Text("Galleria"),
