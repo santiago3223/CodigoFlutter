@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:reconocimiento_imagenes/detalle.dart';
 
+import 'barcode_reader.dart';
 import 'image_labeler.dart';
 import 'text_recognizer.dart';
 
@@ -54,7 +55,7 @@ class HomeScreen extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ReconocedorTexto(file),
+                        builder: (context) => BarcodeReader(file),
                       ));
                 },
                 child: Text("Camara"),
@@ -67,7 +68,7 @@ class HomeScreen extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ReconocedorTexto(file),
+                        builder: (context) => BarcodeReader(file),
                       ));
                 },
                 child: Text("Galleria"),
