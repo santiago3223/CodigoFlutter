@@ -27,7 +27,7 @@ class Artist {
   List<String> genres;
   String href;
   String id;
-  List<Image> images;
+  List<Imagen> images;
   String name;
   int popularity;
   String type;
@@ -39,7 +39,8 @@ class Artist {
         genres: List<String>.from(json["genres"].map((x) => x)),
         href: json["href"],
         id: json["id"],
-        images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
+        images:
+            List<Imagen>.from(json["images"].map((x) => Imagen.fromJson(x))),
         name: json["name"],
         popularity: json["popularity"],
         type: json["type"],
@@ -96,8 +97,8 @@ class Followers {
       };
 }
 
-class Image {
-  Image({
+class Imagen {
+  Imagen({
     this.height,
     this.url,
     this.width,
@@ -107,7 +108,7 @@ class Image {
   String url;
   int width;
 
-  factory Image.fromJson(Map<String, dynamic> json) => Image(
+  factory Imagen.fromJson(Map<String, dynamic> json) => Imagen(
         height: json["height"],
         url: json["url"],
         width: json["width"],

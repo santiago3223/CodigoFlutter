@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:spotifyapi/artist_detail.dart';
 import 'package:spotifyapi/models/artist.dart';
 
 void main() {
@@ -30,14 +31,14 @@ class SearchArtistView extends StatefulWidget {
 
 class _SearchArtistViewState extends State<SearchArtistView> {
   TextEditingController searchController = TextEditingController();
-  List<Artist> artistas = [];
+  List artistas = [];
 
   String token =
-      "Bearer BQD5LHIbxsFMIh-j7M99F5pYC4KBMkPQovt2CYpY4vMRYWvMvTZSe0DoAtlKfcP-B8eilm4SpI6-LPHbnPli0JoP8kCeZz3862PZpQxtfVoQOiNBTM74NPfPQu2bO_8Z-DII-WbpyqistsoqYUa_0Ep_R0wFs14-TE-9W9V1bftqLWtqk6ftc6jVzf3I55KHZRR9plUnt0P_SuH_yUbejf2jeIOHj42quKG9I8jisEoYR4r_LPcyWSq-K13tXEYwlH62xhbxZYEfRgH-";
+      "Bearer BQCvmlA9wUakOv7v8WyOEWGhOJFUkpAnzyD8Dk7uYaqzIo9y3oQesokjF5A0y9pvbk8oD9b-d5teDT8B-Hor_dxCwIBaELMXGUyUAhuSusDLhMjI_e9jAocptzuGtA7fSNMXitEPXBu05iAMgRDnsP6h5ehhC6OhNw4gzVFQPjs4gfo2ydPHQjmqak20xYxFXHclc18KdS0IZClGU1_34abEqy49h2En7wP2L4_l3HfdIpegXbDb1XOAOiW-NaHUaA_c-KLJwVdRJeh8";
 
   void getArtists() async {
     Response response = await Dio().get(
-      "https://api.spotify.com/v1/search?q=Muse&type=artist",
+      "https://api.spotify.com/v1/search?q=${searchController.text}&type=artist",
       options: Options(
         headers: {
           "Authorization": token,
@@ -45,11 +46,7 @@ class _SearchArtistViewState extends State<SearchArtistView> {
       ),
     );
     var jsonArtists = response.data["artists"]["items"];
-    for (var a in jsonArtists) {
-      var artista = Artist.fromJson(a);
-      artistas.add(artista);
-      print(artista.name);
-    }
+    artistas = jsonArtists.map((e) => Artist.fromJson(e)).toList();
     setState(() {
       artistas = artistas;
     });
@@ -86,7 +83,19 @@ class _SearchArtistViewState extends State<SearchArtistView> {
             child: ListView.builder(
               itemCount: artistas.length,
               itemBuilder: (context, index) => ListTile(
+                leading: artistas[index].images.length > 0
+                    ? Image.network(artistas[index].images[0].url)
+                    : Container(),
                 title: Text(artistas[index].name),
+                trailing: Text(artistas[index].popularity.toString()),
+                subtitle: Text(artistas[index].genres.toString()),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ArtistDetail(artistas[index].id),
+                      ));
+                },
               ),
             ),
           )),
