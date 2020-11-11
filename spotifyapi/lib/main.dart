@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:spotifyapi/artist_detail.dart';
 import 'package:spotifyapi/models/artist.dart';
+import 'package:spotifyapi/spotify_api.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,17 +34,11 @@ class _SearchArtistViewState extends State<SearchArtistView> {
   TextEditingController searchController = TextEditingController();
   List artistas = [];
 
-  String token =
-      "Bearer BQCvmlA9wUakOv7v8WyOEWGhOJFUkpAnzyD8Dk7uYaqzIo9y3oQesokjF5A0y9pvbk8oD9b-d5teDT8B-Hor_dxCwIBaELMXGUyUAhuSusDLhMjI_e9jAocptzuGtA7fSNMXitEPXBu05iAMgRDnsP6h5ehhC6OhNw4gzVFQPjs4gfo2ydPHQjmqak20xYxFXHclc18KdS0IZClGU1_34abEqy49h2En7wP2L4_l3HfdIpegXbDb1XOAOiW-NaHUaA_c-KLJwVdRJeh8";
-
   void getArtists() async {
-    Response response = await Dio().get(
-      "https://api.spotify.com/v1/search?q=${searchController.text}&type=artist",
-      options: Options(
-        headers: {
-          "Authorization": token,
-        },
-      ),
+    print("artistaaaas");
+    Dio dio = SpotifyAPI.createDio();
+    Response response = await dio.get(
+      "search?q=${searchController.text}&type=artist",
     );
     var jsonArtists = response.data["artists"]["items"];
     artistas = jsonArtists.map((e) => Artist.fromJson(e)).toList();
@@ -84,8 +79,13 @@ class _SearchArtistViewState extends State<SearchArtistView> {
               itemCount: artistas.length,
               itemBuilder: (context, index) => ListTile(
                 leading: artistas[index].images.length > 0
-                    ? Image.network(artistas[index].images[0].url)
-                    : Container(),
+                    ? Image.network(
+                        artistas[index].images[0].url,
+                        width: 50,
+                      )
+                    : Container(
+                        width: 50,
+                      ),
                 title: Text(artistas[index].name),
                 trailing: Text(artistas[index].popularity.toString()),
                 subtitle: Text(artistas[index].genres.toString()),

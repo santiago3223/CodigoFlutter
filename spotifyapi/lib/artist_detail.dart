@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:spotifyapi/models/album.dart';
+import 'package:spotifyapi/spotify_api.dart';
 
 import 'models/song.dart';
 
@@ -15,17 +16,11 @@ class ArtistDetail extends StatefulWidget {
 class _ArtistDetailState extends State<ArtistDetail> {
   List albums = [];
   List songs = [];
-  String token =
-      "Bearer BQCvmlA9wUakOv7v8WyOEWGhOJFUkpAnzyD8Dk7uYaqzIo9y3oQesokjF5A0y9pvbk8oD9b-d5teDT8B-Hor_dxCwIBaELMXGUyUAhuSusDLhMjI_e9jAocptzuGtA7fSNMXitEPXBu05iAMgRDnsP6h5ehhC6OhNw4gzVFQPjs4gfo2ydPHQjmqak20xYxFXHclc18KdS0IZClGU1_34abEqy49h2En7wP2L4_l3HfdIpegXbDb1XOAOiW-NaHUaA_c-KLJwVdRJeh8";
 
   void getAlbums() async {
-    Response response = await Dio().get(
-      "https://api.spotify.com/v1/artists/${widget.id}/albums",
-      options: Options(
-        headers: {
-          "Authorization": token,
-        },
-      ),
+    Dio dio = SpotifyAPI.createDio();
+    Response response = await dio.get(
+      "artists/${widget.id}/albums",
     );
     var jsonArtists = response.data["items"];
     albums = jsonArtists.map((e) => Album.fromJson(e)).toList();
@@ -35,14 +30,10 @@ class _ArtistDetailState extends State<ArtistDetail> {
   }
 
   void getSongs() async {
-    Response response = await Dio().get(
-      "https://api.spotify.com/v1/artists/${widget.id}/top-tracks?market=PE",
-      options: Options(
-        headers: {
-          "Authorization": token,
-        },
-      ),
-    );
+    Dio dio = SpotifyAPI.createDio();
+    Response response = await dio.get(
+        "artists/${widget.id}/top-tracks?market=PE",
+        options: Options(headers: {"requiresToken": true}));
     var jsonArtists = response.data["tracks"];
     print(response.data["tracks"]);
     songs = jsonArtists.map((e) => Song.fromJson(e)).toList();
