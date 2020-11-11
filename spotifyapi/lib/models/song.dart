@@ -50,7 +50,6 @@ class Song {
   String uri;
 
   factory Song.fromJson(Map<String, dynamic> json) => Song(
-        album: Album.fromJson(json["album"]),
         artists:
             List<Artist>.from(json["artists"].map((x) => Artist.fromJson(x))),
         discNumber: json["disc_number"],
@@ -114,9 +113,7 @@ class ExternalIds {
 
   String isrc;
 
-  factory ExternalIds.fromJson(Map<String, dynamic> json) => ExternalIds(
-        isrc: json["isrc"],
-      );
+  factory ExternalIds.fromJson(Map<String, dynamic> json) => ExternalIds();
 
   Map<String, dynamic> toJson() => {
         "isrc": isrc,

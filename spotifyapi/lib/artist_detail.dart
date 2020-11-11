@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:spotifyapi/album_detail.dart';
 import 'package:spotifyapi/models/album.dart';
 import 'package:spotifyapi/spotify_api.dart';
 
@@ -66,21 +67,29 @@ class _ArtistDetailState extends State<ArtistDetail> {
               itemCount: albums.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => Card(
-                child: Container(
-                  child: Column(
-                    children: [
-                      Image.network(
-                        albums[index].images[0].url,
-                        height: 100,
-                        width: 100,
-                      ),
-                      Text(
-                        albums[index].name,
-                      ),
-                      Text(
-                        albums[index].releaseDate,
-                      ),
-                    ],
+                child: GestureDetector(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            AlbumDetail(albums[index].id, albums[index].name),
+                      )),
+                  child: Container(
+                    child: Column(
+                      children: [
+                        Image.network(
+                          albums[index].images[0].url,
+                          height: 100,
+                          width: 100,
+                        ),
+                        Text(
+                          albums[index].name,
+                        ),
+                        Text(
+                          albums[index].releaseDate,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
