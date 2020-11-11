@@ -17,20 +17,23 @@ class _CodigoApi implements CodigoApi {
   String baseUrl;
 
   @override
-  Future<List<String>> listarEmpresas(usuario) async {
-    ArgumentError.checkNotNull(usuario, 'usuario');
+  Future<Cliente> registrarCliente(cliente) async {
+    ArgumentError.checkNotNull(cliente, 'cliente');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<List<dynamic>>('/empresas/$usuario/',
+    _data.addAll(cliente?.toJson() ?? <String, dynamic>{});
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>('/cliente/',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
+            method: 'POST',
+            headers: <String, dynamic>{r'content-Type': 'application/json'},
             extra: _extra,
+            contentType: 'application/json',
             baseUrl: baseUrl),
         data: _data);
-    final value = _result.data.cast<String>();
+    final value = Cliente.fromJson(_result.data);
     return value;
   }
 }

@@ -1,5 +1,7 @@
 import 'package:retrofit/retrofit.dart';
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' hide Headers;
+
+import 'models/cliente.dart';
 
 part 'rest_api.g.dart';
 
@@ -7,8 +9,9 @@ part 'rest_api.g.dart';
 abstract class CodigoApi {
   factory CodigoApi(Dio dio, {String baseUrl}) = _CodigoApi;
 
-  @GET("/empresas/{usuario}/")
-  Future<List<String>> listarEmpresas(
-    @Path("usuario") String usuario,
+  @POST("/cliente/")
+  @Headers(<String, String>{"content-Type": "application/json"})
+  Future<Cliente> registrarCliente(
+    @Body() Cliente cliente,
   );
 }
