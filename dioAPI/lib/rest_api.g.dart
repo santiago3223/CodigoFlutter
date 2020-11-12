@@ -36,4 +36,25 @@ class _CodigoApi implements CodigoApi {
     final value = Cliente.fromJson(_result.data);
     return value;
   }
+
+  @override
+  Future<TokenInfo> ingresarCliente(username, password) async {
+    ArgumentError.checkNotNull(username, 'username');
+    ArgumentError.checkNotNull(password, 'password');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = {'username': username, 'password': password};
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>('/token/',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{r'content-Type': 'application/json'},
+            extra: _extra,
+            contentType: 'application/json',
+            baseUrl: baseUrl),
+        data: _data);
+    final value = TokenInfo.fromJson(_result.data);
+    return value;
+  }
 }

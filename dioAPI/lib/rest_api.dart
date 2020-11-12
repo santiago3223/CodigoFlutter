@@ -1,3 +1,4 @@
+import 'package:dioAPI/models/token_info.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart' hide Headers;
 
@@ -14,4 +15,9 @@ abstract class CodigoApi {
   Future<Cliente> registrarCliente(
     @Body() Cliente cliente,
   );
+
+  @POST("/token/")
+  @Headers(<String, String>{"content-Type": "application/json"})
+  Future<TokenInfo> ingresarCliente(
+      @Field() String username, @Field() String password);
 }
