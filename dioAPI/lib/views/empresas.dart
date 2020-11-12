@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:dioAPI/models/empresa.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../rest_api.dart';
 
@@ -15,7 +16,10 @@ class _EmpresasViewState extends State<EmpresasView> {
   consultarEmpresas() async {
     var dio = Dio();
     var client = CodigoApi(dio);
-    client.listarEmpresas("1").then((value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int id = prefs.getInt("id");
+
+    client.listarEmpresas(id.toString()).then((value) async {
       setState(() {
         empresas = value;
       });
