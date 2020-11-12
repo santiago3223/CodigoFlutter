@@ -1,4 +1,9 @@
+import 'package:dio/dio.dart';
+import 'package:dioAPI/views/empresas.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../rest_api.dart';
 
 class LoginView extends StatefulWidget {
   @override
@@ -10,7 +15,27 @@ class _LoginViewState extends State<LoginView> {
   TextEditingController correoController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  ingresar() async {}
+  ingresar() async {
+    var dio = Dio();
+    var client = CodigoApi(dio);
+    client
+        .ingresarCliente(correoController.text, passwordController.text)
+        .then((value) async {
+      print(value.token);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString("token", value.token);
+      await prefs.setInt("id", value.userId);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => EmpresasView(),
+          ));
+    }).catchError((obj) {
+      _scaffoldKey.currentState
+          .showSnackBar(SnackBar(content: Text(obj.response.toString())));
+      print(obj.response);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

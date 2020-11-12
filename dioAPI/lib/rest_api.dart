@@ -3,6 +3,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart' hide Headers;
 
 import 'models/cliente.dart';
+import 'models/empresa.dart';
 
 part 'rest_api.g.dart';
 
@@ -20,4 +21,10 @@ abstract class CodigoApi {
   @Headers(<String, String>{"content-Type": "application/json"})
   Future<TokenInfo> ingresarCliente(
       @Field() String username, @Field() String password);
+
+  @GET("/empresas/{usuario}/")
+  @Headers(<String, String>{"content-Type": "application/json"})
+  Future<List<Empresa>> listarEmpresas(
+    @Path("usuario") String usuario,
+  );
 }
