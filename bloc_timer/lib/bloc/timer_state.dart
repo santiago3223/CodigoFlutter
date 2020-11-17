@@ -1,33 +1,33 @@
-class TimerState {
-  int duration;
+abstract class TimerState {
+  final int duration;
 
-  TimerState(duration);
+  const TimerState(this.duration);
+
+  @override
+  List<Object> get props => [duration];
 }
 
 class TimerInitial extends TimerState {
-  TimerInitial(duration) : super(duration);
+  const TimerInitial(int duration) : super(duration);
 
   @override
-  String toString() => "TimerInitial $duration";
-}
-
-class TimerRunInProgress extends TimerState {
-  TimerRunInProgress(duration) : super(duration);
-
-  @override
-  String toString() => "TimerRunInProgress $duration";
+  String toString() => 'TimerInitial { duration: $duration }';
 }
 
 class TimerRunPause extends TimerState {
-  TimerRunPause(duration) : super(duration);
+  const TimerRunPause(int duration) : super(duration);
 
   @override
-  String toString() => "TimerRunPause $duration";
+  String toString() => 'TimerRunPause { duration: $duration }';
+}
+
+class TimerRunInProgress extends TimerState {
+  const TimerRunInProgress(int duration) : super(duration);
+
+  @override
+  String toString() => 'TimerRunInProgress { duration: $duration }';
 }
 
 class TimerRunComplete extends TimerState {
-  TimerRunComplete() : super(0);
-
-  @override
-  String toString() => "TimerInitial 0";
+  const TimerRunComplete() : super(0);
 }
